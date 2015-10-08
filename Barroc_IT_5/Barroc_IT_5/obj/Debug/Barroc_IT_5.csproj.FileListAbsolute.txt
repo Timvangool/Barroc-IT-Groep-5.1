@@ -1,0 +1,9 @@
+q:\documenten\visual studio 2013\Projects\Barroc_IT_5\Barroc_IT_5\bin\Debug\Barroc_IT_5.exe.config
+q:\documenten\visual studio 2013\Projects\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.csprojResolveAssemblyReference.cache
+q:\documenten\visual studio 2013\Projects\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.Properties.Resources.resources
+q:\documenten\visual studio 2013\Projects\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.csproj.GenerateResource.Cache
+q:\documenten\visual studio 2013\Projects\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.frm_Login.resources
+q:\documenten\visual studio 2013\Projects\Barroc_IT_5\Barroc_IT_5\bin\Debug\Barroc_IT_5.exe
+q:\documenten\visual studio 2013\Projects\Barroc_IT_5\Barroc_IT_5\bin\Debug\Barroc_IT_5.pdb
+q:\documenten\visual studio 2013\Projects\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.exe
+q:\documenten\visual studio 2013\Projects\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.pdb
