@@ -1,0 +1,6 @@
+1. Datum altijd voor de commit bv. 06-10-2015 Added database
+2. Commits altijd in het engels.
+3. Duidelijke omschrijving.
+4. Mocht je thuis werken geef het aan.
+5. Niet commiten voordat iemand het heeft gecontroleerd.
+6. Werk altijd lokaal
