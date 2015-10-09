@@ -17,3 +17,14 @@ C:\Users\Kevin\Documents\Visual Studio 2013\Projects\Barroc-IT\Barroc_IT_5\Barro
 C:\Users\Kevin\Documents\Visual Studio 2013\Projects\Barroc-IT\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.csproj.GenerateResource.Cache
 C:\Users\Kevin\Documents\Visual Studio 2013\Projects\Barroc-IT\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.exe
 C:\Users\Kevin\Documents\Visual Studio 2013\Projects\Barroc-IT\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.pdb
+C:\Users\timmie\Desktop\Barroc_IT_5\Barroc_IT_5\bin\Debug\Barroc_IT_5.exe.config
+C:\Users\timmie\Desktop\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.exe
+C:\Users\timmie\Desktop\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.pdb
+C:\Users\timmie\Desktop\Barroc_IT_5\Barroc_IT_5\bin\Debug\Barroc_IT_5.exe
+C:\Users\timmie\Desktop\Barroc_IT_5\Barroc_IT_5\bin\Debug\Barroc_IT_5.pdb
+C:\Users\timmie\Desktop\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.csprojResolveAssemblyReference.cache
+C:\Users\timmie\Desktop\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.frm_Login.resources
+C:\Users\timmie\Desktop\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.frm_Main.resources
+C:\Users\timmie\Desktop\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.Properties.Resources.resources
+C:\Users\timmie\Desktop\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.csproj.GenerateResource.Cache
+C:\Users\timmie\Desktop\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.frm_Show.resources

@@ -12,12 +12,28 @@ namespace Barroc_IT_Groep5
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+        /// 
+
+        static Form nextForm;
+
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frm_Login());
+            
+            nextForm = new frm_Login();
+
+            while(!nextForm.IsDisposed)
+            {
+                Application.Run(nextForm);
+            }
+        }
+
+
+        public static void setForm(Form targetForm)
+        {
+            nextForm = targetForm;
         }
     }
 }
