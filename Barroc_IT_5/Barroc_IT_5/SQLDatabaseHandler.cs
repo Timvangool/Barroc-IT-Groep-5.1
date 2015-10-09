@@ -1,6 +1,6 @@
 ﻿//#define TIMH
-#define TIMG
-//#define KEVIN
+//#define TIMG
+#define KEVIN
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +28,7 @@ namespace Barroc_IT_Groep5
             conString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=Q:\Documenten\Barroc_DB.mdf;Integrated Security=True;Connect Timeout=30";
 #endif
 #if KEVIN
-            conString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\Kevin\Documents\GitHub\Barroc-IT-groep-6\Main programma\Database\Barroc_DB.mdf;Integrated Security=True;Connect Timeout=30";
+            conString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\Kevin\Documents\Visual Studio 2013\Projects\Barroc-IT\Database\Barroc_DB.mdf;Integrated Security=True;Connect Timeout=30";
 #endif
             con = new SqlConnection(conString);
         }
