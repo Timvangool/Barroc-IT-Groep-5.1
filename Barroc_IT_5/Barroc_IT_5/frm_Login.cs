@@ -17,6 +17,7 @@ namespace Barroc_IT_5
     public partial class frm_Login : Form
     {
         SQLDatabaseHandler dbh;
+        frm_Main frm_Main;
 
         public string uN, pW;
         public bool temp;
@@ -38,6 +39,7 @@ namespace Barroc_IT_5
         {
             user = tb_Username.Text;
             pass = tb_Password.Text;
+            frm_Main = new Barroc_IT_5.frm_Main();
 
             string query = "SELECT * FROM TBL_LOGIN WHERE USERNAME = @USERNAME AND PASSWORD = @PASSWORD";
 
@@ -59,6 +61,8 @@ namespace Barroc_IT_5
             {
                 MessageBox.Show("Login Successful.");
                 temp = true;
+                this.Hide();
+                frm_Main.Show();
             }
             else if (uN != user || pW != pass)
             {
@@ -79,12 +83,12 @@ namespace Barroc_IT_5
             com.Parameters.Add(new SqlParameter("@USERNAME", tb_Username.Text));
             com.Parameters.Add(new SqlParameter("@PASSWORD", tb_Password.Text));
 
-            SqlDataReader reader = com.ExecuteReader();
+            //SqlDataReader reader = com.ExecuteReader();
 
-            while (reader.Read())
-            {
-                permission = reader.GetInt32(2);
-            }
+            //while (reader.Read())
+            //{
+            //    permission = reader.GetInt32(2);
+            //}
 
             return permission;
         }
@@ -92,6 +96,14 @@ namespace Barroc_IT_5
         public int GetPermissions()
         {
             return permission;
+        }
+
+        private void tb_Password_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btn_Login_Click(sender, e);
+            }
         }
 
     }

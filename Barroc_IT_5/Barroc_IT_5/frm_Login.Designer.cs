@@ -51,6 +51,8 @@
             this.tb_Password.Name = "tb_Password";
             this.tb_Password.Size = new System.Drawing.Size(150, 20);
             this.tb_Password.TabIndex = 1;
+            this.tb_Password.UseSystemPasswordChar = true;
+            this.tb_Password.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tb_Password_KeyUp);
             // 
             // label1
             // 
