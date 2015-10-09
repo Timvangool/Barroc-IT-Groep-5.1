@@ -44,11 +44,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frm_Add.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_Add.Designer.cs">
+      <DependentUpon>frm_Add.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frm_Edit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_Edit.Designer.cs">
+      <DependentUpon>frm_Edit.cs</DependentUpon>
+    </Compile>
     <Compile Include="frm_Login.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frm_Login.Designer.cs">
       <DependentUpon>frm_Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frm_Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_Main.Designer.cs">
+      <DependentUpon>frm_Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frm_Show.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_Show.Designer.cs">
+      <DependentUpon>frm_Show.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
