@@ -12,29 +12,20 @@ namespace Barroc_IT_5
 {
     public partial class frm_Show : Form
     {
-        frm_Login frmLogin;
-       
+
+        string query;
+
         public frm_Show()
         {
             InitializeComponent();
-            frmLogin = new frm_Login();
+            
         }
 
-        private void frm_Show_Load(object sender, EventArgs e)
+        public frm_Show(string query)
         {
-            switch (frmLogin.GetPermissions())
-            {
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                default:
-                    break;
-            }
+            this.query = query;
+            InitializeComponent();
+            
         }
     }
 }
