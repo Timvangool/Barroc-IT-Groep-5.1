@@ -17,6 +17,7 @@ namespace Barroc_IT_5
         public frm_Main()
         {
             InitializeComponent();
+
         }
 
         #region Customer Buttons
@@ -116,6 +117,11 @@ namespace Barroc_IT_5
             Form frmLogin = new frm_Login();
             Program.setForm(frmLogin);
             this.Close();
+        }
+
+        private void frm_Main_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

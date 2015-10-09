@@ -242,6 +242,7 @@
             this.MaximizeBox = false;
             this.Name = "frm_Main";
             this.Text = "Barroc-IT";
+            this.Load += new System.EventHandler(this.frm_Main_Load);
             this.gb_Customers.ResumeLayout(false);
             this.gb_Invoices.ResumeLayout(false);
             this.gb_Projects.ResumeLayout(false);
