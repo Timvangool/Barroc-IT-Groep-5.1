@@ -123,7 +123,6 @@
             this.Controls.Add(this.dataGridView1);
             this.Name = "frm_Show";
             this.Text = "frm_Show";
-            this.Load += new System.EventHandler(this.frm_Show_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

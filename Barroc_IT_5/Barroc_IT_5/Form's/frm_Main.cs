@@ -36,7 +36,8 @@ namespace Barroc_IT_5
 
         private void btn_C_List_Click(object sender, EventArgs e)
         {
-            Form frmShow = new frm_Show();
+            string query = "SELECT * FROM tbl_Customers";
+            Form frmShow = new frm_Show(query);
             Program.setForm(frmShow);
             this.Close();
         }
@@ -59,7 +60,8 @@ namespace Barroc_IT_5
 
         private void btn_I_List_Click(object sender, EventArgs e)
         {
-            Form frmShow = new frm_Show();
+            string query = "SELECT * FROM tbl_Invoices";
+            Form frmShow = new frm_Show(query);
             Program.setForm(frmShow);
             this.Close();
         }
@@ -82,7 +84,8 @@ namespace Barroc_IT_5
 
         private void btn_P_List_Click(object sender, EventArgs e)
         {
-            Form frmShow = new frm_Show();
+            string query = "SELECT * FROM tbl_Projects";
+            Form frmShow = new frm_Show(query);
             Program.setForm(frmShow);
             this.Close();
         }
@@ -105,7 +108,8 @@ namespace Barroc_IT_5
 
         private void btn_A_List_Click(object sender, EventArgs e)
         {
-            Form frmShow = new frm_Show();
+            string query = "SELECT * FROM tbl_Appointments";
+            Form frmShow = new frm_Show(query);
             Program.setForm(frmShow);
             this.Close();
         }
