@@ -17,7 +17,6 @@ namespace Barroc_IT_5
     public partial class frm_Login : Form
     {
         SQLDatabaseHandler dbh;
-
         frm_Main frm_Main;
 
         public string uN, pW;
@@ -32,9 +31,8 @@ namespace Barroc_IT_5
 
         private void btn_Login_Click(object sender, EventArgs e)
         {
-            permission = SetPermissions();
             IsLoggedIn(tb_Username.Text, tb_Password.Text);
-            
+            //SetPermissions();
         }
 
         public bool IsLoggedIn(string user, string pass)
@@ -82,8 +80,6 @@ namespace Barroc_IT_5
         {
             string query = "SELECT PERMISSIONS FROM TBL_LOGIN WHERE USERNAME = @USERNAME AND PASSWORD = @PASSWORD";
 
-            dbh.openCon();
-
             SqlCommand com = new SqlCommand(query, dbh.getCon());
             com.Parameters.Add(new SqlParameter("@USERNAME", tb_Username.Text));
             com.Parameters.Add(new SqlParameter("@PASSWORD", tb_Password.Text));
@@ -92,11 +88,14 @@ namespace Barroc_IT_5
 
             while (reader.Read())
             {
-                permission = reader.GetInt32(0);
+                permission = reader.GetInt32(2);
             }
 
-            dbh.closeCon();
+            return permission;
+        }
 
+        public int GetPermissions()
+        {
             return permission;
         }
 
