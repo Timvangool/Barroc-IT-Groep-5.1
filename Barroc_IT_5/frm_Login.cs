@@ -17,9 +17,11 @@ namespace Barroc_IT_5
     public partial class frm_Login : Form
     {
         SQLDatabaseHandler dbh;
+        frm_Main frm_Main;
 
         public string uN, pW;
-        public int permissions;
+        public bool temp;
+        public int permission;
 
         public frm_Login()
         {
@@ -27,22 +29,17 @@ namespace Barroc_IT_5
             dbh = new SQLDatabaseHandler();
         }
 
-        public frm_Login(int permissions)
-        {
-            InitializeComponent();
-            dbh = new SQLDatabaseHandler();
-            this.permissions = permissions;
-        }
-
         private void btn_Login_Click(object sender, EventArgs e)
         {
-           LogIn(tb_Username.Text, tb_Password.Text);
+            IsLoggedIn(tb_Username.Text, tb_Password.Text);
+            SetPermissions();
         }
 
-        public void LogIn(string user, string pass)
+        public bool IsLoggedIn(string user, string pass)
         {
             user = tb_Username.Text;
             pass = tb_Password.Text;
+            frm_Main = new Barroc_IT_5.frm_Main();
 
             string query = "SELECT * FROM TBL_LOGIN WHERE USERNAME = @USERNAME AND PASSWORD = @PASSWORD";
 
@@ -63,42 +60,42 @@ namespace Barroc_IT_5
             if (uN == user && pW == pass)
             {
                 MessageBox.Show("Login Successful.");
-               
-
-                switch (uN)
-                {
-                    case "Admin":
-                        permissions = 1;
-                        break;
-                    case "SALES":
-                        permissions = 2;
-                        break;
-                    case "DEVELOPMENT":
-                        permissions = 4;
-                        break;
-                    case "FINANCE":
-                        permissions = 3;
-                        break;
-                    default:
-                        MessageBox.Show("Er is iets fout gegaan bij 'IsLoggedIn()'");
-                        permissions = 0;
-                        break;
-                }
-
-                Form frmMain = new frm_Main(permissions);
-                Program.setForm(frmMain);
-                this.Close();
-
-                
+                temp = true;
+                this.Hide();
+                frm_Main.Show();
             }
             else if (uN != user || pW != pass)
             {
                 MessageBox.Show("Invalid Username and/or Password.");
-  
+                temp = false;
             }
 
             dbh.closeCon();
 
+            return temp;
+        }
+
+        public int SetPermissions()
+        {
+            string query = "SELECT PERMISSIONS FROM TBL_LOGIN WHERE USERNAME = @USERNAME AND PASSWORD = @PASSWORD";
+
+            SqlCommand com = new SqlCommand(query, dbh.getCon());
+            com.Parameters.Add(new SqlParameter("@USERNAME", tb_Username.Text));
+            com.Parameters.Add(new SqlParameter("@PASSWORD", tb_Password.Text));
+
+            //SqlDataReader reader = com.ExecuteReader();
+
+            //while (reader.Read())
+            //{
+            //    permission = reader.GetInt32(2);
+            //}
+
+            return permission;
+        }
+
+        public int GetPermissions()
+        {
+            return permission;
         }
 
         private void tb_Password_KeyUp(object sender, KeyEventArgs e)

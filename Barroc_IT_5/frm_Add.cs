@@ -12,15 +12,8 @@ namespace Barroc_IT_5
 {
     public partial class frm_Add : Form
     {
-        public int permissions;
         public frm_Add()
         {
-            InitializeComponent();
-        }
-
-        public frm_Add(int permissions)
-        {
-            this.permissions = permissions;
             InitializeComponent();
         }
     }

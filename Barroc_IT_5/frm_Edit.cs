@@ -10,17 +10,10 @@ using System.Windows.Forms;
 
 namespace Barroc_IT_5
 {
-    public partial class frm_Add : Form
+    public partial class frm_Edit : Form
     {
-        public int permissions;
-        public frm_Add()
+        public frm_Edit()
         {
-            InitializeComponent();
-        }
-
-        public frm_Add(int permissions)
-        {
-            this.permissions = permissions;
             InitializeComponent();
         }
     }

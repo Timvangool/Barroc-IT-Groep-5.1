@@ -45,13 +45,10 @@
             this.btn_A_Edit = new System.Windows.Forms.Button();
             this.btn_A_Create = new System.Windows.Forms.Button();
             this.btn_Logout = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.btn_Exit = new System.Windows.Forms.Button();
             this.gb_Customers.SuspendLayout();
             this.gb_Invoices.SuspendLayout();
             this.gb_Projects.SuspendLayout();
             this.gb_Appointments.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // gb_Customers
@@ -59,7 +56,7 @@
             this.gb_Customers.Controls.Add(this.btn_C_List);
             this.gb_Customers.Controls.Add(this.btn_C_Edit);
             this.gb_Customers.Controls.Add(this.btn_C_Create);
-            this.gb_Customers.Location = new System.Drawing.Point(12, 42);
+            this.gb_Customers.Location = new System.Drawing.Point(12, 12);
             this.gb_Customers.Name = "gb_Customers";
             this.gb_Customers.Size = new System.Drawing.Size(200, 111);
             this.gb_Customers.TabIndex = 0;
@@ -101,7 +98,7 @@
             this.gb_Invoices.Controls.Add(this.btn_I_List);
             this.gb_Invoices.Controls.Add(this.btn_I_Edit);
             this.gb_Invoices.Controls.Add(this.btn_I_Create);
-            this.gb_Invoices.Location = new System.Drawing.Point(218, 42);
+            this.gb_Invoices.Location = new System.Drawing.Point(218, 12);
             this.gb_Invoices.Name = "gb_Invoices";
             this.gb_Invoices.Size = new System.Drawing.Size(200, 111);
             this.gb_Invoices.TabIndex = 1;
@@ -143,7 +140,7 @@
             this.gb_Projects.Controls.Add(this.btn_P_List);
             this.gb_Projects.Controls.Add(this.btn_P_Edit);
             this.gb_Projects.Controls.Add(this.btn_P_Create);
-            this.gb_Projects.Location = new System.Drawing.Point(12, 159);
+            this.gb_Projects.Location = new System.Drawing.Point(12, 129);
             this.gb_Projects.Name = "gb_Projects";
             this.gb_Projects.Size = new System.Drawing.Size(200, 111);
             this.gb_Projects.TabIndex = 2;
@@ -185,7 +182,7 @@
             this.gb_Appointments.Controls.Add(this.btn_A_List);
             this.gb_Appointments.Controls.Add(this.btn_A_Edit);
             this.gb_Appointments.Controls.Add(this.btn_A_Create);
-            this.gb_Appointments.Location = new System.Drawing.Point(218, 159);
+            this.gb_Appointments.Location = new System.Drawing.Point(218, 129);
             this.gb_Appointments.Name = "gb_Appointments";
             this.gb_Appointments.Size = new System.Drawing.Size(200, 111);
             this.gb_Appointments.TabIndex = 3;
@@ -224,7 +221,7 @@
             // 
             // btn_Logout
             // 
-            this.btn_Logout.Location = new System.Drawing.Point(337, 276);
+            this.btn_Logout.Location = new System.Drawing.Point(337, 246);
             this.btn_Logout.Name = "btn_Logout";
             this.btn_Logout.Size = new System.Drawing.Size(75, 23);
             this.btn_Logout.TabIndex = 4;
@@ -232,48 +229,22 @@
             this.btn_Logout.UseVisualStyleBackColor = true;
             this.btn_Logout.Click += new System.EventHandler(this.btn_Logout_Click);
             // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.panel1.Controls.Add(this.btn_Exit);
-            this.panel1.Location = new System.Drawing.Point(-10, -17);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(448, 44);
-            this.panel1.TabIndex = 5;
-            this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
-            // 
-            // btn_Exit
-            // 
-            this.btn_Exit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btn_Exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Exit.Location = new System.Drawing.Point(416, 18);
-            this.btn_Exit.Name = "btn_Exit";
-            this.btn_Exit.Size = new System.Drawing.Size(21, 23);
-            this.btn_Exit.TabIndex = 3;
-            this.btn_Exit.Text = "X";
-            this.btn_Exit.UseVisualStyleBackColor = false;
-            this.btn_Exit.Click += new System.EventHandler(this.btn_Exit_Click);
-            // 
             // frm_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(429, 303);
-            this.Controls.Add(this.panel1);
+            this.ClientSize = new System.Drawing.Size(429, 275);
             this.Controls.Add(this.btn_Logout);
             this.Controls.Add(this.gb_Appointments);
             this.Controls.Add(this.gb_Projects);
             this.Controls.Add(this.gb_Invoices);
             this.Controls.Add(this.gb_Customers);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.MaximizeBox = false;
             this.Name = "frm_Main";
             this.Text = "Barroc-IT";
             this.gb_Customers.ResumeLayout(false);
             this.gb_Invoices.ResumeLayout(false);
             this.gb_Projects.ResumeLayout(false);
             this.gb_Appointments.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -297,7 +268,5 @@
         private System.Windows.Forms.Button btn_A_Edit;
         private System.Windows.Forms.Button btn_A_Create;
         private System.Windows.Forms.Button btn_Logout;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button btn_Exit;
     }
 }
