@@ -36,7 +36,11 @@ namespace Barroc_IT_5
 
         private void btn_Login_Click(object sender, EventArgs e)
         {
-           LogIn(tb_Username.Text, tb_Password.Text);
+           //LogIn(tb_Username.Text, tb_Password.Text);
+            Form main = new frm_Main();
+            main.StartPosition = FormStartPosition.CenterScreen;
+            Program.setForm(main);
+            this.Close();
         }
 
         public void LogIn(string user, string pass)
@@ -86,6 +90,7 @@ namespace Barroc_IT_5
                 }
 
                 Form frmMain = new frm_Main(permissions);
+                frmMain.StartPosition = FormStartPosition.CenterScreen;
                 Program.setForm(frmMain);
                 this.Close();
 
@@ -107,6 +112,16 @@ namespace Barroc_IT_5
             {
                 btn_Login_Click(sender, e);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void frm_Login_Load(object sender, EventArgs e)
+        {
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
     }

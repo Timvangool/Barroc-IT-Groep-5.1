@@ -40,3 +40,5 @@ C:\Users\Kevin\Documents\Visual Studio 2013\Projects\Barroc-IT\Barroc_IT_5\Barro
 C:\Users\Kevin\Documents\Visual Studio 2013\Projects\Barroc-IT\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.csproj.GenerateResource.Cache
 C:\Users\Kevin\Documents\Visual Studio 2013\Projects\Barroc-IT\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.exe
 C:\Users\Kevin\Documents\Visual Studio 2013\Projects\Barroc-IT\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.pdb
+C:\Users\timmie\Desktop\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.frm_Add.resources
+C:\Users\timmie\Desktop\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.frm_Edit.resources

@@ -28,27 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgv_Show = new System.Windows.Forms.DataGridView();
             this.btn_Edit = new System.Windows.Forms.Button();
             this.btn_Delete = new System.Windows.Forms.Button();
-            this.b = new System.Windows.Forms.Button();
+            this.btn_Add = new System.Windows.Forms.Button();
             this.btn_Print = new System.Windows.Forms.Button();
             this.btn_Search = new System.Windows.Forms.Button();
             this.btn_Back = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btn_Exit = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.cb_Tabledata = new System.Windows.Forms.ComboBox();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_Show)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // dgv_Show
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 59);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(679, 204);
-            this.dataGridView1.TabIndex = 0;
+            this.dgv_Show.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_Show.Location = new System.Drawing.Point(12, 59);
+            this.dgv_Show.Name = "dgv_Show";
+            this.dgv_Show.Size = new System.Drawing.Size(679, 204);
+            this.dgv_Show.TabIndex = 0;
             // 
             // btn_Edit
             // 
@@ -58,6 +59,7 @@
             this.btn_Edit.TabIndex = 1;
             this.btn_Edit.Text = "Edit";
             this.btn_Edit.UseVisualStyleBackColor = true;
+            this.btn_Edit.Click += new System.EventHandler(this.btn_Edit_Click);
             // 
             // btn_Delete
             // 
@@ -68,14 +70,15 @@
             this.btn_Delete.Text = "Delete";
             this.btn_Delete.UseVisualStyleBackColor = true;
             // 
-            // b
+            // btn_Add
             // 
-            this.b.Location = new System.Drawing.Point(252, 269);
-            this.b.Name = "b";
-            this.b.Size = new System.Drawing.Size(114, 23);
-            this.b.TabIndex = 3;
-            this.b.Text = "Add";
-            this.b.UseVisualStyleBackColor = true;
+            this.btn_Add.Location = new System.Drawing.Point(252, 269);
+            this.btn_Add.Name = "btn_Add";
+            this.btn_Add.Size = new System.Drawing.Size(114, 23);
+            this.btn_Add.TabIndex = 3;
+            this.btn_Add.Text = "Add";
+            this.btn_Add.UseVisualStyleBackColor = true;
+            this.btn_Add.Click += new System.EventHandler(this.btn_Add_Click);
             // 
             // btn_Print
             // 
@@ -94,6 +97,7 @@
             this.btn_Search.TabIndex = 5;
             this.btn_Search.Text = "Search";
             this.btn_Search.UseVisualStyleBackColor = true;
+            this.btn_Search.Click += new System.EventHandler(this.btn_Search_Click);
             // 
             // btn_Back
             // 
@@ -103,6 +107,7 @@
             this.btn_Back.TabIndex = 6;
             this.btn_Back.Text = "Back";
             this.btn_Back.UseVisualStyleBackColor = true;
+            this.btn_Back.Click += new System.EventHandler(this.btn_Back_Click);
             // 
             // textBox1
             // 
@@ -131,25 +136,36 @@
             this.btn_Exit.TabIndex = 3;
             this.btn_Exit.Text = "X";
             this.btn_Exit.UseVisualStyleBackColor = false;
+            this.btn_Exit.Click += new System.EventHandler(this.btn_Exit_Click);
+            // 
+            // cb_Tabledata
+            // 
+            this.cb_Tabledata.FormattingEnabled = true;
+            this.cb_Tabledata.Location = new System.Drawing.Point(373, 298);
+            this.cb_Tabledata.Name = "cb_Tabledata";
+            this.cb_Tabledata.Size = new System.Drawing.Size(198, 21);
+            this.cb_Tabledata.TabIndex = 9;
             // 
             // frm_Show
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(704, 337);
+            this.Controls.Add(this.cb_Tabledata);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.btn_Back);
             this.Controls.Add(this.btn_Search);
             this.Controls.Add(this.btn_Print);
-            this.Controls.Add(this.b);
+            this.Controls.Add(this.btn_Add);
             this.Controls.Add(this.btn_Delete);
             this.Controls.Add(this.btn_Edit);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgv_Show);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frm_Show";
             this.Text = "frm_Show";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.Load += new System.EventHandler(this.frm_Show_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_Show)).EndInit();
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -157,15 +173,16 @@
         }
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgv_Show;
         private System.Windows.Forms.Button btn_Edit;
         private System.Windows.Forms.Button btn_Delete;
-        private System.Windows.Forms.Button b;
+        private System.Windows.Forms.Button btn_Add;
         private System.Windows.Forms.Button btn_Print;
         private System.Windows.Forms.Button btn_Search;
         private System.Windows.Forms.Button btn_Back;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btn_Exit;
+        private System.Windows.Forms.ComboBox cb_Tabledata;
     }
 }

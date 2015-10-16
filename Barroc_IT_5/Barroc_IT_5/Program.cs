@@ -23,6 +23,7 @@ namespace Barroc_IT_Groep5
             Application.SetCompatibleTextRenderingDefault(false);
 
             nextForm = new frm_Login();
+            nextForm.StartPosition = FormStartPosition.CenterScreen;
 
             while (!nextForm.IsDisposed)
             {

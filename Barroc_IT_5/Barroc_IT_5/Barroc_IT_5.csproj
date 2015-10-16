@@ -77,6 +77,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLDatabaseHandler.cs" />
+    <EmbeddedResource Include="Form%27s\frm_Add.resx">
+      <DependentUpon>frm_Add.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form%27s\frm_Edit.resx">
+      <DependentUpon>frm_Edit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form%27s\frm_Login.resx">
       <DependentUpon>frm_Login.cs</DependentUpon>
     </EmbeddedResource>

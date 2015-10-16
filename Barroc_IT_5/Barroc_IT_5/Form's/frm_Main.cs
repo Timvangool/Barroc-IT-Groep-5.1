@@ -15,6 +15,7 @@ namespace Barroc_IT_5
     public partial class frm_Main : Form
     {
         public int permissions;
+        string department;
 
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
@@ -39,6 +40,7 @@ namespace Barroc_IT_5
         private void btn_C_Create_Click(object sender, EventArgs e)
         {
             Form frmAdd = new frm_Add(permissions);
+            frmAdd.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frmAdd);
             this.Close();
         }
@@ -46,14 +48,17 @@ namespace Barroc_IT_5
         private void btn_C_Edit_Click(object sender, EventArgs e)
         {
             Form frmEdit = new frm_Edit(permissions);
+            frmEdit.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frmEdit);
             this.Close();
         }
 
         private void btn_C_List_Click(object sender, EventArgs e)
         {
+            department = "TBL_CUSTOMERS";
             string query = "SELECT * FROM tbl_Customers";
-            Form frmShow = new frm_Show(query, permissions);
+            Form frmShow = new frm_Show(query, permissions, department);
+            frmShow.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frmShow);
             this.Close();
         }
@@ -63,6 +68,7 @@ namespace Barroc_IT_5
         private void btn_I_Create_Click(object sender, EventArgs e)
         {
             Form frmAdd = new frm_Add(permissions);
+            frmAdd.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frmAdd);
             this.Close();
         }
@@ -70,14 +76,17 @@ namespace Barroc_IT_5
         private void btn_I_Edit_Click(object sender, EventArgs e)
         {
             Form frmEdit = new frm_Edit(permissions);
+            frmEdit.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frmEdit);
             this.Close();
         }
 
         private void btn_I_List_Click(object sender, EventArgs e)
         {
+            department = "TBL_INVOICES";
             string query = "SELECT * FROM tbl_Invoices";
-            Form frmShow = new frm_Show(query, permissions);
+            Form frmShow = new frm_Show(query, permissions, department);
+            frmShow.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frmShow);
             this.Close();
         }
@@ -87,6 +96,7 @@ namespace Barroc_IT_5
         private void btn_P_Create_Click(object sender, EventArgs e)
         {
             Form frmAdd = new frm_Add(permissions);
+            frmAdd.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frmAdd);
             this.Close();
         }
@@ -94,14 +104,17 @@ namespace Barroc_IT_5
         private void btn_P_Edit_Click(object sender, EventArgs e)
         {
              Form frmEdit = new frm_Edit(permissions);
+             frmEdit.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frmEdit);
             this.Close();
         }
 
         private void btn_P_List_Click(object sender, EventArgs e)
         {
+            department = "TBL_PROJECTS";
             string query = "SELECT * FROM tbl_Projects";
-            Form frmShow = new frm_Show(query, permissions);
+            Form frmShow = new frm_Show(query, permissions, department);
+            frmShow.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frmShow);
             this.Close();
         }
@@ -111,6 +124,7 @@ namespace Barroc_IT_5
         private void btn_A_Create_Click(object sender, EventArgs e)
         {
             Form frmAdd = new frm_Add(permissions);
+            frmAdd.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frmAdd);
             this.Close();
         }
@@ -118,14 +132,17 @@ namespace Barroc_IT_5
         private void btn_A_Edit_Click(object sender, EventArgs e)
         {
             Form frmEdit = new frm_Edit(permissions);
+            frmEdit.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frmEdit);
             this.Close();
         }
 
         private void btn_A_List_Click(object sender, EventArgs e)
         {
+            department = "TBL_APPOINTMENTS";
             string query = "SELECT * FROM tbl_Appointments";
-            Form frmShow = new frm_Show(query, permissions);
+            Form frmShow = new frm_Show(query, permissions, department);
+            frmShow.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frmShow);
             this.Close();
         }
@@ -134,6 +151,7 @@ namespace Barroc_IT_5
         private void btn_Logout_Click(object sender, EventArgs e)
         {
             Form frmLogin = new frm_Login();
+            frmLogin.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frmLogin);
             this.Close();
         }
@@ -141,6 +159,7 @@ namespace Barroc_IT_5
         private void btn_Exit_Click(object sender, EventArgs e)
         {
             Form frmLogin = new frm_Login();
+            frmLogin.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frmLogin);
             this.Close();
         }
@@ -152,6 +171,11 @@ namespace Barroc_IT_5
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
+        }
+
+        private void frm_Main_Load(object sender, EventArgs e)
+        {
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
     }
 }
