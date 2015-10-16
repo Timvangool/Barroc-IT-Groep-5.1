@@ -18,6 +18,8 @@ namespace Barroc_IT_5
         SQLDatabaseHandler dbh;
         public TextBox[] tb;
         public Label[] lb;
+        public SqlCommand cmd;
+        public string query;
 
         public string tempDepartment, tabel;
         public frm_Add()
@@ -51,31 +53,25 @@ namespace Barroc_IT_5
 
         private void frm_Add_Load(object sender, EventArgs e)
         {
-            btn_Refresh.Visible = false;
             this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void cb_Department_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    foreach (TextBox t in tb)
-            //    {
-            //        this.Controls.Remove(t);
-            //        t.Dispose();
-            //    }
-            //
-            //    foreach(Label l in lb)
-            //    {
-            //        this.Controls.Remove(l);
-            //        l.Dispose();
-            //
-            //    }
-            //}
-            //
-            //catch
-            //{
-            //}
+            try
+            {
+                for (int i = 1; i < tb.Count(); i++)
+                {
+                    this.Controls.Remove(tb[i]);
+                    tb[i].Dispose();
+                    this.Controls.Remove(lb[i]);
+                    lb[i].Dispose();
+                }
+            }
+            catch
+            {
+
+            }
 
             tempDepartment = cb_Departments.Text;
             int amount = 101010;
@@ -102,13 +98,13 @@ namespace Barroc_IT_5
 
                 y += 50;
 
-                if(y >= 450)
+                if (y >= 450)
                 {
                     y = 100;
-                    x += 350;
-                    xx += 350;
+                    x += 250;
+                    xx += 250;
                 }
-                if(lb[i].Text == "Maintenance_Contract")
+                if (lb[i].Text == "Maintenance_Contract")
                 {
                     lb[i].Text = @"Maintenance
 Contract";
@@ -117,16 +113,13 @@ Contract";
                 this.Controls.Add(tb[i]);
                 this.Controls.Add(lb[i]);
             }
-
-            btn_Refresh.Visible = true;
-            cb_Departments.Enabled = false;
         }
 
         private string[] getColumnsName()
         {
             switch (tempDepartment)
             {
-                case"Customer":
+                case "Customer":
                     tabel = "TBL_CUSTOMERS";
                     break;
                 case "Invoice":
@@ -143,7 +136,7 @@ Contract";
                     break;
             }
             List<string> listacolumnas = new List<string>();
-            using (SqlCommand command = dbh.getCon().CreateCommand()) 
+            using (SqlCommand command = dbh.getCon().CreateCommand())
             {
                 command.CommandText = "select c.name from sys.columns c inner join sys.tables t on t.object_id = c.object_id and t.name = '" + tabel + "' and t.type = 'U'";
                 dbh.openCon();
@@ -169,12 +162,123 @@ Contract";
             e.Handled = true;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btn_Add_Click(object sender, EventArgs e)
         {
-            Form add = new frm_Add();
-            add.StartPosition = FormStartPosition.CenterScreen;
-            Program.setForm(add);
-            this.Close();
-        }  
+            switch (tempDepartment)
+            {
+                case "Customer":
+                    tabel = "TBL_CUSTOMERS";
+                    break;
+                case "Invoice":
+                    tabel = "TBL_INVOICES";
+                    break;
+                case "Project":
+                    tabel = "TBL_PROJECTS";
+                    break;
+                case "Appointment":
+                    tabel = "TBL_APPOINTMENTS";
+                    break;
+                default:
+                    MessageBox.Show("Something went wrong :c");
+                    break;
+            }
+
+            string[] temp = new string[132213213];
+
+            for (int i = 0; i < tb.Length; i++)
+            {
+                temp[i] = tb[i].ToString();
+            }
+
+            #region customers
+
+            query = "INSERT INTO TBL_CUSTOMERS (NAME, ADDRESS1, HOUSENR1, ZIP_CODE1, PLACE1, COUNTRY, ADDRESS2, HOUSENR2, ZIP_CODE2, PHONE, FAX, EMAIL, POTENTIAL_PROSPECT) VALUES ('@NAME','@ADDRESS1','@HOUSENR1','@ZIP_CODE1','@PLACE1','@COUNTRY','@ADDRESS2','@HOUSENR2', '@ZIP_CODE2','@PHONE','@FAX','@EMAIL','@POTENTIAL_PROSPECT')";
+
+            cmd = new SqlCommand();
+
+            cmd.CommandText = query;
+            cmd.Parameters.Add(new SqlParameter("@Name", temp[1]));
+            cmd.Parameters.Add(new SqlParameter("@ADDRESS1", temp[2]));
+            cmd.Parameters.Add(new SqlParameter("@HOUSENR1", temp[3]));
+            cmd.Parameters.Add(new SqlParameter("@ZIP_CODE1", temp[4]));
+            cmd.Parameters.Add(new SqlParameter("@PLACE1", temp[5]));
+            cmd.Parameters.Add(new SqlParameter("@COUNTY", temp[6]));
+            cmd.Parameters.Add(new SqlParameter("@ADDRESS2", temp[7]));
+            cmd.Parameters.Add(new SqlParameter("@HOUSENR2", temp[8]));
+            cmd.Parameters.Add(new SqlParameter("@ZIP_CODE2", temp[9]));
+            cmd.Parameters.Add(new SqlParameter("@PLACE2", temp[10]));
+            cmd.Parameters.Add(new SqlParameter("@PHONE", temp[11]));
+            cmd.Parameters.Add(new SqlParameter("@FAX", temp[12]));
+            cmd.Parameters.Add(new SqlParameter("@EMAIL", temp[13]));
+            cmd.Parameters.Add(new SqlParameter("@POTENTIAL_PROSPECT", temp[14]));
+
+            dbh.openCon();
+            cmd.ExecuteNonQuery();
+            dbh.closeCon();
+
+            #endregion
+
+            #region invoices
+
+            query = "INSERT INTO TBL_INVOICES (BANK_ACC_NR, PRICE, GROSS_REV, LEDGER_ACC_NR, TAX_CODE, ID_PROJECT, IS_PAYED, DATE, INVOICE_SEND) VALUES ('@BANK_ACC_NR', '@PRICE', '@GROSS_REV', '@LEDGER_ACC_NR', '@TAX_CODE', '@ID_PROJECT', '@IS_PAYED', '@DATE', '@INVOICE_SEND')";
+
+            cmd = new SqlCommand();
+            cmd.CommandText = query;
+            cmd.Parameters.Add(new SqlParameter("@BANK_ACC_NR", temp[1]));
+            cmd.Parameters.Add(new SqlParameter("@PRICE", temp[2]));
+            cmd.Parameters.Add(new SqlParameter("@GROSS_REV", temp[3]));
+            cmd.Parameters.Add(new SqlParameter("@LEDGER_ACC_NR", temp[4]));
+            cmd.Parameters.Add(new SqlParameter("@TAX_CODE", temp[5]));
+            cmd.Parameters.Add(new SqlParameter("@ID_PROJECT", Convert.ToInt32(temp[6])));
+            cmd.Parameters.Add(new SqlParameter("@IS_PAYED", temp[7]));
+            cmd.Parameters.Add(new SqlParameter("@DATE", temp[8]));
+            cmd.Parameters.Add(new SqlParameter("@INVOICE_SEND", temp[9]));
+
+            dbh.openCon();
+            cmd.ExecuteNonQuery();
+            dbh.closeCon();
+
+            #endregion
+
+            #region projects
+            query = "INSERT INTO TBL_PROJECTS (NAME, HARDWARE, OPERATING_SYSTEM, MAINTENANCE_CONTRACT, APPLICATIONS, LIMIT, IS_DONE, NR_INVOICES, BKR, CREDITWORTHY, ID_CUSTOMER) VALUES ('@NAME','@HARDWARE','@OPERATING_SYSTEM','@MAINTENANCE_CONTRACT','@APPLICATIONS','@LIMIT','@IS_DONE','@NR_INVOICES', '@BKR','@CREDITWORTHY','@ID_CUSTOMER')";
+
+            cmd = new SqlCommand();
+            cmd.CommandText = query;
+            cmd.Parameters.Add(new SqlParameter("@NAME", temp[1]));
+            cmd.Parameters.Add(new SqlParameter("@HARDWARE", temp[2]));
+            cmd.Parameters.Add(new SqlParameter("@OPERATING_SYSTEM", temp[3]));
+            cmd.Parameters.Add(new SqlParameter("@MAINTENANCE_CONTRACT", temp[4]));
+            cmd.Parameters.Add(new SqlParameter("@APPLICATIONS", temp[5]));
+            cmd.Parameters.Add(new SqlParameter("@LIMIT", temp[6]));
+            cmd.Parameters.Add(new SqlParameter("@IS_DONE", temp[7]));
+            cmd.Parameters.Add(new SqlParameter("@NR_INVOICES", temp[8]));
+            cmd.Parameters.Add(new SqlParameter("@BKR", temp[9]));
+            cmd.Parameters.Add(new SqlParameter("@CREDITWORTHY", temp[10]));
+            cmd.Parameters.Add(new SqlParameter("@ID_CUSTOMER", Convert.ToInt32(temp[11])));
+
+            dbh.openCon();
+            cmd.ExecuteNonQuery();
+            dbh.closeCon();
+            #endregion
+
+            #region appointments
+
+            query = "INSERT INTO TBL_APPOINTMENTS (DESCRIPTION, DATE, NEXT_ACTION, ID_PROJECT) VALUES ('@DESCRIPTION','@DATE','@NEXT_ACTION','@ID_PROJECT')";
+
+            cmd = new SqlCommand();
+            cmd.CommandText = query;
+            cmd.Parameters.Add(new SqlParameter("@DESCRIPTION", temp[1]));
+            cmd.Parameters.Add(new SqlParameter("@DATE", temp[2]));
+            cmd.Parameters.Add(new SqlParameter("@NEXT_ACTION", temp[3]));
+            cmd.Parameters.Add(new SqlParameter("@ID_PROJECT", Convert.ToInt32(temp[4])));
+
+            dbh.openCon();
+            cmd.ExecuteNonQuery();
+            dbh.closeCon();
+
+            #endregion
+        }
     }
 }
+

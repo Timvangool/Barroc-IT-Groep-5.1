@@ -121,7 +121,7 @@ namespace Barroc_IT_5
         
         private void btn_Search_Click(object sender, EventArgs e)
         {
-            string tempQuery = "SELECT * FROM " + department + " WHERE " + cb_Tabledata.SelectedText + " IS LIKE '%" + textBox1.Text + "%'";
+            string tempQuery = "SELECT * FROM " + department + " WHERE " + cb_Tabledata.Text + " LIKE '%" + textBox1.Text + "%'";
 
             dbh.FillDataGridView(dgv_Show, tempQuery);
 
@@ -141,6 +141,48 @@ namespace Barroc_IT_5
             frm_edit.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frm_edit);
             this.Close();
+        }
+
+        private void btn_Delete_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow dgvr in this.dgv_Show.SelectedRows)
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "DELETE * FROM " + department + " WHERE " + ConvertDepartment() + "=" + dgvr.Index + "";
+                cmd.Connection = dbh.getCon();
+
+                dbh.openCon();
+                cmd.ExecuteNonQuery();
+                dbh.FillDataGridView(dgv_Show, "SELECT * FROM " + department);
+                dbh.closeCon();          
+            }
+        }
+
+        public string ConvertDepartment()
+        {
+            string temp = "";
+
+            switch (department)
+            {
+                case "TBL_CUSTOMERS":
+                    temp = "ID_CUSTOMER";
+                    break;
+                case "TBL_INVOICES":
+                    temp = "ID_INVOICE";
+                    break;
+                case "TBL_APPOINTMENTS":
+                    temp = "ID_APPOINTMENT";
+                    break;
+                case "TBL_PROJECTS":
+                    temp = "ID_PROJECT";
+                    break;
+                default:
+                    MessageBox.Show("Something went wrong :C");
+                    break;
+            }
+
+            return temp;
         }
     }
 }

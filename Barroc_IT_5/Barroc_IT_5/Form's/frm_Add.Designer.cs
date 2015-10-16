@@ -33,18 +33,18 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.btn_Exit = new System.Windows.Forms.Button();
             this.cb_Departments = new System.Windows.Forms.ComboBox();
-            this.btn_Refresh = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_Add
             // 
-            this.btn_Add.Location = new System.Drawing.Point(12, 447);
+            this.btn_Add.Location = new System.Drawing.Point(481, 447);
             this.btn_Add.Name = "btn_Add";
             this.btn_Add.Size = new System.Drawing.Size(75, 23);
             this.btn_Add.TabIndex = 0;
             this.btn_Add.Text = "Add";
             this.btn_Add.UseVisualStyleBackColor = true;
+            this.btn_Add.Click += new System.EventHandler(this.btn_Add_Click);
             // 
             // btn_Back
             // 
@@ -93,22 +93,11 @@
             this.cb_Departments.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cb_Departments_KeyPress);
             this.cb_Departments.MouseUp += new System.Windows.Forms.MouseEventHandler(this.cb_Departments_MouseUp);
             // 
-            // btn_Refresh
-            // 
-            this.btn_Refresh.Location = new System.Drawing.Point(174, 39);
-            this.btn_Refresh.Name = "btn_Refresh";
-            this.btn_Refresh.Size = new System.Drawing.Size(75, 23);
-            this.btn_Refresh.TabIndex = 11;
-            this.btn_Refresh.Text = "Refresh";
-            this.btn_Refresh.UseVisualStyleBackColor = true;
-            this.btn_Refresh.Click += new System.EventHandler(this.button1_Click);
-            // 
             // frm_Add
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(649, 482);
-            this.Controls.Add(this.btn_Refresh);
             this.Controls.Add(this.cb_Departments);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btn_Back);
@@ -130,6 +119,5 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btn_Exit;
         private System.Windows.Forms.ComboBox cb_Departments;
-        private System.Windows.Forms.Button btn_Refresh;
     }
 }

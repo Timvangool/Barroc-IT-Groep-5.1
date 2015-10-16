@@ -27,11 +27,9 @@ namespace Barroc_IT_Groep5
 
             while (!nextForm.IsDisposed)
             {
-
                 Application.Run(nextForm);
             }
-        }
-        
+        }    
 
         public static void setForm(Form targetForm)
         {
