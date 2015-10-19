@@ -42,6 +42,9 @@
             this.cb_Customers.Name = "cb_Customers";
             this.cb_Customers.Size = new System.Drawing.Size(216, 21);
             this.cb_Customers.TabIndex = 0;
+            this.cb_Customers.SelectedIndexChanged += new System.EventHandler(this.cb_Customers_SelectedIndexChanged);
+            this.cb_Customers.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cb_Customers_KeyPress);
+            this.cb_Customers.MouseUp += new System.Windows.Forms.MouseEventHandler(this.cb_Customers_MouseUp);
             // 
             // btn_SelectCustomer
             // 
@@ -77,7 +80,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(634, 301);
+            this.ClientSize = new System.Drawing.Size(634, 387);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btn_SelectCustomer);
             this.Controls.Add(this.cb_Customers);

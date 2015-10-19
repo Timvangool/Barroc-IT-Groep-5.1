@@ -44,5 +44,3 @@ C:\Users\timmie\Desktop\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.frm_Add.re
 C:\Users\timmie\Desktop\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.frm_Edit.resources
 C:\Users\Tim\Documents\Radius\2.1\Barroc_IT_5 lokaal\Barroc_IT_5\obj\Debug\Barroc_IT_5.frm_Add.resources
 C:\Users\Tim\Documents\Radius\2.1\Barroc_IT_5 lokaal\Barroc_IT_5\obj\Debug\Barroc_IT_5.frm_Edit.resources
-C:\Users\Kevin\Documents\Visual Studio 2013\Projects\Barroc-IT\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.frm_Add.resources
-C:\Users\Kevin\Documents\Visual Studio 2013\Projects\Barroc-IT\Barroc_IT_5\Barroc_IT_5\obj\Debug\Barroc_IT_5.frm_Edit.resources

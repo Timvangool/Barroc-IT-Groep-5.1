@@ -16,6 +16,7 @@ namespace Barroc_IT_5
     {
         public int permissions;
         string department;
+        string table;
 
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
@@ -34,79 +35,6 @@ namespace Barroc_IT_5
         {
             this.permissions = permissions;
             InitializeComponent();
-
-            #region IfAdmin
-            if (permissions == 1)
-            {
-                btn_C_Create.Visible = true;
-                btn_C_Edit.Visible = true;
-                btn_C_List.Visible = true;
-                btn_P_Create.Visible = true;
-                btn_P_Edit.Visible = true;
-                btn_P_List.Visible = true;
-                btn_I_Create.Visible = true;
-                btn_I_Edit.Visible = true;
-                btn_I_List.Visible = true;
-                btn_A_Create.Visible = true;
-                btn_A_Edit.Visible = true;
-                btn_A_List.Visible = true;
-            }
-            #endregion
-
-            #region IfSales
-            if (permissions == 2)
-            {
-                btn_C_Create.Visible = true;
-                btn_C_Edit.Visible = true;
-                btn_C_List.Visible = true;
-                btn_P_Create.Visible = true;
-                btn_P_Edit.Visible = true;
-                btn_P_List.Visible = true;
-                btn_I_Create.Visible = false;
-                btn_I_Edit.Visible = false;
-                btn_I_List.Visible = true;
-                btn_A_Create.Visible = true;
-                btn_A_Edit.Visible = true;
-                btn_A_List.Visible = true;
-            }
-            #endregion
-
-            #region IfFinance
-            if (permissions == 3)
-            {
-                btn_C_Create.Visible = true;
-                btn_C_Edit.Visible = true;
-                btn_C_List.Visible = true;
-                btn_P_Create.Visible = false;
-                btn_P_Edit.Visible = false;
-                btn_P_List.Visible = true;
-                btn_I_Create.Visible = true;
-                btn_I_Edit.Visible = true;
-                btn_I_List.Visible = true;
-                btn_A_Create.Visible = false;
-                btn_A_Edit.Visible = false;
-                btn_A_List.Visible = true;
-            }
-            #endregion
-
-            #region IfDevelopment
-            if (permissions == 4)
-            {
-                btn_C_Create.Visible = false;
-                btn_C_Edit.Visible = false;
-                btn_C_List.Visible = true;
-                btn_P_Create.Visible = false;
-                btn_P_Edit.Visible = true;
-                btn_P_List.Visible = true;
-                btn_I_Create.Visible = false;
-                btn_I_Edit.Visible = false;
-                btn_I_List.Visible = true;
-                btn_A_Create.Visible = false;
-                btn_A_Edit.Visible = false;
-                btn_A_List.Visible = false;
-
-            }
-            #endregion
         }
 
         #region Customer Buttons
@@ -120,7 +48,8 @@ namespace Barroc_IT_5
 
         private void btn_C_Edit_Click(object sender, EventArgs e)
         {
-            Form frmEdit = new frm_Edit(permissions);
+            table = "tbl_Customers";
+            Form frmEdit = new frm_Edit(permissions, table);
             frmEdit.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frmEdit);
             this.Close();
@@ -148,7 +77,8 @@ namespace Barroc_IT_5
 
         private void btn_I_Edit_Click(object sender, EventArgs e)
         {
-            Form frmEdit = new frm_Edit(permissions);
+            table = "tbl_Invoices";
+            Form frmEdit = new frm_Edit(permissions, table);
             frmEdit.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frmEdit);
             this.Close();
@@ -176,8 +106,9 @@ namespace Barroc_IT_5
 
         private void btn_P_Edit_Click(object sender, EventArgs e)
         {
-             Form frmEdit = new frm_Edit(permissions);
-             frmEdit.StartPosition = FormStartPosition.CenterScreen;
+            table = "tbl_Projects";
+            Form frmEdit = new frm_Edit(permissions, table);
+            frmEdit.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frmEdit);
             this.Close();
         }
@@ -204,7 +135,8 @@ namespace Barroc_IT_5
 
         private void btn_A_Edit_Click(object sender, EventArgs e)
         {
-            Form frmEdit = new frm_Edit(permissions);
+            table = "tbl_Appointments";
+            Form frmEdit = new frm_Edit(permissions, table);
             frmEdit.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frmEdit);
             this.Close();

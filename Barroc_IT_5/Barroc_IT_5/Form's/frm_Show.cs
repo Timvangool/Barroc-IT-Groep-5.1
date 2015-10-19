@@ -106,14 +106,14 @@ namespace Barroc_IT_5
 
         private void btn_Exit_Click(object sender, EventArgs e)
         {
-            Form frm_Main = new frm_Main(permissions);
+            Form frm_Main = new frm_Main();
             Program.setForm(frm_Main);
             this.Close();
         }
 
         private void btn_Back_Click(object sender, EventArgs e)
         {
-            Form frm_Main = new frm_Main(permissions);
+            Form frm_Main = new frm_Main();
             frm_Main.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frm_Main);
             this.Close();
@@ -129,7 +129,7 @@ namespace Barroc_IT_5
 
         private void btn_Add_Click(object sender, EventArgs e)
         {
-            Form frm_Add = new frm_Add(permissions);
+            Form frm_Add = new frm_Add();
             frm_Add.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frm_Add);
             this.Close();
@@ -137,7 +137,7 @@ namespace Barroc_IT_5
 
         private void btn_Edit_Click(object sender, EventArgs e)
         {
-            Form frm_edit = new frm_Edit(permissions);
+            Form frm_edit = new frm_Edit();
             frm_edit.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frm_edit);
             this.Close();
@@ -181,6 +181,7 @@ namespace Barroc_IT_5
                     MessageBox.Show("Something went wrong :C");
                     break;
             }
+
             return temp;
         }
     }
