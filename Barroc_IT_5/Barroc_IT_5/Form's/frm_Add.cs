@@ -185,12 +185,15 @@ Contract";
 
             string[] temp = new string[132213213];
 
-            for (int i = 0; i < tb.Length; i++)
+            for (int i = 1; i < tb.Length; i++)
             {
                 temp[i] = tb[i].ToString();
             }
 
-            #region customers
+            switch(cb_Departments.Text)
+            {
+                case "Customer":
+                #region customers
 
             query = "INSERT INTO TBL_CUSTOMERS (NAME, ADDRESS1, HOUSENR1, ZIP_CODE1, PLACE1, COUNTRY, ADDRESS2, HOUSENR2, ZIP_CODE2, PHONE, FAX, EMAIL, POTENTIAL_PROSPECT) VALUES ('@NAME','@ADDRESS1','@HOUSENR1','@ZIP_CODE1','@PLACE1','@COUNTRY','@ADDRESS2','@HOUSENR2', '@ZIP_CODE2','@PHONE','@FAX','@EMAIL','@POTENTIAL_PROSPECT')";
 
@@ -217,8 +220,10 @@ Contract";
             dbh.closeCon();
 
             #endregion
-
-            #region invoices
+                break;
+            
+                case "Invoice":
+                #region invoices
 
             query = "INSERT INTO TBL_INVOICES (BANK_ACC_NR, PRICE, GROSS_REV, LEDGER_ACC_NR, TAX_CODE, ID_PROJECT, IS_PAYED, DATE, INVOICE_SEND) VALUES ('@BANK_ACC_NR', '@PRICE', '@GROSS_REV', '@LEDGER_ACC_NR', '@TAX_CODE', '@ID_PROJECT', '@IS_PAYED', '@DATE', '@INVOICE_SEND')";
 
@@ -239,8 +244,10 @@ Contract";
             dbh.closeCon();
 
             #endregion
+                break;
 
-            #region projects
+                case "Project":
+                #region projects
             query = "INSERT INTO TBL_PROJECTS (NAME, HARDWARE, OPERATING_SYSTEM, MAINTENANCE_CONTRACT, APPLICATIONS, LIMIT, IS_DONE, NR_INVOICES, BKR, CREDITWORTHY, ID_CUSTOMER) VALUES ('@NAME','@HARDWARE','@OPERATING_SYSTEM','@MAINTENANCE_CONTRACT','@APPLICATIONS','@LIMIT','@IS_DONE','@NR_INVOICES', '@BKR','@CREDITWORTHY','@ID_CUSTOMER')";
 
             cmd = new SqlCommand();
@@ -261,8 +268,10 @@ Contract";
             cmd.ExecuteNonQuery();
             dbh.closeCon();
             #endregion
+                break;
 
-            #region appointments
+                case "Appointment":
+                #region appointments
 
             query = "INSERT INTO TBL_APPOINTMENTS (DESCRIPTION, DATE, NEXT_ACTION, ID_PROJECT) VALUES ('@DESCRIPTION','@DATE','@NEXT_ACTION','@ID_PROJECT')";
 
@@ -278,6 +287,8 @@ Contract";
             dbh.closeCon();
 
             #endregion
+                break;
+            }
         }
     }
 }
