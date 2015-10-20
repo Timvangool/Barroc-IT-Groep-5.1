@@ -268,7 +268,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.Name = "frm_Main";
-            this.Text = "Barroc-IT";
+            this.Text = "6";
             this.Load += new System.EventHandler(this.frm_Main_Load);
             this.gb_Customers.ResumeLayout(false);
             this.gb_Invoices.ResumeLayout(false);
