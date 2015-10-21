@@ -70,9 +70,15 @@ namespace Barroc_IT_5
 
         private void cb_Customers_SelectedIndexChanged(object sender, EventArgs e)
         {
+            dbh.closeCon();
             string ID = cb_Customers.SelectedValue.ToString();
+
+            object[] temp2 = new object[7583];
+
             try
             {
+                
+
                 for (int i = 1; i < tb.Count(); i++)
                 {
                     this.Controls.Remove(tb[i]);
@@ -81,8 +87,9 @@ namespace Barroc_IT_5
                     lb[i].Dispose();
                 }
             }
-            catch
+            catch(Exception ex)
             {
+                MessageBox.Show(ex.Message);
                 dbh.closeCon();
             }
 
@@ -100,7 +107,6 @@ namespace Barroc_IT_5
             {
                 tb[i] = new TextBox();
                 tb[i].Name = "tb_" + temp[i].ToString();
-                //tb[i].Text = valuesCustomer[i];
                 tb[i].Size = new System.Drawing.Size(130, 21);
                 tb[i].Location = new Point(x, y);
 
@@ -128,6 +134,104 @@ Contract";
                 this.Controls.Add(tb[i]);
                 this.Controls.Add(lb[i]);
             }
+            
+            string query = "SELECT * FROM " + table + " WHERE ID=" + ID;
+            SqlCommand cmd = new SqlCommand(query, dbh.getCon());
+            SqlDataReader reader;
+
+            switch(table)
+            {
+                #region Appointments
+                case "tbl_Appointments":
+                    
+
+                    try 
+                    {
+                        dbh.openCon();
+                        reader = cmd.ExecuteReader();
+
+                        while(reader.Read())
+                        {
+
+                            
+                            string description = reader.GetString(1);
+                            //string date = reader.GetString(2).ToString();
+                            string next_action = reader.GetString(3);
+                            string ID_project;
+
+                            if ( reader.IsDBNull(4) )
+                            {
+                                ID_project = "";
+                            }
+                            else
+                            {
+                                ID_project = reader.GetString(4).ToString();
+                            }                       
+                            string name = reader.GetString(5).ToString();
+
+                            tb[1].Text = description;
+                            //tb[2].Text = date;
+                            tb[3].Text = next_action;
+                            tb[4].Text = ID_project;
+                            tb[5].Text = name;
+                            }
+                    }
+
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+                    break;
+                #endregion
+
+                case "tbl_Customers":
+                    try
+                    {
+                        dbh.openCon();
+                        reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+
+
+                            string name = reader.GetString(1);
+                            string address = reader.GetString(2);
+                            //string date = reader.GetString(2).ToString();
+                            string next_action = reader.GetString(3);
+                            string ID_project;
+
+                            if (reader.IsDBNull(4))
+                            {
+                                ID_project = "";
+                            }
+                            else
+                            {
+                                ID_project = reader.GetString(4).ToString();
+                            }
+                            string name = reader.GetString(5).ToString();
+
+                            tb[1].Text = description;
+                            //tb[2].Text = date;
+                            tb[3].Text = next_action;
+                            tb[4].Text = ID_project;
+                            tb[5].Text = name;
+                        }
+                    }
+
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    break;
+
+                case "tbl_Invoices":
+                    break;
+
+                case "tbl_Projects":
+                    break;
+                    
+            }
         }
 
         private void cb_Customers_MouseUp(object sender, MouseEventArgs e)
@@ -139,6 +243,7 @@ Contract";
         {
             e.Handled = true;
         }
+
 
         private string[] getColumnsName()
         {
