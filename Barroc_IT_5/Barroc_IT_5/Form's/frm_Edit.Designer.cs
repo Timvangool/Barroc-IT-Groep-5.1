@@ -31,6 +31,7 @@
             this.cb_Customers = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btn_Exit = new System.Windows.Forms.Button();
+            this.btn_Save = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -66,11 +67,22 @@
             this.btn_Exit.UseVisualStyleBackColor = false;
             this.btn_Exit.Click += new System.EventHandler(this.btn_Exit_Click);
             // 
+            // btn_Save
+            // 
+            this.btn_Save.Location = new System.Drawing.Point(547, 352);
+            this.btn_Save.Name = "btn_Save";
+            this.btn_Save.Size = new System.Drawing.Size(75, 23);
+            this.btn_Save.TabIndex = 11;
+            this.btn_Save.Text = "Save";
+            this.btn_Save.UseVisualStyleBackColor = true;
+            this.btn_Save.Click += new System.EventHandler(this.btn_Save_Click);
+            // 
             // frm_Edit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(634, 387);
+            this.Controls.Add(this.btn_Save);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.cb_Customers);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -87,5 +99,6 @@
         private System.Windows.Forms.ComboBox cb_Customers;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btn_Exit;
+        private System.Windows.Forms.Button btn_Save;
     }
 }

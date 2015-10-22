@@ -46,7 +46,7 @@ namespace Barroc_IT_5
 
         private void btn_Exit_Click(object sender, EventArgs e)
         {
-            Form frm_Main = new frm_Main();
+            Form frm_Main = new frm_Main(permissions);
             frm_Main.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frm_Main);
             this.Close();
@@ -54,7 +54,7 @@ namespace Barroc_IT_5
 
         private void btn_Back_Click(object sender, EventArgs e)
         {
-            Form frm_Main = new frm_Main();
+            Form frm_Main = new frm_Main(permissions);
             frm_Main.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frm_Main);
             this.Close();

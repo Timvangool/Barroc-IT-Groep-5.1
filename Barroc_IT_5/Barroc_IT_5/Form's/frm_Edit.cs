@@ -30,6 +30,13 @@ namespace Barroc_IT_5
             dbh = new SQLDatabaseHandler();
         }
 
+        public frm_Edit(int permissions)
+        {
+            this.permissions = permissions;
+            InitializeComponent();
+            dbh = new SQLDatabaseHandler();
+        }
+
         public frm_Edit(int permissions, string table)
         {
             this.permissions = permissions;
@@ -40,7 +47,7 @@ namespace Barroc_IT_5
 
         private void btn_Exit_Click(object sender, EventArgs e)
         {
-            Form frm_Main = new frm_Main();
+            Form frm_Main = new frm_Main(permissions);
             frm_Main.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frm_Main);
             this.Close();
@@ -70,17 +77,13 @@ namespace Barroc_IT_5
             reader.Dispose();
         }
 
-        private void cb_Customers_SelectedIndexChanged(object sender, EventArgs e)
+        public void cb_Customers_SelectedIndexChanged(object sender, EventArgs e)
         {
             dbh.closeCon();
             string ID = cb_Customers.SelectedValue.ToString();
 
-            object[] temp2 = new object[7583];
-
             try
             {
-                
-
                 for (int i = 1; i < tb.Count(); i++)
                 {
                     this.Controls.Remove(tb[i]);
@@ -93,7 +96,7 @@ namespace Barroc_IT_5
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                //MessageBox.Show(ex.Message);
                 dbh.closeCon();
             }
 
@@ -188,13 +191,14 @@ Contract";
                             }
                             else
                             {
-                                ID_project = reader.GetString(4).ToString();
+                                ID_project = reader.GetInt32(4).ToString();
                             }                       
                             string name = reader.GetString(5).ToString();
 
                             tb[1].Text = description;
                             dtp[2].Format = DateTimePickerFormat.Custom;
-                            dtp[2].CustomFormat = "MM-dd-yyy 'at' HH:mm";
+                            //dtp[2].CustomFormat = "MM-dd-yyyy 'at' HH:mm";
+                            dtp[2].CustomFormat = "yyyy-MM-dd";
                             dtp[2].Text = Convert.ToString(date);
                             tb[3].Text = next_action;
                             tb[4].Text = ID_project;
@@ -218,8 +222,6 @@ Contract";
 
                         while (reader.Read())
                         {
-
-
                             string name = reader.GetString(1);
                             string address = reader.GetString(2);
                             string address2 = reader.GetString(3);
@@ -363,6 +365,7 @@ Contract";
                     break;
                 #endregion
             }
+            dbh.closeCon();
         }
 
         private void cb_Customers_MouseUp(object sender, MouseEventArgs e)
@@ -378,7 +381,7 @@ Contract";
 
         private string[] getColumnsName()
         {
-            List<string> listacolumnas = new List<string>();
+            List<string> listOfColumns = new List<string>();
             using (SqlCommand command = dbh.getCon().CreateCommand())
             {
                 command.CommandText = "select c.name from sys.columns c inner join sys.tables t on t.object_id = c.object_id and t.name = '" + table + "' and t.type = 'U'";
@@ -387,14 +390,54 @@ Contract";
                 {
                     while (reader.Read())
                     {
-                        listacolumnas.Add(reader.GetString(0));
+                        listOfColumns.Add(reader.GetString(0));
                     }
                 }
                 dbh.closeCon();
             }
             reader.Dispose();
 
-            return listacolumnas.ToArray();
+            return listOfColumns.ToArray();
+        }
+
+        private void btn_Save_Click(object sender, EventArgs e)
+        {
+            string insertQuery;
+            string ID = cb_Customers.SelectedValue.ToString();
+            
+
+            switch (table)
+            {
+                #region Appointments
+                case "tbl_Appointments":
+                    TextBox tb1 = Application.OpenForms["frm_Edit"].Controls["tb_description"] as TextBox;
+                    DateTimePicker dtp1 = Application.OpenForms["frm_Edit"].Controls["dtp_date"] as DateTimePicker;
+                    TextBox tb2 = Application.OpenForms["frm_Edit"].Controls["tb_next_action"] as TextBox;
+                    TextBox tb3 = Application.OpenForms["frm_Edit"].Controls["tb_name"] as TextBox;
+                    TextBox tb4 = Application.OpenForms["frm_Edit"].Controls["tb_Id_project"] as TextBox;
+
+                    int convertedID = Convert.ToInt32(tb4.Text);
+                    convertedID = int.Parse(tb4.Text);
+
+                    dbh.openCon();
+
+                    insertQuery = "UPDATE " + table + " SET description='" + tb1.Text + "', date='" + dtp1.Text + "', next_action='" + tb2.Text + "', ID_project='" + convertedID + "', name='" + tb3.Text + "' WHERE ID=" + ID;
+                    SqlCommand cmd = new SqlCommand(insertQuery, dbh.getCon());
+                    cmd.ExecuteNonQuery();
+
+                    dbh.closeCon();
+                    
+                    MessageBox.Show("Save succesful.");
+                    break;
+                #endregion
+                case "tbl_Customers":
+
+                    break;
+                case "tbl_Invoices":
+                    break;
+                case "tbl_Projects":
+                    break;
+            }
         }
     }
 }
