@@ -18,6 +18,8 @@ namespace Barroc_IT_5
         SQLDatabaseHandler dbh;
         public TextBox[] tb;
         public Label[] lb;
+        public DateTimePicker[] dtp;
+        public CheckBox[] cb;
         public SqlCommand cmd, sqlCmd;
         public string query;
         List<string> columns;
@@ -46,7 +48,7 @@ namespace Barroc_IT_5
 
         private void btn_Exit_Click(object sender, EventArgs e)
         {
-            Form frm_Main = new frm_Main(permissions);
+            Form frm_Main = new frm_Main();
             frm_Main.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frm_Main);
             this.Close();
@@ -54,7 +56,7 @@ namespace Barroc_IT_5
 
         private void btn_Back_Click(object sender, EventArgs e)
         {
-            Form frm_Main = new frm_Main(permissions);
+            Form frm_Main = new frm_Main();
             frm_Main.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frm_Main);
             this.Close();
@@ -75,6 +77,10 @@ namespace Barroc_IT_5
                     tb[i].Dispose();
                     this.Controls.Remove(lb[i]);
                     lb[i].Dispose();
+                    this.Controls.Remove(cb[i]);
+                    cb[i].Dispose();
+                    this.Controls.Remove(dtp[i]);
+                    dtp[i].Dispose();
                 }
             }
             catch
@@ -83,14 +89,47 @@ namespace Barroc_IT_5
             }
 
             tempDepartment = cb_Departments.Text;
-            int amount = 101010;
-            tb = new TextBox[amount];
-            lb = new Label[amount];
+
+            //switch (tempDepartment)
+            //{
+            //    case "Customer":
+            //        tb = new TextBox[14];
+            //        lb = new Label[14];
+            //        cb = new CheckBox[14];
+            //        dtp = new DateTimePicker[14];
+            //        break;
+            //    case "Invoice":
+            //        tb = new TextBox[10];
+            //        lb = new Label[10];
+            //        cb = new CheckBox[10];
+            //        dtp = new DateTimePicker[10];
+            //        break;
+            //    case "Project":
+            //        tb = new TextBox[11];
+            //        lb = new Label[11];
+            //        cb = new CheckBox[11];
+            //        dtp = new DateTimePicker[11];
+            //        break;
+            //    case "Appointment":
+            //        tb = new TextBox[6];
+            //        lb = new Label[6];
+            //        cb = new CheckBox[6];
+            //        dtp = new DateTimePicker[6];
+            //        break;
+            //    default:
+            //        MessageBox.Show("Something went wrong :c");
+            //        break;
+            //}
+
+            tb = new TextBox[60];
+            lb = new Label[60];
+            cb = new CheckBox[60];
+            dtp = new DateTimePicker[60];
             int x = 150;
             int y = 100;
             int xx = x - 95;
 
-            string[] temp = new string[12032130];
+            string[] temp = new string[tb.Length];
             temp = getColumnsName();
 
             for (int i = 1; i < temp.Length; i++)
@@ -105,6 +144,15 @@ namespace Barroc_IT_5
                 lb[i].Location = new Point(xx, y);
                 lb[i].Text = "" + temp[i];
 
+                dtp[i] = new DateTimePicker();
+                dtp[i].Name = "dtp_" + temp[i].ToString();
+                dtp[i].Size = new System.Drawing.Size(130, 21);
+                dtp[i].Location = new Point(x, y);
+
+                cb[i] = new CheckBox();
+                cb[i].Name = "cb_" + temp[i].ToString();
+                cb[i].Location = new Point(x, y);
+
                 y += 50;
 
                 if (y >= 450)
@@ -113,13 +161,28 @@ namespace Barroc_IT_5
                     x += 250;
                     xx += 250;
                 }
-                if (lb[i].Text == "Maintenance_Contract")
+                if (lb[i].Text == "maintenance_contract")
                 {
                     lb[i].Text = @"Maintenance
 Contract";
                     lb[i].Size = new System.Drawing.Size(100, 30);
                 }
-                this.Controls.Add(tb[i]);
+
+                if (dtp[i].Name == "dtp_Date")
+                {
+                    this.Controls.Add(dtp[i]);
+                    dtp[i].Format = DateTimePickerFormat.Custom;
+                    dtp[i].CustomFormat = "MM-dd-yyy 'at' HH:mm";
+                }
+                else if (tb[i].Name == "tb_Potential_Prospect" || tb[i].Name == "tb_is_paid" || tb[i].Name == "tb_Invoice_Send" || tb[i].Name == "tb_Is_Done" || tb[i].Name == "tb_BKR" || tb[i].Name == "tb_Credit_Worthy")
+                {
+                    this.Controls.Add(cb[i]);
+                }
+                else
+                {
+                    this.Controls.Add(tb[i]);
+                }
+
                 this.Controls.Add(lb[i]);
             }
         }
@@ -191,7 +254,6 @@ Contract";
                     MessageBox.Show("Something went wrong :c");
                     break;
             }
-
             Add();
         }
 
