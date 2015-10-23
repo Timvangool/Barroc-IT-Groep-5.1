@@ -20,6 +20,7 @@ namespace Barroc_IT_5
         public Label[] lb;
         public DateTimePicker[] dtp;
         public CheckBox[] cb;
+        public ComboBox[] combo;
         public int permissions;
         public SqlDataReader reader;
         public string table;
@@ -105,6 +106,8 @@ namespace Barroc_IT_5
             lb = new Label[amount];
             dtp = new DateTimePicker[amount];
             cb = new CheckBox[amount];
+            combo = new ComboBox[amount];
+            
             int x = 150;
             int y = 100;
             int xx = x - 95;
@@ -156,6 +159,10 @@ Contract";
                 {
                     this.Controls.Add(cb[i]);
                 }
+                else if (tb[i].Name == "tb_ID_project" || tb[i].Name == "tb_ID_customer" )
+                {
+                    this.Controls.Add(combo[i]);
+                }
                 else
                 {
                     this.Controls.Add(tb[i]);
@@ -179,21 +186,11 @@ Contract";
                         while(reader.Read())
                         {
 
-                            
-                            string description = reader.GetString(1);
+                            string description = CheckForNullsString(reader, 1);
                             DateTime date = reader.GetDateTime(2);
-                            string next_action = reader.GetString(3);
-                            string ID_project;
-
-                            if ( reader.IsDBNull(4) )
-                            {
-                                ID_project = "";
-                            }
-                            else
-                            {
-                                ID_project = reader.GetInt32(4).ToString();
-                            }                       
-                            string name = reader.GetString(5).ToString();
+                            string next_action = CheckForNullsString(reader, 3);
+                            string ID_project = CheckForNullsInt(reader, 4);
+                            string name = CheckForNullsString(reader, 5);
 
                             tb[1].Text = description;
                             dtp[2].Format = DateTimePickerFormat.Custom;
@@ -222,20 +219,20 @@ Contract";
 
                         while (reader.Read())
                         {
-                            string name = reader.GetString(1);
-                            string address = reader.GetString(2);
-                            string address2 = reader.GetString(3);
-                            string housenr = reader.GetString(4);
-                            string housenr2 = reader.GetString(5);
-                            string zipcode = reader.GetString(6);
-                            string zipcode2 = reader.GetString(7);
-                            string place = reader.GetString(8);
-                            string place2 = reader.GetString(9);
-                            string country = reader.GetString(10);
-                            string country2 = reader.GetString(11);
-                            string phone = reader.GetString(12);
-                            string fax = reader.GetString(13);
-                            string email = reader.GetString(14);
+                            string name = CheckForNullsString(reader, 1);
+                            string address = CheckForNullsString(reader, 2);
+                            string address2 = CheckForNullsString(reader, 3);
+                            string housenr = CheckForNullsString(reader, 4);
+                            string housenr2 = CheckForNullsString(reader, 5);
+                            string zipcode = CheckForNullsString(reader, 6);
+                            string zipcode2 = CheckForNullsString(reader, 7);
+                            string place = CheckForNullsString(reader, 8);
+                            string place2 = CheckForNullsString(reader, 9);
+                            string country = CheckForNullsString(reader, 10);
+                            string country2 = CheckForNullsString(reader, 11);
+                            string phone = CheckForNullsString(reader, 12);
+                            string fax = CheckForNullsString(reader, 13);
+                            string email = CheckForNullsString(reader, 14);
                             bool potential_prospect = reader.GetBoolean(15);
 
                             tb[1].Text = name;
@@ -273,35 +270,27 @@ Contract";
                         {
 
 
-                            string bank_acc_number = reader.GetString(1);
-                            string price = reader.GetString(2).ToString();
-                            string gross_rev = reader.GetString(3).ToString();
-                            string ledger_acc_nr = reader.GetString(4);
-                            string tax_code = reader.GetString(5);
-                            string is_paid = reader.GetString(6).ToString();
+                            string bank_acc_number = CheckForNullsString(reader, 1);
+                            string price = CheckForNullsInt(reader, 2);
+                            string gross_rev = CheckForNullsInt(reader, 3);
+                            string ledger_acc_nr = CheckForNullsString(reader, 4);
+                            string tax_code = CheckForNullsString(reader, 5);
+                            bool is_paid = reader.GetBoolean(6);
                             DateTime date = reader.GetDateTime(7);
-                            string invoice_sent = reader.GetString(8).ToString();
-                            string ID_project;
-                            if (reader.IsDBNull(9))
-                            {
-                                ID_project = "";
-                            }
-                            else
-                            {
-                                ID_project = reader.GetString(9).ToString();
-                            }
-                            string name = reader.GetString(10);
+                            bool invoice_sent = reader.GetBoolean(8);
+                            string ID_project = CheckForNullsInt(reader, 9);
+                            string name = CheckForNullsString(reader, 10);
 
                             tb[1].Text = bank_acc_number;
                             tb[2].Text = price;
                             tb[3].Text = gross_rev;
                             tb[4].Text = ledger_acc_nr;
                             tb[5].Text = tax_code;
-                            tb[6].Text = is_paid;
+                            cb[6].Checked = is_paid;
                             dtp[7].Format = DateTimePickerFormat.Custom;
                             dtp[7].CustomFormat = "MM-dd-yyy 'at' HH:mm";
                             dtp[7].Text = Convert.ToString(date);
-                            tb[8].Text = invoice_sent;
+                            cb[8].Checked = invoice_sent;
                             tb[9].Text = ID_project;
                             tb[10].Text = name;
                         }
@@ -324,25 +313,17 @@ Contract";
                         {
 
 
-                            string name = reader.GetString(1);
-                            string hardware = reader.GetString(2);
-                            string operating_system = reader.GetString(3);
-                            string maintenance_contract = reader.GetString(4);
-                            string applications = reader.GetString(5);
-                            string limit = reader.GetString(6).ToString();
+                            string name = CheckForNullsString(reader, 1);
+                            string hardware = CheckForNullsString(reader, 2);
+                            string operating_system = CheckForNullsString(reader, 3);
+                            string maintenance_contract = CheckForNullsString(reader, 4);
+                            string applications = CheckForNullsString(reader, 5);
+                            string limit = CheckForNullsInt(reader, 6);
                             bool is_done = reader.GetBoolean(7);
-                            string nr_invoices = reader.GetString(8).ToString();
+                            string nr_invoices = CheckForNullsInt(reader, 8);
                             bool BKR = reader.GetBoolean(9);
                             bool creditworthy = reader.GetBoolean(10);
-                            string ID_customer;
-                            if (reader.IsDBNull(11))
-                            {
-                                ID_customer = "";
-                            }
-                            else
-                            {
-                                ID_customer = reader.GetString(11).ToString();
-                            }
+                            string ID_customer = CheckForNullsInt(reader, 11);
 
                             tb[1].Text = name;
                             tb[2].Text = hardware;
@@ -354,7 +335,8 @@ Contract";
                             tb[8].Text = nr_invoices;
                             cb[9].Checked = BKR;
                             cb[10].Checked = creditworthy;
-                            tb[11].Text = ID_customer;
+                            SetComboBox();
+                            combo[11].Text = SetComboText(ID_customer);
                         }
                     }
 
@@ -366,6 +348,55 @@ Contract";
                 #endregion
             }
             dbh.closeCon();
+        }
+
+        private void SetComboBox()
+        {
+            cmd = new SqlCommand("SELECT ID,Name FROM "+ GetFKTable() + "", dbh.getCon());
+            SqlDataReader reader;
+
+            dbh.openCon();
+            reader = cmd.ExecuteReader();
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ID", typeof(string));
+            dt.Columns.Add("Name", typeof(string));
+            dt.Load(reader);
+
+            cb_Customers.ValueMember = "ID";
+            cb_Customers.DisplayMember = "Name";
+
+            cb_Customers.DataSource = dt;
+
+            dbh.closeCon();
+
+            reader.Dispose();
+        }
+
+        private string GetFKTable()
+        {
+            switch (table)
+            {
+                case "tbl_Appointments":
+                    return "tbl_Projects";
+                case "tbl_Projects":
+                    return "tbl_Customers";
+                case "tbl_Invoices":
+                    return "tbl_Projects";
+                default:
+                    return "";
+            }
+        }
+
+        private string SetComboText(string ID_customer)
+        {
+            cmd = new SqlCommand("SELECT Name FROM " + GetFKTable() + " WHERE ID=" + ID_customer +"", dbh.getCon());
+            SqlDataReader reader;
+
+            dbh.openCon();
+            reader = cmd.ExecuteReader();
+            dbh.closeCon();
+            return reader.GetString(0);
         }
 
         private void cb_Customers_MouseUp(object sender, MouseEventArgs e)
@@ -437,6 +468,30 @@ Contract";
                     break;
                 case "tbl_Projects":
                     break;
+            }
+        }
+
+        private string CheckForNullsInt(SqlDataReader reader, int i)
+        {
+            if (reader.IsDBNull(i))
+            {
+                return "";
+            }
+            else
+            {
+                return reader.GetInt32(i).ToString();
+            }
+        }
+
+        private string CheckForNullsString(SqlDataReader reader, int i)
+        {
+            if (reader.IsDBNull(i))
+            {
+                return "";             
+            }
+            else
+            {
+                return reader.GetString(i);
             }
         }
     }
