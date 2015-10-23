@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Barroc_IT_Groep5;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 
 namespace Barroc_IT_5
 {
@@ -93,6 +94,10 @@ namespace Barroc_IT_5
                     lb[i].Dispose();
                     this.Controls.Remove(dtp[i]);
                     dtp[i].Dispose();
+                    this.Controls.Remove(cb[i]);
+                    cb[i].Dispose();
+                    this.Controls.Remove(combo[i]);
+                    combo[i].Dispose();
                 }
             }
             catch(Exception ex)
@@ -121,6 +126,11 @@ namespace Barroc_IT_5
                 tb[i].Name = "tb_" + temp[i].ToString();
                 tb[i].Size = new System.Drawing.Size(130, 21);
                 tb[i].Location = new Point(x, y);
+
+                combo[i] = new ComboBox();
+                combo[i].Name = "combo_" + temp[i].ToString();
+                combo[i].Size = new System.Drawing.Size(130, 21);
+                combo[i].Location = new Point(x, y);
 
                 dtp[i] = new DateTimePicker();
                 dtp[i].Name = "dtp_" + temp[i].ToString();
@@ -155,11 +165,11 @@ Contract";
                 {
                     this.Controls.Add(dtp[i]);
                 }
-                else if (tb[i].Name == "tb_potential_prospect" || tb[i].Name == "tb_is_paid" || tb[i].Name == "tb_invoice_sent" || tb[i].Name == "tb_is_done" || tb[i].Name == "tb_BKR" || tb[i].Name == "tb_creditworthy")
+                else if (tb[i].Name == "tb_potential_prospect" || tb[i].Name == "tb_is_paid" || tb[i].Name == "tb_invoice_sent" || tb[i].Name == "tb_is_done" || tb[i].Name == "tb_BKR" || tb[i].Name == "tb_creditworthy" || tb[i].Name == "tb_maintenance_contract")
                 {
                     this.Controls.Add(cb[i]);
                 }
-                else if (tb[i].Name == "tb_ID_project" || tb[i].Name == "tb_ID_customer" )
+                else if (tb[i].Name == "tb_Id_project" || tb[i].Name == "tb_Id_customer" )
                 {
                     this.Controls.Add(combo[i]);
                 }
@@ -306,38 +316,53 @@ Contract";
                 case "tbl_Projects":
                     try
                     {
+                        string name = null, hardware = null, operating_system = null, applications = null, limit = null, nr_invoices = null, ID_customer = null;
+                        bool maintenance_contract = false, is_done = false, BKR = false, creditworthy = false;
                         dbh.openCon();
+                        
                         reader = cmd.ExecuteReader();
 
                         while (reader.Read())
                         {
+                            name = CheckForNullsString(reader, 1);
+                            hardware = CheckForNullsString(reader, 2);
+                            operating_system = CheckForNullsString(reader, 3);
+                            maintenance_contract = reader.GetBoolean(reader.GetOrdinal("maintenance_contract"));
+                            applications = CheckForNullsString(reader, 5);
+                            //limit = CheckForNullsDecimal(reader, 6);
+                            limit = Math.Round(reader.GetDecimal(6), 2).ToString();
+                            is_done = reader.GetBoolean(reader.GetOrdinal("is_done"));
+                            nr_invoices = CheckForNullsInt(reader, 8);
+                            BKR = reader.GetBoolean(reader.GetOrdinal("BKR"));
+                            creditworthy = reader.GetBoolean(reader.GetOrdinal("creditworthy"));
+                            ID_customer = CheckForNullsInt(reader, 11);
 
+                            
+                        }
+                        reader.Dispose();
+                        dbh.closeCon();
 
-                            string name = CheckForNullsString(reader, 1);
-                            string hardware = CheckForNullsString(reader, 2);
-                            string operating_system = CheckForNullsString(reader, 3);
-                            string maintenance_contract = CheckForNullsString(reader, 4);
-                            string applications = CheckForNullsString(reader, 5);
-                            string limit = CheckForNullsInt(reader, 6);
-                            bool is_done = reader.GetBoolean(7);
-                            string nr_invoices = CheckForNullsInt(reader, 8);
-                            bool BKR = reader.GetBoolean(9);
-                            bool creditworthy = reader.GetBoolean(10);
-                            string ID_customer = CheckForNullsInt(reader, 11);
-
-                            tb[1].Text = name;
-                            tb[2].Text = hardware;
-                            tb[3].Text = operating_system;
-                            tb[4].Text = maintenance_contract;
-                            tb[5].Text = applications;
-                            tb[6].Text = limit;
-                            cb[7].Checked = is_done;
-                            tb[8].Text = nr_invoices;
-                            cb[9].Checked = BKR;
-                            cb[10].Checked = creditworthy;
-                            SetComboBox();
+                        tb[1].Text = name;
+                        tb[2].Text = hardware;
+                        tb[3].Text = operating_system;
+                        cb[4].Checked = maintenance_contract;
+                        tb[5].Text = applications;
+                        tb[6].Text = limit;
+                        cb[7].Checked = is_done;
+                        tb[8].Text = nr_invoices;
+                        cb[9].Checked = BKR;
+                        cb[10].Checked = creditworthy;
+                        SetComboBox(combo[11]);
+                        
+                        if (ID_customer == "")
+                        {
+                            combo[11].Text = ID_customer;
+                        }
+                        else
+                        {
                             combo[11].Text = SetComboText(ID_customer);
                         }
+                        dbh.closeCon();
                     }
 
                     catch (Exception ex)
@@ -350,7 +375,7 @@ Contract";
             dbh.closeCon();
         }
 
-        private void SetComboBox()
+        private void SetComboBox(ComboBox combo)
         {
             cmd = new SqlCommand("SELECT ID,Name FROM "+ GetFKTable() + "", dbh.getCon());
             SqlDataReader reader;
@@ -363,12 +388,10 @@ Contract";
             dt.Columns.Add("Name", typeof(string));
             dt.Load(reader);
 
-            cb_Customers.ValueMember = "ID";
-            cb_Customers.DisplayMember = "Name";
+            combo.ValueMember = "ID";
+            combo.DisplayMember = "Name";
 
-            cb_Customers.DataSource = dt;
-
-            dbh.closeCon();
+            combo.DataSource = dt;
 
             reader.Dispose();
         }
@@ -390,13 +413,17 @@ Contract";
 
         private string SetComboText(string ID_customer)
         {
-            cmd = new SqlCommand("SELECT Name FROM " + GetFKTable() + " WHERE ID=" + ID_customer +"", dbh.getCon());
+            cmd = new SqlCommand("SELECT Name FROM " + GetFKTable() + " WHERE ID = " + ID_customer +"", dbh.getCon());
             SqlDataReader reader;
 
-            dbh.openCon();
             reader = cmd.ExecuteReader();
-            dbh.closeCon();
-            return reader.GetString(0);
+            string temp = "";
+
+            while (reader.Read())
+            {
+                temp = reader.GetString(0).ToString();
+            }
+            return temp;
         }
 
         private void cb_Customers_MouseUp(object sender, MouseEventArgs e)
@@ -445,10 +472,10 @@ Contract";
                     DateTimePicker dtp1 = Application.OpenForms["frm_Edit"].Controls["dtp_date"] as DateTimePicker;
                     TextBox tb2 = Application.OpenForms["frm_Edit"].Controls["tb_next_action"] as TextBox;
                     TextBox tb3 = Application.OpenForms["frm_Edit"].Controls["tb_name"] as TextBox;
-                    TextBox tb4 = Application.OpenForms["frm_Edit"].Controls["tb_Id_project"] as TextBox;
+                    ComboBox combo4 = Application.OpenForms["frm_Edit"].Controls["combo_Id_project"] as ComboBox;
 
-                    int convertedID = Convert.ToInt32(tb4.Text);
-                    convertedID = int.Parse(tb4.Text);
+                    int convertedID = Convert.ToInt32(combo4.SelectedValue);
+                    //convertedID = int.Parse(combo4.SelectedValue);
 
                     dbh.openCon();
 
@@ -482,6 +509,7 @@ Contract";
                 return reader.GetInt32(i).ToString();
             }
         }
+
 
         private string CheckForNullsString(SqlDataReader reader, int i)
         {
