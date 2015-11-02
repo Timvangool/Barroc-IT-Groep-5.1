@@ -36,11 +36,11 @@ namespace Barroc_IT_5
 
         private void btn_Login_Click(object sender, EventArgs e)
         {
-           //LogIn(tb_Username.Text, tb_Password.Text);
-            Form main = new frm_Main();
-            main.StartPosition = FormStartPosition.CenterScreen;
-            Program.setForm(main);
-            this.Close();
+            LogIn(tb_Username.Text, tb_Password.Text);
+            //Form main = new frm_Main(permissions);
+            //main.StartPosition = FormStartPosition.CenterScreen;
+            //Program.setForm(main);
+            //this.Close();
         }
 
         public void LogIn(string user, string pass)
@@ -74,13 +74,13 @@ namespace Barroc_IT_5
                     case "Admin":
                         permissions = 1;
                         break;
-                    case "SALES":
+                    case "Sales":
                         permissions = 2;
                         break;
-                    case "DEVELOPMENT":
+                    case "Development":
                         permissions = 4;
                         break;
-                    case "FINANCE":
+                    case "Finance":
                         permissions = 3;
                         break;
                     default:

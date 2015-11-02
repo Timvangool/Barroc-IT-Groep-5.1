@@ -35,6 +35,76 @@ namespace Barroc_IT_5
         {
             this.permissions = permissions;
             InitializeComponent();
+
+            #region IfAdmin
+            if (permissions == 1)
+            {
+                btn_C_Create.Visible = true;
+                btn_C_Edit.Visible = true;
+                btn_C_List.Visible = true;
+                btn_P_Create.Visible = true;
+                btn_P_Edit.Visible = true;
+                btn_P_List.Visible = true;
+                btn_I_Create.Visible = true;
+                btn_I_Edit.Visible = true;
+                btn_I_List.Visible = true;
+                btn_A_Create.Visible = true;
+                btn_A_Edit.Visible = true;
+                btn_A_List.Visible = true;
+            }
+            #endregion
+            #region IfSales
+            if (permissions == 2)
+            {
+                btn_C_Create.Visible = true;
+                btn_C_Edit.Visible = true;
+                btn_C_List.Visible = true;
+                btn_P_Create.Visible = true;
+                btn_P_Edit.Visible = true;
+                btn_P_List.Visible = true;
+                btn_I_Create.Visible = false;
+                btn_I_Edit.Visible = false;
+                btn_I_List.Visible = true;
+                btn_A_Create.Visible = true;
+                btn_A_Edit.Visible = true;
+                btn_A_List.Visible = true;
+            }
+            #endregion
+            #region IfFinance
+            if (permissions == 3)
+            {
+                btn_C_Create.Visible = true;
+                btn_C_Edit.Visible = true;
+                btn_C_List.Visible = true;
+                btn_P_Create.Visible = false;
+                btn_P_Edit.Visible = false;
+                btn_P_List.Visible = true;
+                btn_I_Create.Visible = true;
+                btn_I_Edit.Visible = true;
+                btn_I_List.Visible = true;
+                btn_A_Create.Visible = false;
+                btn_A_Edit.Visible = false;
+                btn_A_List.Visible = true;
+            }
+            #endregion
+            #region IfDevelopment
+            if (permissions == 4)
+            {
+                btn_C_Create.Visible = false;
+                btn_C_Edit.Visible = false;
+                btn_C_List.Visible = true;
+                btn_P_Create.Visible = false;
+                btn_P_Edit.Visible = true;
+                btn_P_List.Visible = true;
+                btn_I_Create.Visible = false;
+                btn_I_Edit.Visible = false;
+                btn_I_List.Visible = true;
+                btn_A_Create.Visible = false;
+                btn_A_Edit.Visible = false;
+                btn_A_List.Visible = false;
+
+            }
+            #endregion
         }
 
         #region Customer Buttons
