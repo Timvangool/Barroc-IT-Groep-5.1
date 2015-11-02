@@ -1,6 +1,6 @@
 ﻿//#define TIMH
-#define TIMG
-//#define KEVIN
+//#define TIMG
+#define KEVIN
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -94,10 +94,10 @@ namespace Barroc_IT_Groep5
             {
                 dgv.Columns["Limit"].DefaultCellStyle.Format = "N2";
             }
-            else if (dgv.Columns.Contains("Gross_Rev") || dgv.Columns.Contains("Price"))
+            else if (dgv.Columns.Contains("Gross_Rev") || dgv.Columns.Contains("Amount"))
             {
                 dgv.Columns["Gross_Rev"].DefaultCellStyle.Format = "N2";
-                dgv.Columns["Price"].DefaultCellStyle.Format = "N2";
+                dgv.Columns["Amount"].DefaultCellStyle.Format = "N2";
             }
             closeCon();
 

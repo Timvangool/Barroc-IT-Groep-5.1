@@ -141,7 +141,7 @@ namespace Barroc_IT_5
         private void btn_I_Create_Click(object sender, EventArgs e)
         {
             table = "tbl_Invoices";
-            Form frmAdd = new frm_Add(permissions);
+            Form frmAdd = new frm_Add(permissions, table);
             frmAdd.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frmAdd);
             this.Close();

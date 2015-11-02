@@ -32,13 +32,12 @@
             this.btn_Back = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btn_Exit = new System.Windows.Forms.Button();
-            this.cb_Departments = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_Add
             // 
-            this.btn_Add.Location = new System.Drawing.Point(481, 447);
+            this.btn_Add.Location = new System.Drawing.Point(596, 447);
             this.btn_Add.Name = "btn_Add";
             this.btn_Add.Size = new System.Drawing.Size(75, 23);
             this.btn_Add.TabIndex = 0;
@@ -48,7 +47,7 @@
             // 
             // btn_Back
             // 
-            this.btn_Back.Location = new System.Drawing.Point(562, 447);
+            this.btn_Back.Location = new System.Drawing.Point(677, 447);
             this.btn_Back.Name = "btn_Back";
             this.btn_Back.Size = new System.Drawing.Size(75, 23);
             this.btn_Back.TabIndex = 1;
@@ -69,7 +68,7 @@
             // 
             this.btn_Exit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btn_Exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Exit.Location = new System.Drawing.Point(813, 15);
+            this.btn_Exit.Location = new System.Drawing.Point(928, 15);
             this.btn_Exit.Name = "btn_Exit";
             this.btn_Exit.Size = new System.Drawing.Size(21, 23);
             this.btn_Exit.TabIndex = 3;
@@ -77,28 +76,11 @@
             this.btn_Exit.UseVisualStyleBackColor = false;
             this.btn_Exit.Click += new System.EventHandler(this.btn_Exit_Click);
             // 
-            // cb_Departments
-            // 
-            this.cb_Departments.FormattingEnabled = true;
-            this.cb_Departments.Items.AddRange(new object[] {
-            "Customer",
-            "Invoice",
-            "Project",
-            "Appointment"});
-            this.cb_Departments.Location = new System.Drawing.Point(12, 39);
-            this.cb_Departments.Name = "cb_Departments";
-            this.cb_Departments.Size = new System.Drawing.Size(155, 21);
-            this.cb_Departments.TabIndex = 10;
-            this.cb_Departments.SelectedIndexChanged += new System.EventHandler(this.cb_Department_SelectedIndexChanged);
-            this.cb_Departments.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cb_Departments_KeyPress);
-            this.cb_Departments.MouseUp += new System.Windows.Forms.MouseEventHandler(this.cb_Departments_MouseUp);
-            // 
             // frm_Add
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(649, 482);
-            this.Controls.Add(this.cb_Departments);
+            this.ClientSize = new System.Drawing.Size(764, 482);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btn_Back);
             this.Controls.Add(this.btn_Add);
@@ -118,6 +100,5 @@
         private System.Windows.Forms.Button btn_Back;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btn_Exit;
-        private System.Windows.Forms.ComboBox cb_Departments;
     }
 }

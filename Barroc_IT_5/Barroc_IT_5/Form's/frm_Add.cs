@@ -25,7 +25,7 @@ namespace Barroc_IT_5
         public string query;
         List<string> columns;
 
-        public string tempDepartment, table;
+        public string table;
         public frm_Add()
         {
             InitializeComponent();
@@ -128,17 +128,17 @@ Contract";
                     lb[i].Size = new System.Drawing.Size(100, 30);
                 }
 
-                if (dtp[i].Name == "dtp_Date")
+                if (dtp[i].Name == "dtp_date")
                 {
                     this.Controls.Add(dtp[i]);
                     dtp[i].Format = DateTimePickerFormat.Custom;
                     dtp[i].CustomFormat = "yyyy-MM-dd";
                 }
-                else if (tb[i].Name == "tb_Potential_Prospect" || tb[i].Name == "tb_is_paid" || tb[i].Name == "tb_Invoice_Send" || tb[i].Name == "tb_Is_Done" || tb[i].Name == "tb_BKR" || tb[i].Name == "tb_Credit_Worthy" || tb[i].Name == "tb_Maintenance_Contract")
+                else if (tb[i].Name == "tb_potential_prospect" || tb[i].Name == "tb_is_paid" || tb[i].Name == "tb_invoice_sent" || tb[i].Name == "tb_is_done" || tb[i].Name == "tb_BKR" || tb[i].Name == "tb_creditworthy" || tb[i].Name == "tb_maintenance_contract")
                 {
                     this.Controls.Add(cb[i]);
                 }
-                else if (tb[i].Name == "tb_Id_Project" || tb[i].Name == "tb_Id_Customer")
+                else if (tb[i].Name == "tb_Id_project" || tb[i].Name == "tb_Id_customer")
                 {
 
                     this.Controls.Add(combo[i]);
@@ -153,65 +153,6 @@ Contract";
                 lb[i].Text = lb[i].Text.Replace("_", " ");
 
             }
-        }
-
-        private void cb_Department_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                for (int i = 1; i < tb.Count(); i++)
-                {
-                    this.Controls.Remove(tb[i]);
-                    tb[i].Dispose();
-                    this.Controls.Remove(lb[i]);
-                    lb[i].Dispose();
-                    this.Controls.Remove(cb[i]);
-                    cb[i].Dispose();
-                    this.Controls.Remove(dtp[i]);
-                    dtp[i].Dispose();
-                    this.Controls.Remove(combo[i]);
-                    combo[i].Dispose();
-                }
-            }
-            catch
-            {
-
-            }
-
-            tempDepartment = cb_Departments.Text;
-
-            //switch (tempDepartment)
-            //{
-            //    case "Customer":
-            //        tb = new TextBox[14];
-            //        lb = new Label[14];
-            //        cb = new CheckBox[14];
-            //        dtp = new DateTimePicker[14];
-            //        break;
-            //    case "Invoice":
-            //        tb = new TextBox[10];
-            //        lb = new Label[10];
-            //        cb = new CheckBox[10];
-            //        dtp = new DateTimePicker[10];
-            //        break;
-            //    case "Project":
-            //        tb = new TextBox[11];
-            //        lb = new Label[11];
-            //        cb = new CheckBox[11];
-            //        dtp = new DateTimePicker[11];
-            //        break;
-            //    case "Appointment":
-            //        tb = new TextBox[6];
-            //        lb = new Label[6];
-            //        cb = new CheckBox[6];
-            //        dtp = new DateTimePicker[6];
-            //        break;
-            //    default:
-            //        MessageBox.Show("Something went wrong :c");
-            //        break;
-            //}
-
-           
         }
 
         private string[] getColumnsName()
@@ -233,16 +174,6 @@ Contract";
             return listacolumnas.ToArray();
         }
 
-        private void cb_Departments_MouseUp(object sender, MouseEventArgs e)
-        {
-            cb_Departments.DroppedDown = true;
-        }
-
-        private void cb_Departments_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = true;
-        }
-
         private void btn_Add_Click(object sender, EventArgs e)
         {
             Add();
@@ -255,64 +186,103 @@ Contract";
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = dbh.getCon();
 
-                if (cb_Departments.SelectedItem.ToString() == "Appointment")
+                if (table == "tbl_Appointments")
                 {
-                    cmd.CommandText = "INSERT INTO TBL_APPOINTMENTS(DESCRIPTION, DATE, NEXT_ACTION, ID_PROJECT, NAME) VALUES (@DESCRIPTION, @DATE, @NEXT_ACTION, @ID_PROJECT, @NAME)";
+                    int ID = Convert.ToInt32(combo[4].SelectedValue);
+                    if (ID != 0)
+                    {
+                        cmd.CommandText = "INSERT INTO TBL_APPOINTMENTS(DESCRIPTION, DATE, NEXT_ACTION, ID_PROJECT, NAME) VALUES (@DESCRIPTION, @DATE, @NEXT_ACTION, @ID_PROJECT, @NAME)";
+                    }
+                    else
+                    {
+                        cmd.CommandText = "INSERT INTO TBL_APPOINTMENTS(DESCRIPTION, DATE, NEXT_ACTION, NAME) VALUES (@DESCRIPTION, @DATE, @NEXT_ACTION, @NAME)";
+                    }
                     cmd.Parameters.AddWithValue("@DESCRIPTION", tb[1].Text);
                     cmd.Parameters.AddWithValue("@DATE", dtp[2].Value);
                     cmd.Parameters.AddWithValue("@NEXT_ACTION", tb[3].Text);
-                    cmd.Parameters.AddWithValue("@ID_PROJECT", combo[4].SelectedValue);
+                    if (ID != 0)
+                    {
+                        cmd.Parameters.AddWithValue("@ID_PROJECT", combo[4].SelectedValue);
+                    }
                     cmd.Parameters.AddWithValue("@NAME", tb[5].Text);
                 }
-                else if (cb_Departments.SelectedItem.ToString() == "Customer")
+                else if (table == "tbl_Customers")
                 {
-                    cmd.CommandText = "INSERT INTO TBL_CUSTOMERS (NAME, ADDRESS1, HOUSENR1, ZIP_CODE1, PLACE1, COUNTRY, ADDRESS2, HOUSENR2, ZIP_CODE2, PLACE2, PHONE, FAX, EMAIL, POTENTIAL_PROSPECT) VALUES (@NAME, @ADDRESS1, @HOUSENR1, @ZIP_CODE1, @PLACE1, @COUNTRY, @ADDRESS2, @HOUSENR2, @ZIP_CODE2, @PLACE2, @PHONE, @FAX, @EMAIL, @POTENTIAL_PROSPECT)";
+                    cmd.CommandText = "INSERT INTO TBL_CUSTOMERS (NAME, ADDRESS1, HOUSENR1, ZIP_CODE1, PLACE1, COUNTRY1, ADDRESS2, HOUSENR2, ZIP_CODE2, PLACE2, COUNTRY2, PHONE, FAX, EMAIL, POTENTIAL_PROSPECT) VALUES (@NAME, @ADDRESS1, @HOUSENR1, @ZIP_CODE1, @PLACE1, @COUNTRY1, @ADDRESS2, @HOUSENR2, @ZIP_CODE2, @PLACE2, @COUNTRY2, @PHONE, @FAX, @EMAIL, @POTENTIAL_PROSPECT)";
                     cmd.Parameters.AddWithValue("@NAME", tb[1].Text);
                     cmd.Parameters.AddWithValue("@ADDRESS1", tb[2].Text);
                     cmd.Parameters.AddWithValue("@HOUSENR1",tb[3].Text);
                     cmd.Parameters.AddWithValue("@ZIP_CODE1", tb[4].Text);
                     cmd.Parameters.AddWithValue("@PLACE1", tb[5].Text);
-                    cmd.Parameters.AddWithValue("@COUNTRY",tb[6].Text);
+                    cmd.Parameters.AddWithValue("@COUNTRY1",tb[6].Text);
                     cmd.Parameters.AddWithValue("@ADDRESS2", tb[7].Text);
                     cmd.Parameters.AddWithValue("@HOUSENR2", tb[8].Text);
                     cmd.Parameters.AddWithValue("@ZIP_CODE2", tb[9].Text);
                     cmd.Parameters.AddWithValue("@PLACE2", tb[10].Text);
-                    cmd.Parameters.AddWithValue("@PHONE", tb[11].Text);
-                    cmd.Parameters.AddWithValue("@FAX", tb[12].Text);
-                    cmd.Parameters.AddWithValue("@EMAIL", tb[13].Text);
-                    cmd.Parameters.AddWithValue("@POTENTIAL_PROSPECT", checkboxState());
+                    cmd.Parameters.AddWithValue("@COUNTRY2", tb[11].Text);
+                    cmd.Parameters.AddWithValue("@PHONE", tb[12].Text);
+                    cmd.Parameters.AddWithValue("@FAX", tb[13].Text);
+                    cmd.Parameters.AddWithValue("@EMAIL", tb[14].Text);
+                    cmd.Parameters.AddWithValue("@POTENTIAL_PROSPECT", checkboxState(cb[15]));
                 }
 
-                else if(cb_Departments.SelectedItem.ToString() == "Invoice")
+                else if(table == "tbl_Invoices")
                 {
-                    cmd.CommandText = "INSERT INTO TBL_INVOICES (BANK_ACC_NR, PRICE, GROSS_REV, LEDGER_ACC_NR, TAX_CODE, ID_PROJECT, IS_PAID, DATE, INVOICE_SEND, NAME) VALUES (@BANK_ACC_NR, @PRICE, @GROSS_REV, @LEDGER_ACC_NR, @TAX_CODE, @ID_PROJECT, @IS_PAID, @DATE, @INVOICE_SEND, @NAME)";
-                    cmd.Parameters.AddWithValue("@BANK_ACC_NR", tb[1].Text);
-                    cmd.Parameters.AddWithValue("@PRICE", tb[2].Text);
-                    cmd.Parameters.AddWithValue("@GROSS_REV", tb[3].Text);
+                    int ID = Convert.ToInt32(combo[9].SelectedValue);
+
+                    if (ID != 0)
+                    {
+                        cmd.CommandText = "INSERT INTO TBL_INVOICES ( AMOUNT, BANK_ACC_NR, GROSS_REV, LEDGER_ACC_NR, TAX_CODE, ID_PROJECT, IS_PAID, DATE, INVOICE_SENT, NAME) VALUES ( @AMOUNT, @BANK_ACC_NR, @GROSS_REV, @LEDGER_ACC_NR, @TAX_CODE, @ID_PROJECT, @IS_PAID, @DATE, @INVOICE_SENT, @NAME)";
+                    }
+                    else
+                    {
+                        cmd.CommandText = "INSERT INTO TBL_INVOICES ( AMOUNT, BANK_ACC_NR, GROSS_REV, LEDGER_ACC_NR, TAX_CODE, IS_PAID, DATE, INVOICE_SENT, NAME) VALUES ( @AMOUNT, @BANK_ACC_NR, @GROSS_REV, @LEDGER_ACC_NR, @TAX_CODE, @IS_PAID, @DATE, @INVOICE_SENT, @NAME)";
+                    }
+
+                    cmd.Parameters.AddWithValue("@AMOUNT", tb[1].Text.Replace(".", ","));
+                    cmd.Parameters.AddWithValue("@BANK_ACC_NR", tb[2].Text);
+                    cmd.Parameters.AddWithValue("@GROSS_REV", tb[3].Text.Replace(".", ","));
                     cmd.Parameters.AddWithValue("@LEDGER_ACC_NR", tb[4].Text);
                     cmd.Parameters.AddWithValue("@TAX_CODE", tb[5].Text);
-                    cmd.Parameters.AddWithValue("@ID_PROJECT", combo[6].SelectedValue);
-                    cmd.Parameters.AddWithValue("@IS_PAID", checkboxState());
+                    cmd.Parameters.AddWithValue("@IS_PAID", checkboxState(cb[6]));
+           
+                    cmd.Parameters.AddWithValue("@INVOICE_SENT", checkboxState(cb[7]));
                     cmd.Parameters.AddWithValue("@DATE", dtp[8].Value);
-                    cmd.Parameters.AddWithValue("@INVOICE_SEND", checkboxState());
+                    if (ID != 0)
+                    {
+                        cmd.Parameters.AddWithValue("@ID_PROJECT", combo[9].SelectedValue);
+                    }
                     cmd.Parameters.AddWithValue("@NAME", tb[10].Text);
                 }
 
-                else if (cb_Departments.SelectedItem.ToString() == "Project")
+                else if (table == "tbl_Projects")
                 {
-                    cmd.CommandText = "INSERT INTO TBL_PROJECTS (NAME, HARDWARE, OPERATING_SYSTEM, MAINTENANCE_CONTRACT, APPLICATIONS, LIMIT, ID_CUSTOMER, IS_DONE, NR_INVOICES, BKR, CREDIT_WORTHY) VALUES (@NAME, @HARDWARE, @OPERATING_SYSTEM, @MAINTENANCE_CONTRACT, @APPLICATIONS, @LIMIT, @ID_CUSTOMER, @IS_DONE, @NR_INVOICES, @BKR, @CREDIT_WORTHY)";
+                    int ID = Convert.ToInt32(combo[9].SelectedValue);
+
+                    if (ID != 0)
+                    {
+                        cmd.CommandText = "INSERT INTO TBL_PROJECTS (NAME, HARDWARE, OPERATING_SYSTEM, MAINTENANCE_CONTRACT, APPLICATIONS, LIMIT, ID_CUSTOMER, IS_DONE, NR_INVOICES, BKR, CREDIT_WORTHY) VALUES (@NAME, @HARDWARE, @OPERATING_SYSTEM, @MAINTENANCE_CONTRACT, @APPLICATIONS, @LIMIT, @ID_CUSTOMER, @IS_DONE, @NR_INVOICES, @BKR, @CREDIT_WORTHY)";
+                    }
+                    else
+                    {
+                        cmd.CommandText = "INSERT INTO TBL_PROJECTS (NAME, HARDWARE, OPERATING_SYSTEM, MAINTENANCE_CONTRACT, APPLICATIONS, LIMIT, IS_DONE, NR_INVOICES, BKR, CREDITWORTHY) VALUES (@NAME, @HARDWARE, @OPERATING_SYSTEM, @MAINTENANCE_CONTRACT, @APPLICATIONS, @LIMIT, @IS_DONE, @NR_INVOICES, @BKR, @CREDITWORTHY)";
+
+                    }
                     cmd.Parameters.AddWithValue("@NAME", tb[1].Text);
                     cmd.Parameters.AddWithValue("@HARDWARE", tb[2].Text);
                     cmd.Parameters.AddWithValue("@OPERATING_SYSTEM", tb[3].Text);
-                    cmd.Parameters.AddWithValue("@MAINTENANCE_CONTRACT", checkboxState());
+                    cmd.Parameters.AddWithValue("@MAINTENANCE_CONTRACT", checkboxState(cb[4]));
                     cmd.Parameters.AddWithValue("@APPLICATIONS", tb[5].Text);
                     cmd.Parameters.AddWithValue("@LIMIT", tb[6].Text.Replace(".", ","));
-                    cmd.Parameters.AddWithValue("@ID_CUSTOMER", combo[7].SelectedValue);
-                    cmd.Parameters.AddWithValue("@IS_DONE", checkboxState());
-                    cmd.Parameters.AddWithValue("@NR_INVOICES", tb[9].Text);
-                    cmd.Parameters.AddWithValue("@BKR", checkboxState());
-                    cmd.Parameters.AddWithValue("@CREDIT_WORTHY", checkboxState());
-
+                    
+                    cmd.Parameters.AddWithValue("@IS_DONE", checkboxState(cb[7]));
+                    cmd.Parameters.AddWithValue("@NR_INVOICES", tb[8].Text);
+                    cmd.Parameters.AddWithValue("@BKR", checkboxState(cb[9]));
+                    cmd.Parameters.AddWithValue("@CREDITWORTHY", checkboxState(cb[10]));
+                    if (ID != 0)
+                    {
+                        cmd.Parameters.AddWithValue("@ID_CUSTOMER", combo[11].SelectedValue);
+                    }
                 }
 
                 dbh.openCon();
@@ -321,7 +291,7 @@ Contract";
 
                 cmd.Dispose();
 
-                MessageBox.Show("Sucessfully added " + tempDepartment + ".");
+                MessageBox.Show("Sucessfully added this record.");
             }
 
             catch(SqlException ex)
@@ -355,6 +325,11 @@ Contract";
             combo.ValueMember = "ID";
             combo.DisplayMember = "Name";
 
+            DataRow emptyrow = dt.NewRow();
+            emptyrow["ID"] = 0;
+            emptyrow["Name"] = "";
+            dt.Rows.Add(emptyrow);
+
             combo.DataSource = dt;
 
             reader.Dispose();
@@ -362,32 +337,14 @@ Contract";
 
         private string GetFKTable()
         {
-            switch (tempDepartment)
-            {
-                case "Customer":
-                    table = "TBL_CUSTOMERS";
-                    break;
-                case "Invoice":
-                    table = "TBL_INVOICES";
-                    break;
-                case "Project":
-                    table = "TBL_PROJECTS";
-                    break;
-                case "Appointment":
-                    table = "TBL_APPOINTMENTS";
-                    break;
-                default:
-                    MessageBox.Show("Something went wrong :c");
-                    break;
-            }
 
             switch (table)
             {
-                case "TBL_APPOINTMENTS":
+                case "tbl_Appointments":
                     return "tbl_Projects";
-                case "TBL_PROJECTS":
+                case "tbl_Projects":
                     return "tbl_Customers";
-                case "TBL_INVOICES":
+                case "tbl_Invoices":
                     return "tbl_Projects";
                 default:
                     return "";
@@ -408,51 +365,31 @@ Contract";
             return temp;
         }
 
-        private string checkboxState()
+        private string checkboxState(CheckBox cb)
         {
-            int temp = 42;
+            int temp = 235;
+                    if(cb.Checked)
+                    {
+                        temp = 1;
+                    }
+                    else
+                    {
+                        temp = 0;
+                    }
+            return temp.ToString();
+        }
 
-            switch (tempDepartment)
+        private object CheckIDNull(int ID)
+        {
+            if (ID == 0)
             {
-                case "Customer":
-                    if(cb[14].Checked)
-                    {
-                        temp = 1;
-                    }
-                    else
-                    {
-                        temp = 0;
-                    }
-                    break;
-                case "Invoice":
-                    if (cb[7].Checked || cb[9].Checked)
-                    {
-                        temp = 1;
-                    }
-                    else
-                    {
-                        temp = 0;
-                    }
-                    break;
-                case "Project":
-                    if(cb[4].Checked || cb[8].Checked || cb[10].Checked || cb[11].Checked)
-                    {
-                        temp = 1;
-                    }
-                    else
-                    {
-                        temp = 0;
-                    }
-                    break;
-                case "Appointment":
-
-                    break;
-                default:
-                    MessageBox.Show("Something went wrong :c");
-                    break;
+                return null;
+            }
+            else
+            {
+                return ID;
             }
 
-            return temp.ToString();
         }
     }
 }
