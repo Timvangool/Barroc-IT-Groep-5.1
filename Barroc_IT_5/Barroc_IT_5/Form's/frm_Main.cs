@@ -110,7 +110,8 @@ namespace Barroc_IT_5
         #region Customer Buttons
         private void btn_C_Create_Click(object sender, EventArgs e)
         {
-            Form frmAdd = new frm_Add(permissions);
+            table = "tbl_Customers";
+            Form frmAdd = new frm_Add(permissions, table);
             frmAdd.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frmAdd);
             this.Close();
@@ -139,6 +140,7 @@ namespace Barroc_IT_5
         #region Invoice Buttons
         private void btn_I_Create_Click(object sender, EventArgs e)
         {
+            table = "tbl_Invoices";
             Form frmAdd = new frm_Add(permissions);
             frmAdd.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frmAdd);
@@ -168,7 +170,8 @@ namespace Barroc_IT_5
         #region Project Buttons
         private void btn_P_Create_Click(object sender, EventArgs e)
         {
-            Form frmAdd = new frm_Add(permissions);
+            table = "tbl_Projects";
+            Form frmAdd = new frm_Add(permissions, table);
             frmAdd.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frmAdd);
             this.Close();
@@ -197,7 +200,8 @@ namespace Barroc_IT_5
         #region Appointment Buttons
         private void btn_A_Create_Click(object sender, EventArgs e)
         {
-            Form frmAdd = new frm_Add(permissions);
+            table = "tbl_Appointments";
+            Form frmAdd = new frm_Add(permissions, table);
             frmAdd.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frmAdd);
             this.Close();

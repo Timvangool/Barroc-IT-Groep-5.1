@@ -25,7 +25,7 @@ namespace Barroc_IT_5
         public string query;
         List<string> columns;
 
-        public string tempDepartment, tabel;
+        public string tempDepartment, table;
         public frm_Add()
         {
             InitializeComponent();
@@ -43,6 +43,14 @@ namespace Barroc_IT_5
         public frm_Add(int permissions)
         {
             this.permissions = permissions;
+            dbh = new SQLDatabaseHandler();
+            InitializeComponent();
+        }
+
+        public frm_Add(int permissions, string table)
+        {
+            this.permissions = permissions;
+            this.table = table;
             dbh = new SQLDatabaseHandler();
             InitializeComponent();
         }
@@ -66,63 +74,6 @@ namespace Barroc_IT_5
         private void frm_Add_Load(object sender, EventArgs e)
         {
             this.StartPosition = FormStartPosition.CenterScreen;
-        }
-
-        private void cb_Department_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                for (int i = 1; i < tb.Count(); i++)
-                {
-                    this.Controls.Remove(tb[i]);
-                    tb[i].Dispose();
-                    this.Controls.Remove(lb[i]);
-                    lb[i].Dispose();
-                    this.Controls.Remove(cb[i]);
-                    cb[i].Dispose();
-                    this.Controls.Remove(dtp[i]);
-                    dtp[i].Dispose();
-                    this.Controls.Remove(combo[i]);
-                    combo[i].Dispose();
-                }
-            }
-            catch
-            {
-
-            }
-
-            tempDepartment = cb_Departments.Text;
-
-            //switch (tempDepartment)
-            //{
-            //    case "Customer":
-            //        tb = new TextBox[14];
-            //        lb = new Label[14];
-            //        cb = new CheckBox[14];
-            //        dtp = new DateTimePicker[14];
-            //        break;
-            //    case "Invoice":
-            //        tb = new TextBox[10];
-            //        lb = new Label[10];
-            //        cb = new CheckBox[10];
-            //        dtp = new DateTimePicker[10];
-            //        break;
-            //    case "Project":
-            //        tb = new TextBox[11];
-            //        lb = new Label[11];
-            //        cb = new CheckBox[11];
-            //        dtp = new DateTimePicker[11];
-            //        break;
-            //    case "Appointment":
-            //        tb = new TextBox[6];
-            //        lb = new Label[6];
-            //        cb = new CheckBox[6];
-            //        dtp = new DateTimePicker[6];
-            //        break;
-            //    default:
-            //        MessageBox.Show("Something went wrong :c");
-            //        break;
-            //}
 
             tb = new TextBox[60];
             lb = new Label[60];
@@ -187,7 +138,7 @@ Contract";
                 {
                     this.Controls.Add(cb[i]);
                 }
-                else if (tb[i].Name == "tb_Id_Project" || tb[i].Name == "tb_Id_Customer" )
+                else if (tb[i].Name == "tb_Id_Project" || tb[i].Name == "tb_Id_Customer")
                 {
 
                     this.Controls.Add(combo[i]);
@@ -198,36 +149,77 @@ Contract";
                     this.Controls.Add(tb[i]);
                 }
 
-                this.Controls.Add(lb[i]); 
+                this.Controls.Add(lb[i]);
                 lb[i].Text = lb[i].Text.Replace("_", " ");
 
             }
         }
 
+        private void cb_Department_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                for (int i = 1; i < tb.Count(); i++)
+                {
+                    this.Controls.Remove(tb[i]);
+                    tb[i].Dispose();
+                    this.Controls.Remove(lb[i]);
+                    lb[i].Dispose();
+                    this.Controls.Remove(cb[i]);
+                    cb[i].Dispose();
+                    this.Controls.Remove(dtp[i]);
+                    dtp[i].Dispose();
+                    this.Controls.Remove(combo[i]);
+                    combo[i].Dispose();
+                }
+            }
+            catch
+            {
+
+            }
+
+            tempDepartment = cb_Departments.Text;
+
+            //switch (tempDepartment)
+            //{
+            //    case "Customer":
+            //        tb = new TextBox[14];
+            //        lb = new Label[14];
+            //        cb = new CheckBox[14];
+            //        dtp = new DateTimePicker[14];
+            //        break;
+            //    case "Invoice":
+            //        tb = new TextBox[10];
+            //        lb = new Label[10];
+            //        cb = new CheckBox[10];
+            //        dtp = new DateTimePicker[10];
+            //        break;
+            //    case "Project":
+            //        tb = new TextBox[11];
+            //        lb = new Label[11];
+            //        cb = new CheckBox[11];
+            //        dtp = new DateTimePicker[11];
+            //        break;
+            //    case "Appointment":
+            //        tb = new TextBox[6];
+            //        lb = new Label[6];
+            //        cb = new CheckBox[6];
+            //        dtp = new DateTimePicker[6];
+            //        break;
+            //    default:
+            //        MessageBox.Show("Something went wrong :c");
+            //        break;
+            //}
+
+           
+        }
+
         private string[] getColumnsName()
         {
-            switch (tempDepartment)
-            {
-                case "Customer":
-                    tabel = "TBL_CUSTOMERS";
-                    break;
-                case "Invoice":
-                    tabel = "TBL_INVOICES";
-                    break;
-                case "Project":
-                    tabel = "TBL_PROJECTS";
-                    break;
-                case "Appointment":
-                    tabel = "TBL_APPOINTMENTS";
-                    break;
-                default:
-                    MessageBox.Show("Something went wrong :c");
-                    break;
-            }
             List<string> listacolumnas = new List<string>();
             using (SqlCommand command = dbh.getCon().CreateCommand())
             {
-                command.CommandText = "select c.name from sys.columns c inner join sys.tables t on t.object_id = c.object_id and t.name = '" + tabel + "' and t.type = 'U'";
+                command.CommandText = "select c.name from sys.columns c inner join sys.tables t on t.object_id = c.object_id and t.name = '" + table + "' and t.type = 'U'";
                 dbh.openCon();
                 using (var reader = command.ExecuteReader())
                 {
@@ -253,24 +245,6 @@ Contract";
 
         private void btn_Add_Click(object sender, EventArgs e)
         {
-            switch (tempDepartment)
-            {
-                case "Customer":
-                    tabel = "TBL_CUSTOMERS";
-                    break;
-                case "Invoice":
-                    tabel = "TBL_INVOICES";
-                    break;
-                case "Project":
-                    tabel = "TBL_PROJECTS";
-                    break;
-                case "Appointment":
-                    tabel = "TBL_APPOINTMENTS";
-                    break;
-                default:
-                    MessageBox.Show("Something went wrong :c");
-                    break;
-            }
             Add();
         }
 
@@ -391,23 +365,23 @@ Contract";
             switch (tempDepartment)
             {
                 case "Customer":
-                    tabel = "TBL_CUSTOMERS";
+                    table = "TBL_CUSTOMERS";
                     break;
                 case "Invoice":
-                    tabel = "TBL_INVOICES";
+                    table = "TBL_INVOICES";
                     break;
                 case "Project":
-                    tabel = "TBL_PROJECTS";
+                    table = "TBL_PROJECTS";
                     break;
                 case "Appointment":
-                    tabel = "TBL_APPOINTMENTS";
+                    table = "TBL_APPOINTMENTS";
                     break;
                 default:
                     MessageBox.Show("Something went wrong :c");
                     break;
             }
 
-            switch (tabel)
+            switch (table)
             {
                 case "TBL_APPOINTMENTS":
                     return "tbl_Projects";
