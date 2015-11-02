@@ -33,6 +33,18 @@ namespace Barroc_IT_Groep5
             con = new SqlConnection(conString);
         }
 
+        public string getConState()
+        {
+            if (con.State == ConnectionState.Open)
+            {
+                return "Open";
+            }
+            else
+            {
+                return "False";
+            }
+
+        }
         public SqlConnection getCon()
         {
             return con;
@@ -40,7 +52,10 @@ namespace Barroc_IT_Groep5
 
         public void openCon()
         {
-            con.Open();
+            if (con.State != ConnectionState.Open)
+            {
+                con.Open();
+            }
         }
 
         public void closeCon()
@@ -75,7 +90,15 @@ namespace Barroc_IT_Groep5
             DataSet dt = new DataSet();
             adapter.Fill(dt);
             dgv.DataSource = dt.Tables[0];
-
+            if(dgv.Columns.Contains("Limit"))
+            {
+                dgv.Columns["Limit"].DefaultCellStyle.Format = "N2";
+            }
+            else if (dgv.Columns.Contains("Gross_Rev") || dgv.Columns.Contains("Price"))
+            {
+                dgv.Columns["Gross_Rev"].DefaultCellStyle.Format = "N2";
+                dgv.Columns["Price"].DefaultCellStyle.Format = "N2";
+            }
             closeCon();
 
         }

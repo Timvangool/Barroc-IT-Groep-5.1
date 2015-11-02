@@ -89,6 +89,7 @@
             this.btn_Print.TabIndex = 4;
             this.btn_Print.Text = "Print";
             this.btn_Print.UseVisualStyleBackColor = true;
+            this.btn_Print.Click += new System.EventHandler(this.btn_Print_Click);
             // 
             // btn_Search
             // 

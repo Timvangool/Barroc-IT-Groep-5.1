@@ -184,5 +184,10 @@ namespace Barroc_IT_5
 
             return temp;
         }
+
+        private void btn_Print_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
