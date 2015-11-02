@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Barroc_IT_Groep5;
 using System.Data.SqlClient;
-using System.Data.SqlTypes;
 
 namespace Barroc_IT_5
 {
@@ -100,7 +96,7 @@ namespace Barroc_IT_5
                     combo[i].Dispose();
                 }
             }
-            catch(Exception ex)
+            catch(Exception /*ex*/)
             {
                 //MessageBox.Show(ex.Message);
                 dbh.closeCon();
@@ -155,7 +151,7 @@ namespace Barroc_IT_5
                     xx += 250;
                 }
 
-                if (lb[i].Text == "Maintenance_Contract")
+                if (lb[i].Text == "maintenance_contract")
                 {
                     lb[i].Text = @"Maintenance
 Contract";
@@ -296,7 +292,7 @@ Contract";
                         dbh.openCon();
                         reader = cmd.ExecuteReader();
 
-                        string amount2 = null, bank_acc_number = null, price = null, gross_rev = null, ledger_acc_nr = null, tax_code = null, ID_project = null, name = null;
+                        string amount2 = null, bank_acc_number = null, gross_rev = null, ledger_acc_nr = null, tax_code = null, ID_project = null, name = null;
                         DateTime date = DateTime.Now;
                         bool is_paid = false, invoice_sent = false;
 
@@ -474,7 +470,6 @@ Contract";
             e.Handled = true;
         }
 
-
         private string[] getColumnsName()
         {
             List<string> listOfColumns = new List<string>();
@@ -609,6 +604,60 @@ Contract";
                 #endregion
                 #region Projects
                 case "tbl_Projects":
+                    TextBox P_name = Application.OpenForms["frm_Edit"].Controls["tb_name"] as TextBox;
+                    TextBox P_hardware = Application.OpenForms["frm_Edit"].Controls["tb_hardware"] as TextBox;
+                    TextBox P_os = Application.OpenForms["frm_Edit"].Controls["tb_operating_system"] as TextBox;
+                    CheckBox P_mc = Application.OpenForms["frm_Edit"].Controls["cb_maintenance_contract"] as CheckBox;
+                    TextBox P_applications = Application.OpenForms["frm_Edit"].Controls["tb_applications"] as TextBox;
+                    TextBox P_limit = Application.OpenForms["frm_Edit"].Controls["tb_limit"] as TextBox;
+                    CheckBox P_isdone = Application.OpenForms["frm_Edit"].Controls["cb_is_done"] as CheckBox;
+                    TextBox P_invoices = Application.OpenForms["frm_Edit"].Controls["tb_nr_invoices"] as TextBox;
+                    CheckBox P_bkr = Application.OpenForms["frm_Edit"].Controls["cb_BKR"] as CheckBox;
+                    CheckBox P_credit = Application.OpenForms["frm_Edit"].Controls["cb_creditworthy"] as CheckBox;
+                    ComboBox P_id_customer = Application.OpenForms["frm_Edit"].Controls["combo_Id_customer"] as ComboBox;
+
+                    convertedID = Convert.ToInt32(P_id_customer.SelectedValue);
+
+                    int mcIsChecked, isDoneIsChecked, bkrIsChecked, creditIsChecked;
+
+                    #region If Statements
+                    if (P_mc.Checked == true)
+                    {
+                        mcIsChecked = 1;
+                    }
+                    else { mcIsChecked = 0; }
+
+                    if (P_isdone.Checked == true)
+                    {
+                        isDoneIsChecked = 1;
+                    }
+                    else { isDoneIsChecked = 0; }
+
+                    if (P_bkr.Checked == true)
+                    {
+                        bkrIsChecked = 1;
+                    }
+                    else { bkrIsChecked = 0; }
+
+                    if (P_credit.Checked == true)
+                    {
+                        creditIsChecked = 1;
+                    }
+                    else { creditIsChecked = 0; }
+#endregion
+
+                    dbh.openCon();
+
+                    P_limit.Text = P_limit.Text.Replace(",", ".");
+
+                    insertQuery = "UPDATE " + table + " SET name='" + P_name.Text + "', hardware='" + P_hardware.Text + "', operating_system='" + P_os.Text + "', maintenance_contract='" + mcIsChecked + "', applications='" + P_applications.Text + "', limit='" + P_limit.Text + "', is_done='" + isDoneIsChecked + "', nr_invoices='" + P_invoices.Text + "', BKR='" + bkrIsChecked + "', creditworthy='" + creditIsChecked + "', Id_customer='" + CheckIDNull(convertedID) + "' WHERE ID=" + ID;
+
+                    cmd = new SqlCommand(insertQuery, dbh.getCon());
+                    cmd.ExecuteNonQuery();
+
+                    dbh.closeCon();
+                    MessageBox.Show("Save succesful.");
+
                     break;
                 #endregion
             }
@@ -638,7 +687,6 @@ Contract";
                 return reader.GetInt32(i).ToString();
             }
         }
-
 
         private string CheckForNullsString(SqlDataReader reader, int i)
         {
