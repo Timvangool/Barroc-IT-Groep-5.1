@@ -134,7 +134,7 @@ Contract";
                     dtp[i].Format = DateTimePickerFormat.Custom;
                     dtp[i].CustomFormat = "yyyy-MM-dd";
                 }
-                else if (tb[i].Name == "tb_potential_prospect" || tb[i].Name == "tb_is_paid" || tb[i].Name == "tb_invoice_sent" || tb[i].Name == "tb_is_done" || tb[i].Name == "tb_BKR" || tb[i].Name == "tb_creditworthy" || tb[i].Name == "tb_maintenance_contract")
+                else if (tb[i].Name == "tb_is_paid" || tb[i].Name == "tb_invoice_sent" || tb[i].Name == "tb_is_done" || tb[i].Name == "tb_BKR" || tb[i].Name == "tb_creditworthy" || tb[i].Name == "tb_maintenance_contract")
                 {
                     this.Controls.Add(cb[i]);
                 }
@@ -143,6 +143,11 @@ Contract";
 
                     this.Controls.Add(combo[i]);
                     SetComboBox(combo[i]);
+                }
+                else if (tb[i].Name == "tb_potential_prospect")
+                {
+                    this.Controls.Add(combo[i]);
+                    SetComboBoxProspect(combo[i]);
                 }
                 else
                 {
@@ -223,7 +228,7 @@ Contract";
                     cmd.Parameters.AddWithValue("@PHONE", tb[12].Text);
                     cmd.Parameters.AddWithValue("@FAX", tb[13].Text);
                     cmd.Parameters.AddWithValue("@EMAIL", tb[14].Text);
-                    cmd.Parameters.AddWithValue("@POTENTIAL_PROSPECT", checkboxState(cb[15]));
+                    cmd.Parameters.AddWithValue("@POTENTIAL_PROSPECT", combo[15].SelectedValue);
                 }
 
                 else if(table == "tbl_Invoices")
@@ -309,6 +314,20 @@ Contract";
             }
 
         }
+
+        private void SetComboBoxProspect(ComboBox comboBox)
+        {
+            comboBox.DisplayMember = "Text";
+            comboBox.ValueMember = "Value";
+
+            var items = new[] { 
+                new { Text = "Active", Value = "Active" }, 
+                new { Text = "Inactive", Value = "Inactive" }, 
+                new { Text = "Potential", Value = "Potential" },
+            };
+            comboBox.DataSource = items;
+        }
+
         private void SetComboBox(ComboBox combo)
         {
             cmd = new SqlCommand("SELECT ID,Name FROM " + GetFKTable() + "", dbh.getCon());
