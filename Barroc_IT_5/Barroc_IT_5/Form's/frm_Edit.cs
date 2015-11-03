@@ -21,6 +21,7 @@ namespace Barroc_IT_5
         public int permissions;
         public SqlDataReader reader;
         public string table;
+        public int? id;
 
         public frm_Edit()
         {
@@ -28,17 +29,20 @@ namespace Barroc_IT_5
             dbh = new SQLDatabaseHandler();
         }
 
-        //public frm_Edit(int permissions)
-        //{
-        //    this.permissions = permissions;
-        //    InitializeComponent();
-        //    dbh = new SQLDatabaseHandler();
-        //}
-
         public frm_Edit(int permissions, string table)
         {
             this.permissions = permissions;
             this.table = table;
+            InitializeComponent();
+            dbh = new SQLDatabaseHandler();
+        }
+
+        public frm_Edit(int permissions, string table, int id)
+        {
+            this.permissions = permissions;
+            this.table = table;
+            this.id = id;
+            
             InitializeComponent();
             dbh = new SQLDatabaseHandler();
         }
@@ -72,6 +76,11 @@ namespace Barroc_IT_5
 
             dbh.closeCon();
 
+            if (id != null)
+            {
+                cb_Customers.SelectedValue = id;
+            }
+            
             reader.Dispose();
         }
 
@@ -221,12 +230,10 @@ Contract";
 
                         dbh.closeCon();
                     }
-
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message);
                     }
-
                     break;
                 #endregion
                 #region Customers
@@ -278,7 +285,6 @@ Contract";
 
                         dbh.closeCon();
                     }
-
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message);
@@ -359,7 +365,6 @@ Contract";
                             operating_system = CheckForNullsString(reader, 3);
                             maintenance_contract = reader.GetBoolean(reader.GetOrdinal("maintenance_contract"));
                             applications = CheckForNullsString(reader, 5);
-                            //limit = CheckForNullsDecimal(reader, 6);
                             limit = Math.Round(reader.GetDecimal(6), 2).ToString();
                             is_done = reader.GetBoolean(reader.GetOrdinal("is_done"));
                             nr_invoices = CheckForNullsInt(reader, 8);
@@ -495,7 +500,6 @@ Contract";
         {
             string insertQuery;
             string ID = cb_Customers.SelectedValue.ToString();
-            
 
             switch (table)
             {
@@ -661,6 +665,20 @@ Contract";
                     break;
                 #endregion
             }
+
+            dbh.closeCon();
+            Form frm_Main = new frm_Main(permissions);
+            frm_Main.StartPosition = FormStartPosition.CenterScreen;
+            Program.setForm(frm_Main);
+            this.Close();
+        }
+
+        private void btn_Cancel_Click(object sender, EventArgs e)
+        {
+            Form frm_Main = new frm_Main(permissions);
+            frm_Main.StartPosition = FormStartPosition.CenterScreen;
+            Program.setForm(frm_Main);
+            this.Close();
         }
 
         private object CheckIDNull(int ID)
@@ -673,7 +691,6 @@ Contract";
             {
                 return ID;
             }
-        
         }
 
         private string CheckForNullsInt(SqlDataReader reader, int i)

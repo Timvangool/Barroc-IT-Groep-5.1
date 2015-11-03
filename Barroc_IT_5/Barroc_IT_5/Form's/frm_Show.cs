@@ -45,6 +45,66 @@ namespace Barroc_IT_5
             this.department = department;
             dbh = new SQLDatabaseHandler();
             InitializeComponent();
+
+            #region IfAdmin
+            if (permissions == 1)
+            {
+                btn_Add.Enabled = true;
+                btn_Edit.Enabled = true;
+                btn_Delete.Enabled = true; 
+            }
+            #endregion
+            #region IfSales
+            if (permissions == 2)
+            {
+                if (department == "TBL_INVOICES")
+                {
+                    btn_Add.Enabled = false;
+                    btn_Edit.Enabled = false;
+                    btn_Delete.Enabled = false;
+                }
+                else
+                {
+                    btn_Add.Enabled = true;
+                    btn_Edit.Enabled = true;
+                    btn_Delete.Enabled = true;
+                }
+            }
+            #endregion
+            #region IfFinance
+            if (permissions == 3)
+            {
+                if (department == "TBL_PROJECTS" || department == "TBL_APPOINTMENTS")
+                {
+                    btn_Add.Enabled = false;
+                    btn_Edit.Enabled = false;
+                    btn_Delete.Enabled = false;
+                }
+                else
+                {
+                    btn_Add.Enabled = true;
+                    btn_Edit.Enabled = true;
+                    btn_Delete.Enabled = true;
+                }
+            }
+            #endregion
+            #region IfDevelopment
+            if (permissions == 4)
+            {
+                if (department == "TBL_CUSTOMERS" || department == "TBL_INVOICES" || department == "TBL_APPOINTMENTS")
+                {
+                    btn_Add.Enabled = false;
+                    btn_Edit.Enabled = false;
+                    btn_Delete.Enabled = false;
+                }
+                else
+                {
+                    btn_Add.Enabled = false;
+                    btn_Edit.Enabled = true;
+                    btn_Delete.Enabled = false;
+                }
+            }
+            #endregion
         }
 
         private void panel1_MouseDown(object sender, MouseEventArgs e)
@@ -100,7 +160,6 @@ namespace Barroc_IT_5
                     MessageBox.Show("Something went wrong :C");
                     break;
             }
-
         }
 
         private void btn_Exit_Click(object sender, EventArgs e)
@@ -135,19 +194,43 @@ namespace Barroc_IT_5
 
         private void btn_Edit_Click(object sender, EventArgs e)
         {
-            Form frm_edit = new frm_Edit(permissions, department);
+            int selectedIndex = dgv_Show.SelectedRows[0].Index;
+            int rowID = int.Parse(dgv_Show[0, selectedIndex].Value.ToString());
+
+            Form frm_edit = new frm_Edit(permissions, GetDepartment(department), rowID);
             frm_edit.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frm_edit);
             this.Close();
+        }
+
+        private string GetDepartment(string department)
+        {
+            switch (department)
+            {
+                case "TBL_CUSTOMERS":
+                    return "tbl_Customers";
+                case "TBL_INVOICES":
+                    return "tbl_Invoices";
+                case "TBL_APPOINTMENTS":
+                    return "tbl_Appointments";
+                case "TBL_PROJECTS":
+                    return "tbl_Projects";
+                default:
+                    return "";
+                    
+            }
         }
 
         private void btn_Delete_Click(object sender, EventArgs e)
         {
             foreach (DataGridViewRow dgvr in this.dgv_Show.SelectedRows)
             {
+                int selectedIndex = dgv_Show.SelectedRows[0].Index;
+                int rowID = int.Parse(dgv_Show[0, selectedIndex].Value.ToString());
+
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "DELETE * FROM " + department + " WHERE " + ConvertDepartment() + "=" + dgvr.Index + "";
+                cmd.CommandText = "DELETE FROM " + department + " WHERE ID="  + rowID + "";
                 cmd.Connection = dbh.getCon();
 
                 dbh.openCon();
