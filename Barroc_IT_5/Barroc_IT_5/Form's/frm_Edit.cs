@@ -28,12 +28,12 @@ namespace Barroc_IT_5
             dbh = new SQLDatabaseHandler();
         }
 
-        public frm_Edit(int permissions)
-        {
-            this.permissions = permissions;
-            InitializeComponent();
-            dbh = new SQLDatabaseHandler();
-        }
+        //public frm_Edit(int permissions)
+        //{
+        //    this.permissions = permissions;
+        //    InitializeComponent();
+        //    dbh = new SQLDatabaseHandler();
+        //}
 
         public frm_Edit(int permissions, string table)
         {

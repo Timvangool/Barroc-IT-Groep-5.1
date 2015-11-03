@@ -45,7 +45,6 @@ namespace Barroc_IT_5
             this.department = department;
             dbh = new SQLDatabaseHandler();
             InitializeComponent();
-            
         }
 
         private void panel1_MouseDown(object sender, MouseEventArgs e)
@@ -69,7 +68,7 @@ namespace Barroc_IT_5
 
             string[] customers = new string[14] { "Name", "Address1", "HouseNr1", "Zip_Code1", "Place1", "Country", "Address2", "HouseNr2", "Zip_Code2", "Place2", "Fax", "Email", "Potential_Prospect", "Phone" };
 
-            string[] projects= new string[10] {"Naam","Hardware","Operating_System","Maintenance_Contract","Applications","Limit","Nr_Invoices","Is_Done","BKR","Credit_Worthy" };
+            string[] projects = new string[10] {"Naam","Hardware","Operating_System","Maintenance_Contract","Applications","Limit","Nr_Invoices","Is_Done","BKR","Credit_Worthy" };
 
             switch (department)
             {
@@ -124,7 +123,6 @@ namespace Barroc_IT_5
             string tempQuery = "SELECT * FROM " + department + " WHERE " + cb_Tabledata.Text + " LIKE '%" + textBox1.Text + "%'";
 
             dbh.FillDataGridView(dgv_Show, tempQuery);
-
         }
 
         private void btn_Add_Click(object sender, EventArgs e)
@@ -137,7 +135,7 @@ namespace Barroc_IT_5
 
         private void btn_Edit_Click(object sender, EventArgs e)
         {
-            Form frm_edit = new frm_Edit(permissions);
+            Form frm_edit = new frm_Edit(permissions, department);
             frm_edit.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frm_edit);
             this.Close();
@@ -181,7 +179,6 @@ namespace Barroc_IT_5
                     MessageBox.Show("Something went wrong :C");
                     break;
             }
-
             return temp;
         }
 
