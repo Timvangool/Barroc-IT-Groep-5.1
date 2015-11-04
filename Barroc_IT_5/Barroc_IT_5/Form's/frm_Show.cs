@@ -30,6 +30,7 @@ namespace Barroc_IT_5
         public string query, department;
         public int permissions;
 
+        // Default constructor
 
         public frm_Show()
         {
@@ -38,6 +39,8 @@ namespace Barroc_IT_5
             
         }
 
+        //Custom constructor
+        
         public frm_Show(string query, int permissions, string department)
         {
             this.query = query;
@@ -106,6 +109,8 @@ namespace Barroc_IT_5
             }
             #endregion
         }
+
+        // Allows the form to be moved.
 
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -203,6 +208,8 @@ namespace Barroc_IT_5
             this.Close();
         }
 
+        // Returns the tabel name of the department that was selected in the main menu.
+
         private string GetDepartment(string department)
         {
             switch (department)
@@ -223,6 +230,8 @@ namespace Barroc_IT_5
 
         private void btn_Delete_Click(object sender, EventArgs e)
         {
+            // Deletes the selected Customer/Invoice/Project/Appointment.
+
             foreach (DataGridViewRow dgvr in this.dgv_Show.SelectedRows)
             {
                 int selectedIndex = dgv_Show.SelectedRows[0].Index;
@@ -238,31 +247,6 @@ namespace Barroc_IT_5
                 dbh.FillDataGridView(dgv_Show, "SELECT * FROM " + department);
                 dbh.closeCon();          
             }
-        }
-
-        public string ConvertDepartment()
-        {
-            string temp = "";
-
-            switch (department)
-            {
-                case "TBL_CUSTOMERS":
-                    temp = "ID_CUSTOMER";
-                    break;
-                case "TBL_INVOICES":
-                    temp = "ID_INVOICE";
-                    break;
-                case "TBL_APPOINTMENTS":
-                    temp = "ID_APPOINTMENT";
-                    break;
-                case "TBL_PROJECTS":
-                    temp = "ID_PROJECT";
-                    break;
-                default:
-                    MessageBox.Show("Something went wrong :C");
-                    break;
-            }
-            return temp;
         }
 
         private void btn_Print_Click(object sender, EventArgs e)

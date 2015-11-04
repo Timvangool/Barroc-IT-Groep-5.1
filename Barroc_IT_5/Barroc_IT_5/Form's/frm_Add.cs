@@ -26,6 +26,9 @@ namespace Barroc_IT_5
         List<string> columns;
 
         public string table;
+
+
+        // Default constructor
         public frm_Add()
         {
             InitializeComponent();
@@ -39,14 +42,14 @@ namespace Barroc_IT_5
             }
             sqlDR.Close();
         }
-
+       // Custom constructor
         public frm_Add(int permissions)
         {
             this.permissions = permissions;
             dbh = new SQLDatabaseHandler();
             InitializeComponent();
         }
-
+        // Custom Constructor
         public frm_Add(int permissions, string table)
         {
             this.permissions = permissions;
@@ -54,7 +57,7 @@ namespace Barroc_IT_5
             dbh = new SQLDatabaseHandler();
             InitializeComponent();
         }
-
+        // btn_Click event to exit the application.
         private void btn_Exit_Click(object sender, EventArgs e)
         {
             Form frm_Main = new frm_Main(permissions);
@@ -62,7 +65,7 @@ namespace Barroc_IT_5
             Program.setForm(frm_Main);
             this.Close();
         }
-
+        // btn_Click event to exit the application.
         private void btn_Back_Click(object sender, EventArgs e)
         {
             Form frm_Main = new frm_Main(permissions);
@@ -87,6 +90,7 @@ namespace Barroc_IT_5
             string[] temp = new string[tb.Length];
             temp = getColumnsName();
 
+            // Initializes all dynamic controls.
             for (int i = 1; i < temp.Length; i++)
             {
                 tb[i] = new TextBox();
@@ -121,7 +125,10 @@ namespace Barroc_IT_5
                     x += 250;
                     xx += 250;
                 }
-                if (lb[i].Text == "maintenance_contract")
+
+                // Replaces textBoxes with the correct control
+
+                if (lb[i].Text == "lb_maintenance_contract" || lb[i].Text == "lb_Maintenance_Contract")
                 {
                     lb[i].Text = @"Maintenance
 Contract";
@@ -159,7 +166,7 @@ Contract";
 
             }
         }
-
+        // Get the column names from the database.
         private string[] getColumnsName()
         {
             List<string> listacolumnas = new List<string>();
@@ -183,6 +190,8 @@ Contract";
         {
             Add();
         }
+
+        // Method to add a  new Customer/Invoice/Appointment/Project.
 
         public void Add()
         {
@@ -315,6 +324,8 @@ Contract";
 
         }
 
+        // Add a comboBox to make a customer Active/Inacctive/Potential.
+
         private void SetComboBoxProspect(ComboBox comboBox)
         {
             comboBox.DisplayMember = "Text";
@@ -327,6 +338,8 @@ Contract";
             };
             comboBox.DataSource = items;
         }
+
+        // Loads ForeignKeys into a comboBox and gives them the correct ID.
 
         private void SetComboBox(ComboBox combo)
         {
@@ -354,6 +367,8 @@ Contract";
             reader.Dispose();
         }
 
+        // Returns the foreign key form a tabel.
+        
         private string GetFKTable()
         {
 
@@ -369,6 +384,9 @@ Contract";
                     return "";
             }
         }
+
+        // Fills the comboBox with the name's of the Customers/Invoices/Projects
+
         private string SetComboText(string ID_customer)
         {
             cmd = new SqlCommand("SELECT Name FROM " + GetFKTable() + " WHERE ID = " + ID_customer + "", dbh.getCon());
@@ -384,6 +402,8 @@ Contract";
             return temp;
         }
 
+        // Checks if a checkBox is checked.
+
         private string checkboxState(CheckBox cb)
         {
             int temp = 235;
@@ -397,6 +417,8 @@ Contract";
                     }
             return temp.ToString();
         }
+
+        // Checks if the column 'ID' is NULL.
 
         private object CheckIDNull(int ID)
         {
