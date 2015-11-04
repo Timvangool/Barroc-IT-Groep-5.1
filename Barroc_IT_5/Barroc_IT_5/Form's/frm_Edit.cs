@@ -6,11 +6,17 @@ using System.Linq;
 using System.Windows.Forms;
 using Barroc_IT_Groep5;
 using System.Data.SqlClient;
+using System.Runtime.InteropServices;
 
 namespace Barroc_IT_5
 {
     public partial class frm_Edit : Form
     {
+        [DllImportAttribute("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        [DllImportAttribute("user32.dll")]
+        public static extern bool ReleaseCapture();
+
         SQLDatabaseHandler dbh;
         public SqlCommand cmd;
         public TextBox[] tb;
@@ -23,12 +29,14 @@ namespace Barroc_IT_5
         public string table;
         public int? id;
 
+        //Default constructor
         public frm_Edit()
         {
             InitializeComponent();
             dbh = new SQLDatabaseHandler();
         }
 
+        //Custom constructor
         public frm_Edit(int permissions, string table)
         {
             this.permissions = permissions;
@@ -37,6 +45,7 @@ namespace Barroc_IT_5
             dbh = new SQLDatabaseHandler();
         }
 
+        //Custom contructor
         public frm_Edit(int permissions, string table, int id)
         {
             this.permissions = permissions;
@@ -55,6 +64,7 @@ namespace Barroc_IT_5
             this.Close();
         }
 
+        //Fills combobox with IDs and Names from the table defined in the custom constructor.
         private void frm_Edit_Load(object sender, EventArgs e)
         {
             this.StartPosition = FormStartPosition.CenterScreen;
@@ -84,6 +94,7 @@ namespace Barroc_IT_5
             reader.Dispose();
         }
 
+        //This creates the texboxes, comboboxes, checkboxes and labels filled with data from the selected record in the combobox.
         public void cb_Customers_SelectedIndexChanged(object sender, EventArgs e)
         {
             dbh.closeCon();
@@ -105,9 +116,8 @@ namespace Barroc_IT_5
                     combo[i].Dispose();
                 }
             }
-            catch(Exception /*ex*/)
+            catch(Exception)
             {
-                //MessageBox.Show(ex.Message);
                 dbh.closeCon();
             }
 
@@ -409,6 +419,7 @@ Contract";
             dbh.closeCon();
         }
 
+        //Fill the combobox with records from another table by using the foreign key from this table.
         private void SetComboBox(ComboBox combo)
         {
             cmd = new SqlCommand("SELECT ID,Name FROM "+ GetFKTable() + "", dbh.getCon());
@@ -435,6 +446,7 @@ Contract";
             reader.Dispose();
         }
 
+        //returns the foreign key.
         private string GetFKTable()
         {
             switch (table)
@@ -450,9 +462,10 @@ Contract";
             }
         }
 
-        private string SetComboText(string ID_customer)
+        //sets the combobox on the correct record by using the ID parameter
+        private string SetComboText(string ID)
         {
-            cmd = new SqlCommand("SELECT Name FROM " + GetFKTable() + " WHERE ID = " + ID_customer +"", dbh.getCon());
+            cmd = new SqlCommand("SELECT Name FROM " + GetFKTable() + " WHERE ID = " + ID +"", dbh.getCon());
             SqlDataReader reader;
 
             reader = cmd.ExecuteReader();
@@ -475,6 +488,7 @@ Contract";
             e.Handled = true;
         }
 
+        //returns all column headers in array.
         private string[] getColumnsName()
         {
             List<string> listOfColumns = new List<string>();
@@ -496,182 +510,191 @@ Contract";
             return listOfColumns.ToArray();
         }
 
+        //saves record to database.
         private void btn_Save_Click(object sender, EventArgs e)
         {
-            string insertQuery;
-            string ID = cb_Customers.SelectedValue.ToString();
-
-            switch (table)
+            try
             {
-                #region Appointments
-                case "tbl_Appointments":
-                    TextBox A_description = Application.OpenForms["frm_Edit"].Controls["tb_description"] as TextBox;
-                    DateTimePicker A_date = Application.OpenForms["frm_Edit"].Controls["dtp_date"] as DateTimePicker;
-                    TextBox A_next_action = Application.OpenForms["frm_Edit"].Controls["tb_next_action"] as TextBox;
-                    TextBox A_name = Application.OpenForms["frm_Edit"].Controls["tb_name"] as TextBox;
-                    ComboBox A_Id_project = Application.OpenForms["frm_Edit"].Controls["combo_Id_project"] as ComboBox;
+                string insertQuery;
+                string ID = cb_Customers.SelectedValue.ToString();
 
-                    int convertedID = Convert.ToInt32(A_Id_project.SelectedValue);
+                switch (table)
+                {
+                    #region Appointments
+                    case "tbl_Appointments":
+                        TextBox A_description = Application.OpenForms["frm_Edit"].Controls["tb_description"] as TextBox;
+                        DateTimePicker A_date = Application.OpenForms["frm_Edit"].Controls["dtp_date"] as DateTimePicker;
+                        TextBox A_next_action = Application.OpenForms["frm_Edit"].Controls["tb_next_action"] as TextBox;
+                        TextBox A_name = Application.OpenForms["frm_Edit"].Controls["tb_name"] as TextBox;
+                        ComboBox A_Id_project = Application.OpenForms["frm_Edit"].Controls["combo_Id_project"] as ComboBox;
 
-                    dbh.openCon();
+                        int convertedID = Convert.ToInt32(A_Id_project.SelectedValue);
 
-                    insertQuery = "UPDATE " + table + " SET description='" + A_description.Text + "', date='" + A_date.Text + "', next_action='" + A_next_action.Text + "', ID_project='" + convertedID + "', name='" + A_name.Text + "' WHERE ID=" + ID;
-                    SqlCommand cmd = new SqlCommand(insertQuery, dbh.getCon());
-                    cmd.ExecuteNonQuery();
+                        dbh.openCon();
 
-                    dbh.closeCon();
-                    MessageBox.Show("Save succesful.");
-                    break;
-                #endregion
-                #region Customers
-                case "tbl_Customers":
-                    TextBox C_name = Application.OpenForms["frm_Edit"].Controls["tb_name"] as TextBox;
-                    TextBox C_address1 = Application.OpenForms["frm_Edit"].Controls["tb_address1"] as TextBox;
-                    TextBox C_housenr1 = Application.OpenForms["frm_Edit"].Controls["tb_housenr1"] as TextBox;
-                    TextBox C_zip_code1 = Application.OpenForms["frm_Edit"].Controls["tb_zip_code1"] as TextBox;
-                    TextBox C_place1 = Application.OpenForms["frm_Edit"].Controls["tb_place1"] as TextBox;
-                    TextBox C_country1 = Application.OpenForms["frm_Edit"].Controls["tb_country1"] as TextBox;
-                    TextBox C_address2 = Application.OpenForms["frm_Edit"].Controls["tb_address2"] as TextBox;
-                    TextBox C_housenr2 = Application.OpenForms["frm_Edit"].Controls["tb_housenr2"] as TextBox;
-                    TextBox C_zip_code2 = Application.OpenForms["frm_Edit"].Controls["tb_zip_code2"] as TextBox;
-                    TextBox C_place2 = Application.OpenForms["frm_Edit"].Controls["tb_place2"] as TextBox;
-                    TextBox C_country2 = Application.OpenForms["frm_Edit"].Controls["tb_country2"] as TextBox;
-                    TextBox C_phone = Application.OpenForms["frm_Edit"].Controls["tb_phone"] as TextBox;
-                    TextBox C_fax = Application.OpenForms["frm_Edit"].Controls["tb_fax"] as TextBox;
-                    TextBox C_email = Application.OpenForms["frm_Edit"].Controls["tb_email"] as TextBox;
-                    CheckBox C_potential_prospect = Application.OpenForms["frm_Edit"].Controls["cb_potential_prospect"] as CheckBox;
+                        insertQuery = "UPDATE " + table + " SET description='" + A_description.Text + "', date='" + A_date.Text + "', next_action='" + A_next_action.Text + "', ID_project='" + convertedID + "', name='" + A_name.Text + "' WHERE ID=" + ID;
+                        SqlCommand cmd = new SqlCommand(insertQuery, dbh.getCon());
+                        cmd.ExecuteNonQuery();
 
-                    int cbIsChecked;
+                        dbh.closeCon();
+                        MessageBox.Show("Save succesful.");
+                        break;
+                    #endregion
+                    #region Customers
+                    case "tbl_Customers":
+                        TextBox C_name = Application.OpenForms["frm_Edit"].Controls["tb_name"] as TextBox;
+                        TextBox C_address1 = Application.OpenForms["frm_Edit"].Controls["tb_address1"] as TextBox;
+                        TextBox C_housenr1 = Application.OpenForms["frm_Edit"].Controls["tb_housenr1"] as TextBox;
+                        TextBox C_zip_code1 = Application.OpenForms["frm_Edit"].Controls["tb_zip_code1"] as TextBox;
+                        TextBox C_place1 = Application.OpenForms["frm_Edit"].Controls["tb_place1"] as TextBox;
+                        TextBox C_country1 = Application.OpenForms["frm_Edit"].Controls["tb_country1"] as TextBox;
+                        TextBox C_address2 = Application.OpenForms["frm_Edit"].Controls["tb_address2"] as TextBox;
+                        TextBox C_housenr2 = Application.OpenForms["frm_Edit"].Controls["tb_housenr2"] as TextBox;
+                        TextBox C_zip_code2 = Application.OpenForms["frm_Edit"].Controls["tb_zip_code2"] as TextBox;
+                        TextBox C_place2 = Application.OpenForms["frm_Edit"].Controls["tb_place2"] as TextBox;
+                        TextBox C_country2 = Application.OpenForms["frm_Edit"].Controls["tb_country2"] as TextBox;
+                        TextBox C_phone = Application.OpenForms["frm_Edit"].Controls["tb_phone"] as TextBox;
+                        TextBox C_fax = Application.OpenForms["frm_Edit"].Controls["tb_fax"] as TextBox;
+                        TextBox C_email = Application.OpenForms["frm_Edit"].Controls["tb_email"] as TextBox;
+                        CheckBox C_potential_prospect = Application.OpenForms["frm_Edit"].Controls["cb_potential_prospect"] as CheckBox;
 
-                    if (C_potential_prospect.Checked == true)
-                    {
-                        cbIsChecked = 1;
-                    }
-                    else
-                    {
-                        cbIsChecked = 0;
-                    }
+                        int cbIsChecked;
 
-                    dbh.openCon();
+                        if (C_potential_prospect.Checked == true)
+                        {
+                            cbIsChecked = 1;
+                        }
+                        else
+                        {
+                            cbIsChecked = 0;
+                        }
 
-                    insertQuery = "UPDATE " + table + " SET name='" + C_name.Text + "', address1='" + C_address1.Text + "', housenr1='" + C_housenr1.Text + "', zip_code1='" + C_zip_code1.Text + "', place1='" + C_place1.Text + "', country1='" + C_country1.Text + "', address2='" + C_address2.Text + "', housenr2='" + C_housenr2.Text + "', zip_code2='" + C_zip_code2.Text + "', place2='" + C_place2.Text + "', country2='" + C_country2.Text + "', phone='" + C_phone.Text + "', fax='" + C_fax.Text + "', email='" + C_email.Text + "', potential_prospect='" + cbIsChecked + "' WHERE ID=" + ID;
-                    cmd = new SqlCommand(insertQuery, dbh.getCon());
-                    cmd.ExecuteNonQuery();
+                        dbh.openCon();
 
-                    dbh.closeCon();
-                    MessageBox.Show("Save succesful.");
-                    break;
-                #endregion
-                #region Invoices
-                case "tbl_Invoices":
-                    TextBox I_amount = Application.OpenForms["frm_Edit"].Controls["tb_amount"] as TextBox;
-                    TextBox I_bank_acc_nr = Application.OpenForms["frm_Edit"].Controls["tb_bank_acc_nr"] as TextBox;
-                    TextBox I_gross_rev = Application.OpenForms["frm_Edit"].Controls["tb_gross_rev"] as TextBox;
-                    TextBox I_ledger_acc_nr = Application.OpenForms["frm_Edit"].Controls["tb_ledger_acc_nr"] as TextBox;
-                    TextBox I_tax_code = Application.OpenForms["frm_Edit"].Controls["tb_tax_code"] as TextBox;
-                    CheckBox I_is_paid = Application.OpenForms["frm_Edit"].Controls["cb_is_paid"] as CheckBox;
-                    CheckBox I_invoice_sent = Application.OpenForms["frm_Edit"].Controls["cb_invoice_sent"] as CheckBox;
-                    DateTimePicker I_date = Application.OpenForms["frm_Edit"].Controls["dtp_date"] as DateTimePicker;
-                    ComboBox I_id_project = Application.OpenForms["frm_Edit"].Controls["combo_Id_project"] as ComboBox;
-                    TextBox I_name = Application.OpenForms["frm_Edit"].Controls["tb_name"] as TextBox;
+                        insertQuery = "UPDATE " + table + " SET name='" + C_name.Text + "', address1='" + C_address1.Text + "', housenr1='" + C_housenr1.Text + "', zip_code1='" + C_zip_code1.Text + "', place1='" + C_place1.Text + "', country1='" + C_country1.Text + "', address2='" + C_address2.Text + "', housenr2='" + C_housenr2.Text + "', zip_code2='" + C_zip_code2.Text + "', place2='" + C_place2.Text + "', country2='" + C_country2.Text + "', phone='" + C_phone.Text + "', fax='" + C_fax.Text + "', email='" + C_email.Text + "', potential_prospect='" + cbIsChecked + "' WHERE ID=" + ID;
+                        cmd = new SqlCommand(insertQuery, dbh.getCon());
+                        cmd.ExecuteNonQuery();
 
-                    int isPaidIsChecked, invoiceSendIsChecked;
+                        dbh.closeCon();
+                        MessageBox.Show("Save succesful.");
+                        break;
+                    #endregion
+                    #region Invoices
+                    case "tbl_Invoices":
+                        TextBox I_amount = Application.OpenForms["frm_Edit"].Controls["tb_amount"] as TextBox;
+                        TextBox I_bank_acc_nr = Application.OpenForms["frm_Edit"].Controls["tb_bank_acc_nr"] as TextBox;
+                        TextBox I_gross_rev = Application.OpenForms["frm_Edit"].Controls["tb_gross_rev"] as TextBox;
+                        TextBox I_ledger_acc_nr = Application.OpenForms["frm_Edit"].Controls["tb_ledger_acc_nr"] as TextBox;
+                        TextBox I_tax_code = Application.OpenForms["frm_Edit"].Controls["tb_tax_code"] as TextBox;
+                        CheckBox I_is_paid = Application.OpenForms["frm_Edit"].Controls["cb_is_paid"] as CheckBox;
+                        CheckBox I_invoice_sent = Application.OpenForms["frm_Edit"].Controls["cb_invoice_sent"] as CheckBox;
+                        DateTimePicker I_date = Application.OpenForms["frm_Edit"].Controls["dtp_date"] as DateTimePicker;
+                        ComboBox I_id_project = Application.OpenForms["frm_Edit"].Controls["combo_Id_project"] as ComboBox;
+                        TextBox I_name = Application.OpenForms["frm_Edit"].Controls["tb_name"] as TextBox;
 
-                    convertedID = Convert.ToInt32(I_id_project.SelectedValue);
+                        int isPaidIsChecked, invoiceSendIsChecked;
 
-                    if (I_is_paid.Checked == true)
-                    {
-                        isPaidIsChecked = 1;
-                    }
-                    else { isPaidIsChecked = 0; }
+                        convertedID = Convert.ToInt32(I_id_project.SelectedValue);
 
-                    if (I_invoice_sent.Checked == true)
-                    {
-                        invoiceSendIsChecked = 1;
-                    }
-                    else { invoiceSendIsChecked = 0; }
+                        if (I_is_paid.Checked == true)
+                        {
+                            isPaidIsChecked = 1;
+                        }
+                        else { isPaidIsChecked = 0; }
 
-                    dbh.openCon();
+                        if (I_invoice_sent.Checked == true)
+                        {
+                            invoiceSendIsChecked = 1;
+                        }
+                        else { invoiceSendIsChecked = 0; }
 
-                    I_amount.Text = I_amount.Text.Replace(",", ".");
-                    I_gross_rev.Text = I_gross_rev.Text.Replace(",", ".");
-                    
-                    insertQuery = "UPDATE " + table + " SET amount='" + I_amount.Text + "', bank_acc_nr='" + I_bank_acc_nr.Text + "', gross_rev='" + I_gross_rev.Text + "', ledger_acc_nr='" + I_ledger_acc_nr.Text + "', tax_code='" + I_tax_code.Text + "', is_paid='" + isPaidIsChecked + "', invoice_sent='" + invoiceSendIsChecked + "', date='" + I_date.Text + "', Id_project=" + CheckIDNull(convertedID) + ", name='" + I_name.Text + "' WHERE ID=" + ID;
-                    
-                    cmd = new SqlCommand(insertQuery, dbh.getCon());
-                    cmd.ExecuteNonQuery();
+                        dbh.openCon();
 
-                    dbh.closeCon();
-                    MessageBox.Show("Save succesful.");
+                        I_amount.Text = I_amount.Text.Replace(",", ".");
+                        I_gross_rev.Text = I_gross_rev.Text.Replace(",", ".");
 
-                    break;
-                #endregion
-                #region Projects
-                case "tbl_Projects":
-                    TextBox P_name = Application.OpenForms["frm_Edit"].Controls["tb_name"] as TextBox;
-                    TextBox P_hardware = Application.OpenForms["frm_Edit"].Controls["tb_hardware"] as TextBox;
-                    TextBox P_os = Application.OpenForms["frm_Edit"].Controls["tb_operating_system"] as TextBox;
-                    CheckBox P_mc = Application.OpenForms["frm_Edit"].Controls["cb_maintenance_contract"] as CheckBox;
-                    TextBox P_applications = Application.OpenForms["frm_Edit"].Controls["tb_applications"] as TextBox;
-                    TextBox P_limit = Application.OpenForms["frm_Edit"].Controls["tb_limit"] as TextBox;
-                    CheckBox P_isdone = Application.OpenForms["frm_Edit"].Controls["cb_is_done"] as CheckBox;
-                    TextBox P_invoices = Application.OpenForms["frm_Edit"].Controls["tb_nr_invoices"] as TextBox;
-                    CheckBox P_bkr = Application.OpenForms["frm_Edit"].Controls["cb_BKR"] as CheckBox;
-                    CheckBox P_credit = Application.OpenForms["frm_Edit"].Controls["cb_creditworthy"] as CheckBox;
-                    ComboBox P_id_customer = Application.OpenForms["frm_Edit"].Controls["combo_Id_customer"] as ComboBox;
+                        insertQuery = "UPDATE " + table + " SET amount='" + I_amount.Text + "', bank_acc_nr='" + I_bank_acc_nr.Text + "', gross_rev='" + I_gross_rev.Text + "', ledger_acc_nr='" + I_ledger_acc_nr.Text + "', tax_code='" + I_tax_code.Text + "', is_paid='" + isPaidIsChecked + "', invoice_sent='" + invoiceSendIsChecked + "', date='" + I_date.Text + "', Id_project=" + CheckIDNull(convertedID) + ", name='" + I_name.Text + "' WHERE ID=" + ID;
 
-                    convertedID = Convert.ToInt32(P_id_customer.SelectedValue);
+                        cmd = new SqlCommand(insertQuery, dbh.getCon());
+                        cmd.ExecuteNonQuery();
 
-                    int mcIsChecked, isDoneIsChecked, bkrIsChecked, creditIsChecked;
+                        dbh.closeCon();
+                        MessageBox.Show("Save succesful.");
 
-                    #region If Statements
-                    if (P_mc.Checked == true)
-                    {
-                        mcIsChecked = 1;
-                    }
-                    else { mcIsChecked = 0; }
+                        break;
+                    #endregion
+                    #region Projects
+                    case "tbl_Projects":
+                        TextBox P_name = Application.OpenForms["frm_Edit"].Controls["tb_name"] as TextBox;
+                        TextBox P_hardware = Application.OpenForms["frm_Edit"].Controls["tb_hardware"] as TextBox;
+                        TextBox P_os = Application.OpenForms["frm_Edit"].Controls["tb_operating_system"] as TextBox;
+                        CheckBox P_mc = Application.OpenForms["frm_Edit"].Controls["cb_maintenance_contract"] as CheckBox;
+                        TextBox P_applications = Application.OpenForms["frm_Edit"].Controls["tb_applications"] as TextBox;
+                        TextBox P_limit = Application.OpenForms["frm_Edit"].Controls["tb_limit"] as TextBox;
+                        CheckBox P_isdone = Application.OpenForms["frm_Edit"].Controls["cb_is_done"] as CheckBox;
+                        TextBox P_invoices = Application.OpenForms["frm_Edit"].Controls["tb_nr_invoices"] as TextBox;
+                        CheckBox P_bkr = Application.OpenForms["frm_Edit"].Controls["cb_BKR"] as CheckBox;
+                        CheckBox P_credit = Application.OpenForms["frm_Edit"].Controls["cb_creditworthy"] as CheckBox;
+                        ComboBox P_id_customer = Application.OpenForms["frm_Edit"].Controls["combo_Id_customer"] as ComboBox;
 
-                    if (P_isdone.Checked == true)
-                    {
-                        isDoneIsChecked = 1;
-                    }
-                    else { isDoneIsChecked = 0; }
+                        convertedID = Convert.ToInt32(P_id_customer.SelectedValue);
 
-                    if (P_bkr.Checked == true)
-                    {
-                        bkrIsChecked = 1;
-                    }
-                    else { bkrIsChecked = 0; }
+                        int mcIsChecked, isDoneIsChecked, bkrIsChecked, creditIsChecked;
 
-                    if (P_credit.Checked == true)
-                    {
-                        creditIsChecked = 1;
-                    }
-                    else { creditIsChecked = 0; }
-#endregion
+                        #region If Statements
+                        if (P_mc.Checked == true)
+                        {
+                            mcIsChecked = 1;
+                        }
+                        else { mcIsChecked = 0; }
 
-                    dbh.openCon();
+                        if (P_isdone.Checked == true)
+                        {
+                            isDoneIsChecked = 1;
+                        }
+                        else { isDoneIsChecked = 0; }
 
-                    P_limit.Text = P_limit.Text.Replace(",", ".");
+                        if (P_bkr.Checked == true)
+                        {
+                            bkrIsChecked = 1;
+                        }
+                        else { bkrIsChecked = 0; }
 
-                    insertQuery = "UPDATE " + table + " SET name='" + P_name.Text + "', hardware='" + P_hardware.Text + "', operating_system='" + P_os.Text + "', maintenance_contract='" + mcIsChecked + "', applications='" + P_applications.Text + "', limit='" + P_limit.Text + "', is_done='" + isDoneIsChecked + "', nr_invoices='" + P_invoices.Text + "', BKR='" + bkrIsChecked + "', creditworthy='" + creditIsChecked + "', Id_customer='" + CheckIDNull(convertedID) + "' WHERE ID=" + ID;
+                        if (P_credit.Checked == true)
+                        {
+                            creditIsChecked = 1;
+                        }
+                        else { creditIsChecked = 0; }
+                        #endregion
 
-                    cmd = new SqlCommand(insertQuery, dbh.getCon());
-                    cmd.ExecuteNonQuery();
+                        dbh.openCon();
 
-                    dbh.closeCon();
-                    MessageBox.Show("Save succesful.");
+                        P_limit.Text = P_limit.Text.Replace(",", ".");
 
-                    break;
-                #endregion
+                        insertQuery = "UPDATE " + table + " SET name='" + P_name.Text + "', hardware='" + P_hardware.Text + "', operating_system='" + P_os.Text + "', maintenance_contract='" + mcIsChecked + "', applications='" + P_applications.Text + "', limit='" + P_limit.Text + "', is_done='" + isDoneIsChecked + "', nr_invoices='" + P_invoices.Text + "', BKR='" + bkrIsChecked + "', creditworthy='" + creditIsChecked + "', Id_customer='" + CheckIDNull(convertedID) + "' WHERE ID=" + ID;
+
+                        cmd = new SqlCommand(insertQuery, dbh.getCon());
+                        cmd.ExecuteNonQuery();
+
+                        dbh.closeCon();
+                        MessageBox.Show("Save succesful.");
+
+                        break;
+                    #endregion
+                }
+
+                dbh.closeCon();
+                Form frm_Main = new frm_Main(permissions);
+                frm_Main.StartPosition = FormStartPosition.CenterScreen;
+                Program.setForm(frm_Main);
+                this.Close();
             }
-
-            dbh.closeCon();
-            Form frm_Main = new frm_Main(permissions);
-            frm_Main.StartPosition = FormStartPosition.CenterScreen;
-            Program.setForm(frm_Main);
-            this.Close();
+            catch
+            {
+                MessageBox.Show("Een van de velden is incorrect ingevoerd.");
+            }
         }
+
 
         private void btn_Cancel_Click(object sender, EventArgs e)
         {
@@ -681,6 +704,7 @@ Contract";
             this.Close();
         }
 
+        //checks for null value in ID.
         private object CheckIDNull(int ID)
         {
             if(ID == 0)
@@ -693,6 +717,7 @@ Contract";
             }
         }
 
+        //Checks if int is null. When null, return empty string.
         private string CheckForNullsInt(SqlDataReader reader, int i)
         {
             if (reader.IsDBNull(i))
@@ -705,6 +730,7 @@ Contract";
             }
         }
 
+        //Checks if string is null. When null, return empty string.
         private string CheckForNullsString(SqlDataReader reader, int i)
         {
             if (reader.IsDBNull(i))
