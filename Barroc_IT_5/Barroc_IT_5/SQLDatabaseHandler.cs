@@ -1,6 +1,6 @@
 ﻿//#define TIMH
-//#define TIMG
-#define KEVIN
+#define TIMG
+//#define KEVIN
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +33,8 @@ namespace Barroc_IT_Groep5
             con = new SqlConnection(conString);
         }
 
+        // Returns the current state of the connection to the database.
+
         public string getConState()
         {
             if (con.State == ConnectionState.Open)
@@ -45,10 +47,15 @@ namespace Barroc_IT_Groep5
             }
 
         }
+
+        // Returns the connectionString.
+
         public SqlConnection getCon()
         {
             return con;
         }
+
+        // Opens the connection to the database if the connection is not opened
 
         public void openCon()
         {
@@ -58,11 +65,14 @@ namespace Barroc_IT_Groep5
             }
         }
 
+        // Closes the connection to the database.
+
         public void closeCon()
         {
             con.Close();
         }
 
+        // Tests the connection to the database by opening and closing it.
 
         public void testCon()
         {
@@ -81,6 +91,8 @@ namespace Barroc_IT_Groep5
                 closeCon();
             }
         }
+
+        // Fills a dataSet with values from the database and loads this dataSet into a DataGridView.
 
         public void FillDataGridView(DataGridView dgv, string query)
         {
