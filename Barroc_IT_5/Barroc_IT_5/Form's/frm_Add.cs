@@ -195,6 +195,7 @@ Contract";
 
         public void Add()
         {
+            bool isFinished = false;
             try
             {
                 SqlCommand cmd = new SqlCommand();
@@ -306,20 +307,25 @@ Contract";
                 cmd.Dispose();
 
                 MessageBox.Show("Sucessfully added this record.");
+
+                isFinished = true;
             }
 
             catch(SqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show("One or more items contain incorrect values.");
             }
 
             finally
             {
-                dbh.closeCon();
-                Form frm_Main = new frm_Main();
-                frm_Main.StartPosition = FormStartPosition.CenterScreen;
-                Program.setForm(frm_Main);
-                this.Close();
+                if (isFinished)
+                {
+                    dbh.closeCon();
+                    Form frm_Main = new frm_Main();
+                    frm_Main.StartPosition = FormStartPosition.CenterScreen;
+                    Program.setForm(frm_Main);
+                    this.Close();
+                }
             }
 
         }
