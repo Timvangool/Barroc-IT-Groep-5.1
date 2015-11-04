@@ -18,9 +18,9 @@ namespace Barroc_IT_5
         string department;
         string table;
 
+        //Code to move to window, since we're using a custom bar.
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
-
         [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
         [DllImportAttribute("user32.dll")]
@@ -36,6 +36,7 @@ namespace Barroc_IT_5
             this.permissions = permissions;
             InitializeComponent();
 
+            //These regions hide the buttons that turn (in)visible depending on which department logs in.
             #region IfAdmin
             if (permissions == 1)
             {
@@ -107,6 +108,7 @@ namespace Barroc_IT_5
             #endregion
         }
 
+        //These regions hide the code to open the windows depending on what button is pressed.
         #region Customer Buttons
         private void btn_C_Create_Click(object sender, EventArgs e)
         {
@@ -136,7 +138,6 @@ namespace Barroc_IT_5
             this.Close();
         }
         #endregion
-
         #region Invoice Buttons
         private void btn_I_Create_Click(object sender, EventArgs e)
         {
@@ -166,7 +167,6 @@ namespace Barroc_IT_5
             this.Close();
         }
         #endregion
-
         #region Project Buttons
         private void btn_P_Create_Click(object sender, EventArgs e)
         {
@@ -196,7 +196,6 @@ namespace Barroc_IT_5
             this.Close();
         }
         #endregion
-
         #region Appointment Buttons
         private void btn_A_Create_Click(object sender, EventArgs e)
         {
@@ -243,6 +242,7 @@ namespace Barroc_IT_5
             this.Close();
         }
 
+        //Continuation of the code to move the window.
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
