@@ -183,11 +183,11 @@ Contract";
                 {
                     this.Controls.Add(dtp[i]);
                 }
-                else if (tb[i].Name == "tb_is_paid" || tb[i].Name == "tb_invoice_sent" || tb[i].Name == "tb_is_done" || tb[i].Name == "tb_BKR" || tb[i].Name == "tb_creditworthy" || tb[i].Name == "tb_maintenance_contract")
+                else if (tb[i].Name == "tb_potential_prospect" || tb[i].Name == "tb_is_paid" || tb[i].Name == "tb_invoice_sent" || tb[i].Name == "tb_is_done" || tb[i].Name == "tb_BKR" || tb[i].Name == "tb_creditworthy" || tb[i].Name == "tb_maintenance_contract")
                 {
                     this.Controls.Add(cb[i]);
                 }
-                else if (tb[i].Name == "tb_Id_project" || tb[i].Name == "tb_Id_customer" || tb[i].Name == "tb_potential_prospect")
+                else if (tb[i].Name == "tb_Id_project" || tb[i].Name == "tb_Id_customer" )
                 {
                     this.Controls.Add(combo[i]);
                 }
@@ -257,7 +257,7 @@ Contract";
                         reader = cmd.ExecuteReader();
 
                         string name = null, address = null, address2 = null, housenr = null, housenr2 = null, zipcode = null, zipcode2 = null, place = null, place2 = null, country = null, country2 = null, phone = null, fax = null, email = null;
-                        string potential_prospect = null;
+                        bool potential_prospect = false;
 
                         while (reader.Read())
                         {
@@ -275,7 +275,7 @@ Contract";
                             phone = CheckForNullsString(reader, 12);
                             fax = CheckForNullsString(reader, 13);
                             email = CheckForNullsString(reader, 14);
-                            potential_prospect = CheckForNullsString(reader, 15);
+                            potential_prospect = reader.GetBoolean(reader.GetOrdinal("potential_prospect"));
                         }
                         reader.Dispose();
                         dbh.closeCon();
@@ -294,7 +294,7 @@ Contract";
                         tb[12].Text = phone;
                         tb[13].Text = fax;
                         tb[14].Text = email;
-                        SetComboBoxProspect(combo[15], potential_prospect);
+                        cb[15].Checked = potential_prospect;
 
                         dbh.closeCon();
                     }
@@ -399,11 +399,7 @@ Contract";
                         tb[8].Text = nr_invoices;
                         cb[9].Checked = BKR;
                         cb[10].Checked = creditworthy;
-                        cb[10].Enabled = false;
                         SetComboBox(combo[11]);
-
-                        cb[9].Click += new EventHandler(this.cbIndexChanged);
-                        cb[9].KeyPress += new KeyPressEventHandler(this.cbIndexChanged);
 
                         if (ID_customer == "")
                         {
@@ -426,24 +422,9 @@ Contract";
             dbh.closeCon();
         }
 
-        //Checks if BKR is checked before creditworthy is allowed to be checked.
-        private void cbIndexChanged(object sender, EventArgs e)
-        {
-            if (cb[9].Checked == false)
-            {
-                cb[10].Enabled = false;
-                cb[10].Checked = false;
-            }
-            else
-            {
-                cb[10].Enabled = true;
-            }
-        }
-
         //Fill the combobox with records from another table by using the foreign key from this table.
         private void SetComboBox(ComboBox combo)
         {
-            combo.KeyPress += new KeyPressEventHandler(Combo_keyPress);
             cmd = new SqlCommand("SELECT ID,Name FROM "+ GetFKTable() + "", dbh.getCon());
             SqlDataReader reader;
 
@@ -502,7 +483,7 @@ Contract";
 
         private void cb_Customers_MouseUp(object sender, MouseEventArgs e)
         {
-           cb_Customers.DroppedDown = true;
+            cb_Customers.DroppedDown = true;
         }
 
         private void cb_Customers_KeyPress(object sender, KeyPressEventArgs e)
@@ -553,15 +534,8 @@ Contract";
                         int convertedID = Convert.ToInt32(A_Id_project.SelectedValue);
 
                         dbh.openCon();
-                        if (convertedID != 0)
-                        {
-                            insertQuery = "UPDATE " + table + " SET description='" + A_description.Text + "', date='" + A_date.Text + "', next_action='" + A_next_action.Text + "', ID_project='" + convertedID + "', name='" + A_name.Text + "' WHERE ID=" + ID;
-                        }
-                        else
-                        {
-                            insertQuery = "UPDATE " + table + " SET description='" + A_description.Text + "', date='" + A_date.Text + "', next_action='" + A_next_action.Text + "', ID_project=NULL, name='" + A_name.Text + "' WHERE ID=" + ID;
 
-                        }
+                        insertQuery = "UPDATE " + table + " SET description='" + A_description.Text + "', date='" + A_date.Text + "', next_action='" + A_next_action.Text + "', ID_project='" + convertedID + "', name='" + A_name.Text + "' WHERE ID=" + ID;
                         SqlCommand cmd = new SqlCommand(insertQuery, dbh.getCon());
                         cmd.ExecuteNonQuery();
 
@@ -585,11 +559,22 @@ Contract";
                         TextBox C_phone = Application.OpenForms["frm_Edit"].Controls["tb_phone"] as TextBox;
                         TextBox C_fax = Application.OpenForms["frm_Edit"].Controls["tb_fax"] as TextBox;
                         TextBox C_email = Application.OpenForms["frm_Edit"].Controls["tb_email"] as TextBox;
-                        ComboBox C_potential_prospect = Application.OpenForms["frm_Edit"].Controls["combo_potential_prospect"] as ComboBox;
+                        CheckBox C_potential_prospect = Application.OpenForms["frm_Edit"].Controls["cb_potential_prospect"] as CheckBox;
+
+                        int cbIsChecked;
+
+                        if (C_potential_prospect.Checked == true)
+                        {
+                            cbIsChecked = 1;
+                        }
+                        else
+                        {
+                            cbIsChecked = 0;
+                        }
 
                         dbh.openCon();
 
-                        insertQuery = "UPDATE " + table + " SET name='" + C_name.Text + "', address1='" + C_address1.Text + "', housenr1='" + C_housenr1.Text + "', zip_code1='" + C_zip_code1.Text + "', place1='" + C_place1.Text + "', country1='" + C_country1.Text + "', address2='" + C_address2.Text + "', housenr2='" + C_housenr2.Text + "', zip_code2='" + C_zip_code2.Text + "', place2='" + C_place2.Text + "', country2='" + C_country2.Text + "', phone='" + C_phone.Text + "', fax='" + C_fax.Text + "', email='" + C_email.Text + "', potential_prospect='" + C_potential_prospect.SelectedValue + "' WHERE ID=" + ID;
+                        insertQuery = "UPDATE " + table + " SET name='" + C_name.Text + "', address1='" + C_address1.Text + "', housenr1='" + C_housenr1.Text + "', zip_code1='" + C_zip_code1.Text + "', place1='" + C_place1.Text + "', country1='" + C_country1.Text + "', address2='" + C_address2.Text + "', housenr2='" + C_housenr2.Text + "', zip_code2='" + C_zip_code2.Text + "', place2='" + C_place2.Text + "', country2='" + C_country2.Text + "', phone='" + C_phone.Text + "', fax='" + C_fax.Text + "', email='" + C_email.Text + "', potential_prospect='" + cbIsChecked + "' WHERE ID=" + ID;
                         cmd = new SqlCommand(insertQuery, dbh.getCon());
                         cmd.ExecuteNonQuery();
 
@@ -631,14 +616,7 @@ Contract";
                         I_amount.Text = I_amount.Text.Replace(",", ".");
                         I_gross_rev.Text = I_gross_rev.Text.Replace(",", ".");
 
-                        if (convertedID != 0)
-                        {
-                            insertQuery = "UPDATE " + table + " SET amount='" + I_amount.Text + "', bank_acc_nr='" + I_bank_acc_nr.Text + "', gross_rev='" + I_gross_rev.Text + "', ledger_acc_nr='" + I_ledger_acc_nr.Text + "', tax_code='" + I_tax_code.Text + "', is_paid='" + isPaidIsChecked + "', invoice_sent='" + invoiceSendIsChecked + "', date='" + I_date.Text + "', Id_project=" + CheckIDNull(convertedID) + ", name='" + I_name.Text + "' WHERE ID=" + ID;
-                        }
-                        else
-                        {
-                            insertQuery = "UPDATE " + table + " SET amount='" + I_amount.Text + "', bank_acc_nr='" + I_bank_acc_nr.Text + "', gross_rev='" + I_gross_rev.Text + "', ledger_acc_nr='" + I_ledger_acc_nr.Text + "', tax_code='" + I_tax_code.Text + "', is_paid='" + isPaidIsChecked + "', invoice_sent='" + invoiceSendIsChecked + "', date='" + I_date.Text + "', Id_project=NULL, name='" + I_name.Text + "' WHERE ID=" + ID;
-                        }
+                        insertQuery = "UPDATE " + table + " SET amount='" + I_amount.Text + "', bank_acc_nr='" + I_bank_acc_nr.Text + "', gross_rev='" + I_gross_rev.Text + "', ledger_acc_nr='" + I_ledger_acc_nr.Text + "', tax_code='" + I_tax_code.Text + "', is_paid='" + isPaidIsChecked + "', invoice_sent='" + invoiceSendIsChecked + "', date='" + I_date.Text + "', Id_project=" + CheckIDNull(convertedID) + ", name='" + I_name.Text + "' WHERE ID=" + ID;
 
                         cmd = new SqlCommand(insertQuery, dbh.getCon());
                         cmd.ExecuteNonQuery();
@@ -696,14 +674,7 @@ Contract";
 
                         P_limit.Text = P_limit.Text.Replace(",", ".");
 
-                        if (convertedID != 0)
-                        {
-                            insertQuery = "UPDATE " + table + " SET name='" + P_name.Text + "', hardware='" + P_hardware.Text + "', operating_system='" + P_os.Text + "', maintenance_contract='" + mcIsChecked + "', applications='" + P_applications.Text + "', limit='" + P_limit.Text + "', is_done='" + isDoneIsChecked + "', nr_invoices='" + P_invoices.Text + "', BKR='" + bkrIsChecked + "', creditworthy='" + creditIsChecked + "', Id_customer='" + CheckIDNull(convertedID) + "' WHERE ID=" + ID;
-                        }
-                        else
-                        {
-                            insertQuery = "UPDATE " + table + " SET name='" + P_name.Text + "', hardware='" + P_hardware.Text + "', operating_system='" + P_os.Text + "', maintenance_contract='" + mcIsChecked + "', applications='" + P_applications.Text + "', limit='" + P_limit.Text + "', is_done='" + isDoneIsChecked + "', nr_invoices='" + P_invoices.Text + "', BKR='" + bkrIsChecked + "', creditworthy='" + creditIsChecked + "', Id_customer=NULL WHERE ID=" + ID;
-                        }
+                        insertQuery = "UPDATE " + table + " SET name='" + P_name.Text + "', hardware='" + P_hardware.Text + "', operating_system='" + P_os.Text + "', maintenance_contract='" + mcIsChecked + "', applications='" + P_applications.Text + "', limit='" + P_limit.Text + "', is_done='" + isDoneIsChecked + "', nr_invoices='" + P_invoices.Text + "', BKR='" + bkrIsChecked + "', creditworthy='" + creditIsChecked + "', Id_customer='" + CheckIDNull(convertedID) + "' WHERE ID=" + ID;
 
                         cmd = new SqlCommand(insertQuery, dbh.getCon());
                         cmd.ExecuteNonQuery();
@@ -714,6 +685,7 @@ Contract";
                         break;
                     #endregion
                 }
+
                 dbh.closeCon();
                 Form frm_Main = new frm_Main(permissions);
                 frm_Main.StartPosition = FormStartPosition.CenterScreen;
@@ -725,6 +697,7 @@ Contract";
                 MessageBox.Show("Een van de velden is incorrect ingevoerd.");
             }
         }
+
 
         private void btn_Cancel_Click(object sender, EventArgs e)
         {
@@ -781,31 +754,6 @@ Contract";
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
-        }
-
-        private void SetComboBoxProspect(ComboBox comboBox, string potential_prospect)
-        {
-            comboBox.KeyPress += new KeyPressEventHandler(Combo_keyPress);
-            comboBox.DisplayMember = "Text";
-            comboBox.ValueMember = "Value";
-
-            var items = new[] { 
-                new { Text = "Active", Value = "Active" }, 
-                new { Text = "Inactive", Value = "Inactive" }, 
-                new { Text = "Potential", Value = "Potential" },
-            };
-            comboBox.DataSource = items;
-            comboBox.SelectedValue = potential_prospect;
-        }
-
-        private void Combo_keyPress(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = true;
-        }
-
-        private void frm_Edit_Activated(object sender, EventArgs e)
-        {
-
         }
     }
 }

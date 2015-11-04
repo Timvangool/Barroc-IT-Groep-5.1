@@ -146,14 +146,6 @@ Contract";
                 else if (tb[i].Name == "tb_is_paid" || tb[i].Name == "tb_invoice_sent" || tb[i].Name == "tb_is_done" || tb[i].Name == "tb_BKR" || tb[i].Name == "tb_creditworthy" || tb[i].Name == "tb_maintenance_contract")
                 {
                     this.Controls.Add(cb[i]);
-
-                    //Checks for checkboxes for BKR and creditworthy.
-                    if (table == "tbl_Projects" && i == 10)
-                    {
-                        cb[10].Enabled = false;
-                        cb[9].Click += new EventHandler(this.cbIndexChanged);
-                        cb[9].KeyPress += new KeyPressEventHandler(this.cbIndexChanged);
-                    }
                 }
                 else if (tb[i].Name == "tb_Id_project" || tb[i].Name == "tb_Id_customer")
                 {
@@ -173,20 +165,7 @@ Contract";
 
                 this.Controls.Add(lb[i]);
                 lb[i].Text = lb[i].Text.Replace("_", " ");
-            }
-        }
 
-        //Checks if BKR is checked before creditworthy is allowed to be checked.
-        private void cbIndexChanged(object sender, EventArgs e)
-        {
-            if (cb[9].Checked == false)
-            {
-                cb[10].Enabled = false;
-                cb[10].Checked = false;
-            }
-            else
-            {
-                cb[10].Enabled = true;
             }
         }
 

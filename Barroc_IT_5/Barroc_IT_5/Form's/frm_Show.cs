@@ -186,7 +186,7 @@ namespace Barroc_IT_5
 
         private void btn_Add_Click(object sender, EventArgs e)
         {
-            Form frm_Add = new frm_Add(permissions, GetDepartment(department));
+            Form frm_Add = new frm_Add(permissions);
             frm_Add.StartPosition = FormStartPosition.CenterScreen;
             Program.setForm(frm_Add);
             this.Close();
