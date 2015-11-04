@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Barroc_IT_Groep5;
 using System.Data.SqlClient;
+using System.Runtime.InteropServices;
 
 namespace Barroc_IT_5
 {
@@ -24,6 +25,14 @@ namespace Barroc_IT_5
         public SqlCommand cmd, sqlCmd;
         public string query;
         List<string> columns;
+
+        //Code to move to window, since we're using a custom bar.
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
+        [DllImportAttribute("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        [DllImportAttribute("user32.dll")]
+        public static extern bool ReleaseCapture();
 
         public string table;
         public frm_Add()
@@ -414,7 +423,16 @@ Contract";
             {
                 return ID;
             }
+        }
 
+        //Continuation of the code to move the window.
+        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
         }
     }
 }

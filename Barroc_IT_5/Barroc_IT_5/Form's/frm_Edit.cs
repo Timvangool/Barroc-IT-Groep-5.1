@@ -12,6 +12,9 @@ namespace Barroc_IT_5
 {
     public partial class frm_Edit : Form
     {
+        //Code to move to window, since we're using a custom bar.
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
         [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
         [DllImportAttribute("user32.dll")]
@@ -740,6 +743,16 @@ Contract";
             else
             {
                 return reader.GetString(i);
+            }
+        }
+
+        //Continuation of the code to move the window.
+        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
         }
     }

@@ -37,7 +37,7 @@
             // 
             // btn_Add
             // 
-            this.btn_Add.Location = new System.Drawing.Point(596, 447);
+            this.btn_Add.Location = new System.Drawing.Point(684, 447);
             this.btn_Add.Name = "btn_Add";
             this.btn_Add.Size = new System.Drawing.Size(75, 23);
             this.btn_Add.TabIndex = 0;
@@ -47,7 +47,7 @@
             // 
             // btn_Back
             // 
-            this.btn_Back.Location = new System.Drawing.Point(677, 447);
+            this.btn_Back.Location = new System.Drawing.Point(765, 447);
             this.btn_Back.Name = "btn_Back";
             this.btn_Back.Size = new System.Drawing.Size(75, 23);
             this.btn_Back.TabIndex = 1;
@@ -61,14 +61,15 @@
             this.panel1.Controls.Add(this.btn_Exit);
             this.panel1.Location = new System.Drawing.Point(-191, -11);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(998, 43);
+            this.panel1.Size = new System.Drawing.Size(1146, 43);
             this.panel1.TabIndex = 9;
+            this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
             // 
             // btn_Exit
             // 
             this.btn_Exit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btn_Exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Exit.Location = new System.Drawing.Point(928, 15);
+            this.btn_Exit.Location = new System.Drawing.Point(1007, 15);
             this.btn_Exit.Name = "btn_Exit";
             this.btn_Exit.Size = new System.Drawing.Size(21, 23);
             this.btn_Exit.TabIndex = 3;
@@ -80,7 +81,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(764, 482);
+            this.ClientSize = new System.Drawing.Size(852, 482);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btn_Back);
             this.Controls.Add(this.btn_Add);
