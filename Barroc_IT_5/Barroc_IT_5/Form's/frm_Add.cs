@@ -317,6 +317,7 @@ Contract";
 
         private void SetComboBoxProspect(ComboBox comboBox)
         {
+            comboBox.KeyPress += new KeyPressEventHandler(Combo_keyPress);
             comboBox.DisplayMember = "Text";
             comboBox.ValueMember = "Value";
 
@@ -332,7 +333,7 @@ Contract";
         {
             cmd = new SqlCommand("SELECT ID,Name FROM " + GetFKTable() + "", dbh.getCon());
             SqlDataReader reader;
-
+            combo.KeyPress += new KeyPressEventHandler(Combo_keyPress);
             dbh.openCon();
             reader = cmd.ExecuteReader();
 
@@ -352,6 +353,11 @@ Contract";
             combo.DataSource = dt;
 
             reader.Dispose();
+        }
+
+        private void Combo_keyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
         }
 
         private string GetFKTable()
