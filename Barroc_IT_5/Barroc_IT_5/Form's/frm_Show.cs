@@ -29,6 +29,7 @@ namespace Barroc_IT_5
 
         public string query, department;
         public int permissions;
+        SqlCommand cmd;
 
 
         public frm_Show()
@@ -122,44 +123,45 @@ namespace Barroc_IT_5
 
             dbh.FillDataGridView(dgv_Show, query);
 
-            string[] invoices = new string[9] {"Bank_Acc_Nr", "Price", "Gross_Rev", "Ledger_Acc_Nr", "Tax_code", "Id_Project", "Is_Payed", "Date", "Invoice_Send"};
-
-            string[] appointments = new string[4] { "Description", "Date", "Next_Action", "Id_Project" };
-
-            string[] customers = new string[14] { "Name", "Address1", "HouseNr1", "Zip_Code1", "Place1", "Country", "Address2", "HouseNr2", "Zip_Code2", "Place2", "Fax", "Email", "Potential_Prospect", "Phone" };
-
-            string[] projects = new string[10] {"Naam","Hardware","Operating_System","Maintenance_Contract","Applications","Limit","Nr_Invoices","Is_Done","BKR","Credit_Worthy" };
-
             switch (department)
             {
                 case "TBL_CUSTOMERS":
+                    string[] customers = new string[15] { "Name", "Address1", "HouseNr1", "Zip_Code1", "Place1", "Country1", "Address2", "HouseNr2", "Zip_Code2", "Place2", "Country2", "Phone", "Fax", "Email", "Potential_Prospect" };
                     foreach (var item in customers)
                     {
                         cb_Tabledata.Items.Add(item);
+                        cb_Tabledata.SelectedItem = customers[0];
                     }
                     break;
                 case "TBL_INVOICES":
+                    string[] invoices = new string[10] { "Amount", "Bank_Acc_Nr", "Gross_Rev", "Ledger_Acc_Nr", "Tax_code", "Is_Paid", "Invoice_Sent", "Date", "Id_Project", "Name" };
                     foreach (var item in invoices)
                     {
                         cb_Tabledata.Items.Add(item);
+                        cb_Tabledata.SelectedItem = invoices[0];
                     }
                     break;
                 case "TBL_APPOINTMENTS":
+                    string[] appointments = new string[5] { "Description", "Date", "Next_Action", "Id_Project", "Name" };
                     foreach (var item in appointments)
                     {
                         cb_Tabledata.Items.Add(item);
+                        cb_Tabledata.SelectedItem = appointments[0];
                     }
                     break;
                 case "TBL_PROJECTS":
+                    string[] projects = new string[10] { "Name", "Hardware", "Operating_System", "Maintenance_Contract", "Applications", "Limit", "Is_Done", "Nr_Invoices", "BKR", "Creditworthy"};
                     foreach (var item in projects)
                     {
                         cb_Tabledata.Items.Add(item);
+                        cb_Tabledata.SelectedItem = projects[0];
                     }
                     break;
                 default:
-                    MessageBox.Show("Something went wrong :C");
+                    MessageBox.Show("Something went wrong.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     break;
             }
+            SetComboBox(cb_Find);
         }
 
         private void btn_Exit_Click(object sender, EventArgs e)
@@ -194,13 +196,22 @@ namespace Barroc_IT_5
 
         private void btn_Edit_Click(object sender, EventArgs e)
         {
-            int selectedIndex = dgv_Show.SelectedRows[0].Index;
-            int rowID = int.Parse(dgv_Show[0, selectedIndex].Value.ToString());
+            int selectedIndex = 0;
+            int rowID = 0;
 
-            Form frm_edit = new frm_Edit(permissions, GetDepartment(department), rowID);
-            frm_edit.StartPosition = FormStartPosition.CenterScreen;
-            Program.setForm(frm_edit);
-            this.Close();
+            try
+            {
+                selectedIndex = dgv_Show.SelectedRows[0].Index;
+                rowID = int.Parse(dgv_Show[0, selectedIndex].Value.ToString());
+                Form frm_edit = new frm_Edit(permissions, GetDepartment(department), rowID);
+                frm_edit.StartPosition = FormStartPosition.CenterScreen;
+                Program.setForm(frm_edit);
+                this.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Please select a record.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private string GetDepartment(string department)
@@ -217,7 +228,6 @@ namespace Barroc_IT_5
                     return "tbl_Projects";
                 default:
                     return "";
-                    
             }
         }
 
@@ -226,19 +236,47 @@ namespace Barroc_IT_5
             foreach (DataGridViewRow dgvr in this.dgv_Show.SelectedRows)
             {
                 int selectedIndex = dgv_Show.SelectedRows[0].Index;
-                int rowID = int.Parse(dgv_Show[0, selectedIndex].Value.ToString());
-
-                SqlCommand cmd = new SqlCommand();
-                cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "DELETE FROM " + department + " WHERE ID="  + rowID + "";
-                cmd.Connection = dbh.getCon();
-
-                dbh.openCon();
-                cmd.ExecuteNonQuery();
-                dbh.FillDataGridView(dgv_Show, "SELECT * FROM " + department);
-                dbh.closeCon();          
+                int rowID = 0;
+                DialogResult result;
+                result = MessageBox.Show("Are you sure you want to delete this record?", "Delete record", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (result == System.Windows.Forms.DialogResult.Yes)
+                {
+                    try
+                    {
+                        rowID = int.Parse(dgv_Show[0, selectedIndex].Value.ToString());
+          
+                        cmd = new SqlCommand();
+                        cmd.CommandType = CommandType.Text;
+                        cmd.CommandText = "DELETE FROM " + department + " WHERE ID=" + rowID + "";
+                        cmd.Connection = dbh.getCon();
+          
+                        dbh.openCon();
+          
+                        try
+                        {
+                            cmd.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            SqlCommand cmd2 = new SqlCommand();
+                            cmd2.CommandType = CommandType.Text;
+                            cmd2.CommandText = "UPDATE " + ConvertDepartment() + " SET " + ConvertSqlSet() + " WHERE " + ConvertSqlWhere(rowID) + "";
+                            cmd2.Connection = dbh.getCon();
+                            cmd2.ExecuteNonQuery();
+                            cmd.ExecuteNonQuery();
+                        }
+                        dbh.FillDataGridView(dgv_Show, "SELECT * FROM " + department);
+                        dbh.closeCon();
+                        MessageBox.Show("Delete was succesful!","Succes!");
+                    }
+                    
+                    catch
+                    {
+                        MessageBox.Show("Can't delete this record.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
-        }
+        } 
 
         public string ConvertDepartment()
         {
@@ -247,27 +285,131 @@ namespace Barroc_IT_5
             switch (department)
             {
                 case "TBL_CUSTOMERS":
-                    temp = "ID_CUSTOMER";
-                    break;
-                case "TBL_INVOICES":
-                    temp = "ID_INVOICE";
-                    break;
-                case "TBL_APPOINTMENTS":
-                    temp = "ID_APPOINTMENT";
+                    temp = "TBL_PROJECTS";
                     break;
                 case "TBL_PROJECTS":
-                    temp = "ID_PROJECT";
+                    temp = "TBL_INVOICES, TBL_APPOINTMENTS";
                     break;
                 default:
-                    MessageBox.Show("Something went wrong :C");
+                    MessageBox.Show("Something went wrong.");
                     break;
             }
             return temp;
         }
 
-        private void btn_Print_Click(object sender, EventArgs e)
+        public string ConvertSqlSet()
         {
+            string temp = "";
 
+            switch (department)
+            {
+                case "TBL_CUSTOMERS":
+                    temp = "Id_customer=NULL";
+                    break;
+                case "TBL_PROJECTS":
+                    temp = "Id_project=NULL";
+                    break;
+                default:
+                    MessageBox.Show("Something went wrong.");
+                    break;
+            }
+            return temp;
+        }
+
+        public string ConvertSqlWhere(int ID)
+        {
+            string temp = "";
+
+            switch (department)
+            {
+                case "TBL_CUSTOMERS":
+                    temp = "Id_customer=" + ID + "";
+                    break;
+                case "TBL_PROJECTS":
+                    temp = "Id_project="+ ID + "";
+                    break;
+                default:
+                    MessageBox.Show("Something went wrong.");
+                    break;
+            }
+            return temp;
+        }
+
+        private void cb_Tabledata_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void SetComboBox(ComboBox combo)
+        {
+            cmd = new SqlCommand("SELECT ID,Name FROM " + GetFKTable() + "", dbh.getCon());
+            SqlDataReader reader;
+
+            dbh.openCon();
+            reader = cmd.ExecuteReader();
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ID", typeof(string));
+            dt.Columns.Add("Name", typeof(string));
+            dt.Load(reader);
+
+            combo.ValueMember = "ID";
+            combo.DisplayMember = "Name";
+
+            DataRow emptyrow = dt.NewRow();
+            emptyrow["ID"] = 0;
+            emptyrow["Name"] = "";
+            dt.Rows.Add(emptyrow);
+
+            combo.DataSource = dt;
+
+            reader.Dispose();
+        }
+
+        private string GetFKTable()
+        {
+            switch (department)
+            {
+                case "TBL_APPOINTMENTS":
+                    return "tbl_Projects";
+                case "TBL_PROJECTS":
+                    return "tbl_Customers";
+                case "TBL_INVOICES":
+                    return "tbl_Projects";
+                default:
+                    return "";
+            }
+        }
+
+        private void btn_FKSearch_Click(object sender, EventArgs e)
+        {
+            string tempQuery;
+            int ID = Convert.ToInt32(cb_Find.SelectedValue);
+            if(ID != 0)
+            {
+                tempQuery = "SELECT * FROM " + department + " WHERE " + SetID() + "=" + cb_Find.SelectedValue + "";
+            }
+            else
+            {
+                tempQuery = "SELECT * FROM " + department + "";
+            }
+
+            dbh.FillDataGridView(dgv_Show, tempQuery);
+        }
+
+        private string SetID()
+        {
+            switch (department)
+            {
+                case "TBL_APPOINTMENTS":
+                    return "Id_Projects";
+                case "TBL_PROJECTS":
+                    return "Id_customer";
+                case "TBL_INVOICES":
+                    return "Id_Projects";
+                default:
+                    return "";
+            }
         }
     }
 }

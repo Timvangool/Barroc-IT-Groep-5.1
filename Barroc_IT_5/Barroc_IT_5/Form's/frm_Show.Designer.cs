@@ -32,13 +32,14 @@
             this.btn_Edit = new System.Windows.Forms.Button();
             this.btn_Delete = new System.Windows.Forms.Button();
             this.btn_Add = new System.Windows.Forms.Button();
-            this.btn_Print = new System.Windows.Forms.Button();
             this.btn_Search = new System.Windows.Forms.Button();
             this.btn_Back = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btn_Exit = new System.Windows.Forms.Button();
             this.cb_Tabledata = new System.Windows.Forms.ComboBox();
+            this.btn_FKSearch = new System.Windows.Forms.Button();
+            this.cb_Find = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Show)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -80,16 +81,6 @@
             this.btn_Add.Text = "Add";
             this.btn_Add.UseVisualStyleBackColor = true;
             this.btn_Add.Click += new System.EventHandler(this.btn_Add_Click);
-            // 
-            // btn_Print
-            // 
-            this.btn_Print.Location = new System.Drawing.Point(252, 298);
-            this.btn_Print.Name = "btn_Print";
-            this.btn_Print.Size = new System.Drawing.Size(114, 23);
-            this.btn_Print.TabIndex = 4;
-            this.btn_Print.Text = "Print";
-            this.btn_Print.UseVisualStyleBackColor = true;
-            this.btn_Print.Click += new System.EventHandler(this.btn_Print_Click);
             // 
             // btn_Search
             // 
@@ -147,18 +138,38 @@
             this.cb_Tabledata.Name = "cb_Tabledata";
             this.cb_Tabledata.Size = new System.Drawing.Size(198, 21);
             this.cb_Tabledata.TabIndex = 9;
+            this.cb_Tabledata.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cb_Tabledata_KeyPress);
+            // 
+            // btn_FKSearch
+            // 
+            this.btn_FKSearch.Location = new System.Drawing.Point(252, 298);
+            this.btn_FKSearch.Name = "btn_FKSearch";
+            this.btn_FKSearch.Size = new System.Drawing.Size(114, 23);
+            this.btn_FKSearch.TabIndex = 10;
+            this.btn_FKSearch.Text = "Find";
+            this.btn_FKSearch.UseVisualStyleBackColor = true;
+            this.btn_FKSearch.Click += new System.EventHandler(this.btn_FKSearch_Click);
+            // 
+            // cb_Find
+            // 
+            this.cb_Find.FormattingEnabled = true;
+            this.cb_Find.Location = new System.Drawing.Point(12, 300);
+            this.cb_Find.Name = "cb_Find";
+            this.cb_Find.Size = new System.Drawing.Size(234, 21);
+            this.cb_Find.TabIndex = 11;
             // 
             // frm_Show
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(704, 337);
+            this.Controls.Add(this.cb_Find);
+            this.Controls.Add(this.btn_FKSearch);
             this.Controls.Add(this.cb_Tabledata);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.btn_Back);
             this.Controls.Add(this.btn_Search);
-            this.Controls.Add(this.btn_Print);
             this.Controls.Add(this.btn_Add);
             this.Controls.Add(this.btn_Delete);
             this.Controls.Add(this.btn_Edit);
@@ -179,12 +190,13 @@
         private System.Windows.Forms.Button btn_Edit;
         private System.Windows.Forms.Button btn_Delete;
         private System.Windows.Forms.Button btn_Add;
-        private System.Windows.Forms.Button btn_Print;
         private System.Windows.Forms.Button btn_Search;
         private System.Windows.Forms.Button btn_Back;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btn_Exit;
         private System.Windows.Forms.ComboBox cb_Tabledata;
+        private System.Windows.Forms.Button btn_FKSearch;
+        private System.Windows.Forms.ComboBox cb_Find;
     }
 }

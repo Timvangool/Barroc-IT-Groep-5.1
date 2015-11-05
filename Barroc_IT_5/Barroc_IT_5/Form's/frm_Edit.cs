@@ -566,7 +566,7 @@ Contract";
                         cmd.ExecuteNonQuery();
 
                         dbh.closeCon();
-                        MessageBox.Show("Save succesful.");
+                        MessageBox.Show("Save succesful.", "Succes!");
                         break;
                     #endregion
                     #region Customers
@@ -594,7 +594,7 @@ Contract";
                         cmd.ExecuteNonQuery();
 
                         dbh.closeCon();
-                        MessageBox.Show("Save succesful.");
+                        MessageBox.Show("Save succesful.", "Succes!");
                         break;
                     #endregion
                     #region Invoices
@@ -644,7 +644,7 @@ Contract";
                         cmd.ExecuteNonQuery();
 
                         dbh.closeCon();
-                        MessageBox.Show("Save succesful.");
+                        MessageBox.Show("Save succesful.", "Succes!");
 
                         break;
                     #endregion
@@ -709,7 +709,7 @@ Contract";
                         cmd.ExecuteNonQuery();
 
                         dbh.closeCon();
-                        MessageBox.Show("Save succesful.");
+                        MessageBox.Show("Save succesful.", "Succes!");
 
                         break;
                     #endregion
@@ -722,7 +722,7 @@ Contract";
             }
             catch
             {
-                MessageBox.Show("Een van de velden is incorrect ingevoerd.");
+                MessageBox.Show("One or more fields contain incorrect data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -801,11 +801,6 @@ Contract";
         private void Combo_keyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = true;
-        }
-
-        private void frm_Edit_Activated(object sender, EventArgs e)
-        {
-
         }
     }
 }

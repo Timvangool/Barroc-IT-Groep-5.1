@@ -37,10 +37,6 @@ namespace Barroc_IT_5
         private void btn_Login_Click(object sender, EventArgs e)
         {
             LogIn(tb_Username.Text, tb_Password.Text);
-            //Form main = new frm_Main(permissions);
-            //main.StartPosition = FormStartPosition.CenterScreen;
-            //Program.setForm(main);
-            //this.Close();
         }
 
         public void LogIn(string user, string pass)
@@ -66,8 +62,7 @@ namespace Barroc_IT_5
 
             if (uN == user && pW == pass)
             {
-                MessageBox.Show("Login Successful.");
-               
+                MessageBox.Show("Login Successful.", "Succes!");
 
                 switch (uN)
                 {
@@ -93,17 +88,13 @@ namespace Barroc_IT_5
                 frmMain.StartPosition = FormStartPosition.CenterScreen;
                 Program.setForm(frmMain);
                 this.Close();
-
-                
             }
             else if (uN != user || pW != pass)
             {
-                MessageBox.Show("Invalid Username and/or Password.");
+                MessageBox.Show("Invalid Username and/or Password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
   
             }
-
             dbh.closeCon();
-
         }
 
         private void tb_Password_KeyUp(object sender, KeyEventArgs e)
@@ -123,6 +114,5 @@ namespace Barroc_IT_5
         {
             this.StartPosition = FormStartPosition.CenterScreen;
         }
-
     }
 }

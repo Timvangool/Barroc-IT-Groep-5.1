@@ -99,8 +99,11 @@ namespace Barroc_IT_Groep5
                 dgv.Columns["Gross_Rev"].DefaultCellStyle.Format = "N2";
                 dgv.Columns["Amount"].DefaultCellStyle.Format = "N2";
             }
-            closeCon();
+            dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgv.MultiSelect = false;
+            dgv.ReadOnly = true;
 
+            closeCon();
         }
     }
 

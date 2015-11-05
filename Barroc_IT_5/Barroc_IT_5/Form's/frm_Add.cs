@@ -327,14 +327,14 @@ Contract";
 
                 cmd.Dispose();
 
-                MessageBox.Show("Sucessfully added this record.");
+                MessageBox.Show("Sucessfully added this record.", "Succes!");
 
                 isFinished = true;
             }
 
             catch(SqlException ex)
             {
-                MessageBox.Show("One or more items contain incorrect values.");
+                MessageBox.Show("One or more fields contain incorrect data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
             finally
@@ -348,7 +348,6 @@ Contract";
                     this.Close();
                 }
             }
-
         }
 
         private void SetComboBoxProspect(ComboBox comboBox)
