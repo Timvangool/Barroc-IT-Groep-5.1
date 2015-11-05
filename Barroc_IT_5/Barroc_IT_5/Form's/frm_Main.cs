@@ -242,6 +242,33 @@ namespace Barroc_IT_5
             this.Close();
         }
 
+        private void frm_Main_Load(object sender, EventArgs e)
+        {
+            this.StartPosition = FormStartPosition.CenterScreen;
+            lb_Menu.Text = "Welcome " + ChangeLabel(permissions);
+        }
+
+        //Chooses the text to be added to the label at the top of the window.
+        private string ChangeLabel(int table)
+        {
+            switch (table)
+            {
+                case 1:
+                    return "Admin";
+                case 2:
+                    lb_Menu.Location = new Point(110, 19);
+                    return "Sales Employee";
+                case 3:
+                    lb_Menu.Location = new Point(100, 19);
+                    return "Finance Employee";
+                case 4:
+                    lb_Menu.Location = new Point(80,19);
+                    return "Development Employee";
+                default:
+                    return "";
+            }
+        }
+
         //Continuation of the code to move the window.
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -251,10 +278,14 @@ namespace Barroc_IT_5
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
         }
-
-        private void frm_Main_Load(object sender, EventArgs e)
+        //Continuation of the code to move the window.
+        private void lb_Menu_MouseDown(object sender, MouseEventArgs e)
         {
-            this.StartPosition = FormStartPosition.CenterScreen;
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
         }
     }
 }

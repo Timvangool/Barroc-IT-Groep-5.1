@@ -47,6 +47,7 @@
             this.btn_Logout = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btn_Exit = new System.Windows.Forms.Button();
+            this.lb_Menu = new System.Windows.Forms.Label();
             this.gb_Customers.SuspendLayout();
             this.gb_Invoices.SuspendLayout();
             this.gb_Projects.SuspendLayout();
@@ -235,6 +236,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.panel1.Controls.Add(this.lb_Menu);
             this.panel1.Controls.Add(this.btn_Exit);
             this.panel1.Location = new System.Drawing.Point(-10, -17);
             this.panel1.Name = "panel1";
@@ -253,6 +255,17 @@
             this.btn_Exit.Text = "X";
             this.btn_Exit.UseVisualStyleBackColor = false;
             this.btn_Exit.Click += new System.EventHandler(this.btn_Exit_Click);
+            // 
+            // lb_Menu
+            // 
+            this.lb_Menu.AutoSize = true;
+            this.lb_Menu.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.lb_Menu.Location = new System.Drawing.Point(165, 19);
+            this.lb_Menu.Name = "lb_Menu";
+            this.lb_Menu.Size = new System.Drawing.Size(105, 24);
+            this.lb_Menu.TabIndex = 4;
+            this.lb_Menu.Text = "Main Menu";
+            this.lb_Menu.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lb_Menu_MouseDown);
             // 
             // frm_Main
             // 
@@ -275,6 +288,7 @@
             this.gb_Projects.ResumeLayout(false);
             this.gb_Appointments.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -300,5 +314,6 @@
         private System.Windows.Forms.Button btn_Logout;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btn_Exit;
+        private System.Windows.Forms.Label lb_Menu;
     }
 }

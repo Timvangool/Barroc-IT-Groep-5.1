@@ -32,6 +32,7 @@
             this.btn_Back = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btn_Exit = new System.Windows.Forms.Button();
+            this.lb_Add = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,6 +59,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.panel1.Controls.Add(this.lb_Add);
             this.panel1.Controls.Add(this.btn_Exit);
             this.panel1.Location = new System.Drawing.Point(-191, -11);
             this.panel1.Name = "panel1";
@@ -77,6 +79,17 @@
             this.btn_Exit.UseVisualStyleBackColor = false;
             this.btn_Exit.Click += new System.EventHandler(this.btn_Exit_Click);
             // 
+            // lb_Add
+            // 
+            this.lb_Add.AutoSize = true;
+            this.lb_Add.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.lb_Add.Location = new System.Drawing.Point(554, 15);
+            this.lb_Add.Name = "lb_Add";
+            this.lb_Add.Size = new System.Drawing.Size(45, 24);
+            this.lb_Add.TabIndex = 10;
+            this.lb_Add.Text = "Add";
+            this.lb_Add.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lb_Add_MouseDown);
+            // 
             // frm_Add
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -91,6 +104,7 @@
             this.Text = "Add";
             this.Load += new System.EventHandler(this.frm_Add_Load);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -101,5 +115,6 @@
         private System.Windows.Forms.Button btn_Back;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btn_Exit;
+        private System.Windows.Forms.Label lb_Add;
     }
 }

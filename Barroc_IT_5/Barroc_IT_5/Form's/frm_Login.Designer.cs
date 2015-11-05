@@ -37,6 +37,7 @@
             this.btn_Login = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btn_Exit = new System.Windows.Forms.Button();
+            this.lb_Login = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -98,11 +99,13 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.panel1.Controls.Add(this.lb_Login);
             this.panel1.Controls.Add(this.btn_Exit);
             this.panel1.Location = new System.Drawing.Point(-233, -4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(998, 36);
+            this.panel1.Size = new System.Drawing.Size(822, 36);
             this.panel1.TabIndex = 11;
+            this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
             // 
             // btn_Exit
             // 
@@ -115,6 +118,17 @@
             this.btn_Exit.Text = "X";
             this.btn_Exit.UseVisualStyleBackColor = false;
             this.btn_Exit.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // lb_Login
+            // 
+            this.lb_Login.AutoSize = true;
+            this.lb_Login.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.lb_Login.Location = new System.Drawing.Point(480, 7);
+            this.lb_Login.Name = "lb_Login";
+            this.lb_Login.Size = new System.Drawing.Size(57, 24);
+            this.lb_Login.TabIndex = 5;
+            this.lb_Login.Text = "Login";
+            this.lb_Login.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lb_Login_MouseDown);
             // 
             // frm_Login
             // 
@@ -136,6 +150,7 @@
             this.Load += new System.EventHandler(this.frm_Login_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -151,5 +166,6 @@
         private System.Windows.Forms.Button btn_Login;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btn_Exit;
+        private System.Windows.Forms.Label lb_Login;
     }
 }

@@ -33,6 +33,7 @@
             this.btn_Exit = new System.Windows.Forms.Button();
             this.btn_Save = new System.Windows.Forms.Button();
             this.btn_Cancel = new System.Windows.Forms.Button();
+            this.lb_Edit = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,6 +51,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.panel1.Controls.Add(this.lb_Edit);
             this.panel1.Controls.Add(this.btn_Exit);
             this.panel1.Location = new System.Drawing.Point(-182, -10);
             this.panel1.Name = "panel1";
@@ -89,6 +91,17 @@
             this.btn_Cancel.UseVisualStyleBackColor = true;
             this.btn_Cancel.Click += new System.EventHandler(this.btn_Cancel_Click);
             // 
+            // lb_Edit
+            // 
+            this.lb_Edit.AutoSize = true;
+            this.lb_Edit.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.lb_Edit.Location = new System.Drawing.Point(550, 15);
+            this.lb_Edit.Name = "lb_Edit";
+            this.lb_Edit.Size = new System.Drawing.Size(42, 24);
+            this.lb_Edit.TabIndex = 13;
+            this.lb_Edit.Text = "Edit";
+            this.lb_Edit.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lb_Edit_MouseDown);
+            // 
             // frm_Edit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -103,6 +116,7 @@
             this.Text = "Barroc_IT";
             this.Load += new System.EventHandler(this.frm_Edit_Load);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -114,5 +128,6 @@
         private System.Windows.Forms.Button btn_Exit;
         private System.Windows.Forms.Button btn_Save;
         private System.Windows.Forms.Button btn_Cancel;
+        private System.Windows.Forms.Label lb_Edit;
     }
 }

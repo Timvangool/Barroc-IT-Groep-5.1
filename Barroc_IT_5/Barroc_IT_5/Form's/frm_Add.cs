@@ -39,7 +39,7 @@ namespace Barroc_IT_5
         {
             InitializeComponent();
             dbh = new SQLDatabaseHandler();
-            sqlCmd = new SqlCommand("Select top 1* from Tbl_Customer", dbh.getCon());
+            sqlCmd = new SqlCommand("Select top 1* from Tbl_Customer", dbh.GetCon());
             SqlDataReader sqlDR = sqlCmd.ExecuteReader();
             columns = new List<string>();
             for (int i = 1; i < sqlDR.FieldCount; i++)
@@ -174,6 +174,25 @@ Contract";
                 this.Controls.Add(lb[i]);
                 lb[i].Text = lb[i].Text.Replace("_", " ");
             }
+            lb_Add.Text = "Add " + ChangeLabel(table);
+        }
+
+        //Chooses the text to be added to the label at the top of the window.
+        private string ChangeLabel(string table)
+        {
+            switch(table)
+            {
+                case "tbl_Customers":
+                    return "Customer";
+                case "tbl_Projects":
+                    return "Project";
+                case "tbl_Invoices":
+                    return "Invoice";
+                case "tbl_Appointments":
+                    return "Appointment";
+                default:
+                    return "";
+            }
         }
 
         //Checks if BKR is checked before creditworthy is allowed to be checked.
@@ -193,10 +212,10 @@ Contract";
         private string[] getColumnsName()
         {
             List<string> listacolumnas = new List<string>();
-            using (SqlCommand command = dbh.getCon().CreateCommand())
+            using (SqlCommand command = dbh.GetCon().CreateCommand())
             {
                 command.CommandText = "select c.name from sys.columns c inner join sys.tables t on t.object_id = c.object_id and t.name = '" + table + "' and t.type = 'U'";
-                dbh.openCon();
+                dbh.OpenCon();
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -204,7 +223,7 @@ Contract";
                         listacolumnas.Add(reader.GetString(0));
                     }
                 }
-                dbh.closeCon();
+                dbh.CloseCon();
             }
             return listacolumnas.ToArray();
         }
@@ -220,7 +239,7 @@ Contract";
             try
             {
                 SqlCommand cmd = new SqlCommand();
-                cmd.Connection = dbh.getCon();
+                cmd.Connection = dbh.GetCon();
 
                 if (table == "tbl_Appointments")
                 {
@@ -321,9 +340,9 @@ Contract";
                     }
                 }
 
-                dbh.openCon();
+                dbh.OpenCon();
                 cmd.ExecuteNonQuery();
-                dbh.closeCon();
+                dbh.CloseCon();
 
                 cmd.Dispose();
 
@@ -341,7 +360,7 @@ Contract";
             {
                 if (isFinished)
                 {
-                    dbh.closeCon();
+                    dbh.CloseCon();
                     Form frm_Main = new frm_Main();
                     frm_Main.StartPosition = FormStartPosition.CenterScreen;
                     Program.setForm(frm_Main);
@@ -366,10 +385,10 @@ Contract";
 
         private void SetComboBox(ComboBox combo)
         {
-            cmd = new SqlCommand("SELECT ID,Name FROM " + GetFKTable() + "", dbh.getCon());
+            cmd = new SqlCommand("SELECT ID,Name FROM " + GetFKTable() + "", dbh.GetCon());
             SqlDataReader reader;
             combo.KeyPress += new KeyPressEventHandler(Combo_keyPress);
-            dbh.openCon();
+            dbh.OpenCon();
             reader = cmd.ExecuteReader();
 
             DataTable dt = new DataTable();
@@ -412,7 +431,7 @@ Contract";
         }
         private string SetComboText(string ID_customer)
         {
-            cmd = new SqlCommand("SELECT Name FROM " + GetFKTable() + " WHERE ID = " + ID_customer + "", dbh.getCon());
+            cmd = new SqlCommand("SELECT Name FROM " + GetFKTable() + " WHERE ID = " + ID_customer + "", dbh.GetCon());
             SqlDataReader reader;
 
             reader = cmd.ExecuteReader();
@@ -453,6 +472,14 @@ Contract";
 
         //Continuation of the code to move the window.
         private void panel1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+        private void lb_Add_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {

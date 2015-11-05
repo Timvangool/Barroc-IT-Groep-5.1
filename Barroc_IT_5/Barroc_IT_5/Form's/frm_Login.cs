@@ -11,11 +11,20 @@ using System.Windows.Forms;
 using System.Data.Sql;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
+using System.Runtime.InteropServices;
 
 namespace Barroc_IT_5
 {
     public partial class frm_Login : Form
     {
+        //Code to move to window, since we're using a custom bar.
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
+        [DllImportAttribute("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        [DllImportAttribute("user32.dll")]
+        public static extern bool ReleaseCapture();
+
         SQLDatabaseHandler dbh;
 
         public string uN, pW;
@@ -46,9 +55,9 @@ namespace Barroc_IT_5
 
             string query = "SELECT * FROM TBL_LOGIN WHERE USERNAME = @USERNAME AND PASSWORD = @PASSWORD";
 
-            dbh.openCon();
+            dbh.OpenCon();
 
-            SqlCommand com = new SqlCommand(query, dbh.getCon());
+            SqlCommand com = new SqlCommand(query, dbh.GetCon());
             com.Parameters.Add(new SqlParameter("@USERNAME", user));
             com.Parameters.Add(new SqlParameter("@PASSWORD", pass));
 
@@ -94,7 +103,7 @@ namespace Barroc_IT_5
                 MessageBox.Show("Invalid Username and/or Password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
   
             }
-            dbh.closeCon();
+            dbh.CloseCon();
         }
 
         private void tb_Password_KeyUp(object sender, KeyEventArgs e)
@@ -113,6 +122,24 @@ namespace Barroc_IT_5
         private void frm_Login_Load(object sender, EventArgs e)
         {
             this.StartPosition = FormStartPosition.CenterScreen;
+        }
+
+        //Continuation of the code to move the window.
+        private void lb_Login_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
         }
     }
 }

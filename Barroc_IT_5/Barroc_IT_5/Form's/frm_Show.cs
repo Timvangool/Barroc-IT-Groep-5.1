@@ -170,6 +170,7 @@ namespace Barroc_IT_5
                 cb_Find.Visible = false;
                 btn_FKSearch.Visible = false;
             }
+
         }
 
         private void btn_Exit_Click(object sender, EventArgs e)
@@ -256,9 +257,9 @@ namespace Barroc_IT_5
                         cmd = new SqlCommand();
                         cmd.CommandType = CommandType.Text;
                         cmd.CommandText = "DELETE FROM " + department + " WHERE ID=" + rowID + "";
-                        cmd.Connection = dbh.getCon();
+                        cmd.Connection = dbh.GetCon();
           
-                        dbh.openCon();
+                        dbh.OpenCon();
           
                         try
                         {
@@ -269,12 +270,12 @@ namespace Barroc_IT_5
                             SqlCommand cmd2 = new SqlCommand();
                             cmd2.CommandType = CommandType.Text;
                             cmd2.CommandText = "UPDATE " + ConvertDepartment() + " SET " + ConvertSqlSet() + " WHERE " + ConvertSqlWhere(rowID) + "";
-                            cmd2.Connection = dbh.getCon();
+                            cmd2.Connection = dbh.GetCon();
                             cmd2.ExecuteNonQuery();
                             cmd.ExecuteNonQuery();
                         }
                         dbh.FillDataGridView(dgv_Show, "SELECT * FROM " + department);
-                        dbh.closeCon();
+                        dbh.CloseCon();
                         MessageBox.Show("Delete was succesful!","Succes!");
                     }
                     
@@ -350,10 +351,10 @@ namespace Barroc_IT_5
 
         private void SetComboBox(ComboBox combo)
         {
-            cmd = new SqlCommand("SELECT ID,Name FROM " + GetFKTable() + "", dbh.getCon());
+            cmd = new SqlCommand("SELECT ID,Name FROM " + GetFKTable() + "", dbh.GetCon());
             SqlDataReader reader;
 
-            dbh.openCon();
+            dbh.OpenCon();
             reader = cmd.ExecuteReader();
 
             DataTable dt = new DataTable();

@@ -33,7 +33,7 @@ namespace Barroc_IT_Groep5
             con = new SqlConnection(conString);
         }
 
-        public string getConState()
+        public string GetConState()
         {
             if (con.State == ConnectionState.Open)
             {
@@ -45,12 +45,12 @@ namespace Barroc_IT_Groep5
             }
 
         }
-        public SqlConnection getCon()
+        public SqlConnection GetCon()
         {
             return con;
         }
 
-        public void openCon()
+        public void OpenCon()
         {
             if (con.State != ConnectionState.Open)
             {
@@ -58,16 +58,16 @@ namespace Barroc_IT_Groep5
             }
         }
 
-        public void closeCon()
+        public void CloseCon()
         {
             con.Close();
         }
 
-        public void testCon()
+        public void TestCon()
         {
             try
             {
-                openCon();
+                OpenCon();
             }
             catch (Exception ex)
             {
@@ -77,15 +77,15 @@ namespace Barroc_IT_Groep5
             }
             finally
             {
-                closeCon();
+                CloseCon();
             }
         }
 
         public void FillDataGridView(DataGridView dgv, string query)
         {
-            openCon();
+            OpenCon();
 
-            SqlDataAdapter adapter = new SqlDataAdapter(query, getCon());
+            SqlDataAdapter adapter = new SqlDataAdapter(query, GetCon());
             DataSet dt = new DataSet();
             adapter.Fill(dt);
             dgv.DataSource = dt.Tables[0];
@@ -102,7 +102,7 @@ namespace Barroc_IT_Groep5
             dgv.MultiSelect = false;
             dgv.ReadOnly = true;
 
-            closeCon();
+            CloseCon();
         }
     }
 }
