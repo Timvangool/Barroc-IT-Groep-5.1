@@ -161,7 +161,15 @@ namespace Barroc_IT_5
                     MessageBox.Show("Something went wrong.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     break;
             }
-            SetComboBox(cb_Find);
+            if (department != "TBL_CUSTOMERS")
+            {
+                SetComboBox(cb_Find);
+            }
+            else
+            {
+                cb_Find.Visible = false;
+                btn_FKSearch.Visible = false;
+            }
         }
 
         private void btn_Exit_Click(object sender, EventArgs e)
@@ -402,11 +410,11 @@ namespace Barroc_IT_5
             switch (department)
             {
                 case "TBL_APPOINTMENTS":
-                    return "Id_Projects";
+                    return "Id_Project";
                 case "TBL_PROJECTS":
                     return "Id_customer";
                 case "TBL_INVOICES":
-                    return "Id_Projects";
+                    return "Id_Project";
                 default:
                     return "";
             }

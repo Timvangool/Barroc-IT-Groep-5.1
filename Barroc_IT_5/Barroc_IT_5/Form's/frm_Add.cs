@@ -293,11 +293,11 @@ Contract";
 
                 else if (table == "tbl_Projects")
                 {
-                    int ID = Convert.ToInt32(combo[9].SelectedValue);
+                    int ID = Convert.ToInt32(combo[11].SelectedValue);
 
                     if (ID != 0)
                     {
-                        cmd.CommandText = "INSERT INTO TBL_PROJECTS (NAME, HARDWARE, OPERATING_SYSTEM, MAINTENANCE_CONTRACT, APPLICATIONS, LIMIT, ID_CUSTOMER, IS_DONE, NR_INVOICES, BKR, CREDIT_WORTHY) VALUES (@NAME, @HARDWARE, @OPERATING_SYSTEM, @MAINTENANCE_CONTRACT, @APPLICATIONS, @LIMIT, @ID_CUSTOMER, @IS_DONE, @NR_INVOICES, @BKR, @CREDIT_WORTHY)";
+                        cmd.CommandText = "INSERT INTO TBL_PROJECTS (NAME, HARDWARE, OPERATING_SYSTEM, MAINTENANCE_CONTRACT, APPLICATIONS, LIMIT, ID_CUSTOMER, IS_DONE, NR_INVOICES, BKR, CREDITWORTHY) VALUES (@NAME, @HARDWARE, @OPERATING_SYSTEM, @MAINTENANCE_CONTRACT, @APPLICATIONS, @LIMIT, @ID_CUSTOMER, @IS_DONE, @NR_INVOICES, @BKR, @CREDITWORTHY)";
                     }
                     else
                     {
@@ -334,7 +334,7 @@ Contract";
 
             catch(SqlException ex)
             {
-                MessageBox.Show("One or more fields contain incorrect data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("One or more fields contain incorrect data." + ex, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
             finally

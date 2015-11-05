@@ -63,7 +63,6 @@ namespace Barroc_IT_Groep5
             con.Close();
         }
 
-
         public void testCon()
         {
             try
@@ -72,9 +71,9 @@ namespace Barroc_IT_Groep5
             }
             catch (Exception ex)
             {
-                System.Windows.Forms.MessageBox.Show(@"Er is iets fout gegaan
+                System.Windows.Forms.MessageBox.Show(@"An error has occured:
 
-" + ex);
+" + ex, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -106,5 +105,4 @@ namespace Barroc_IT_Groep5
             closeCon();
         }
     }
-
 }
