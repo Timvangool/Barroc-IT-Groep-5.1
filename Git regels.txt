@@ -4,3 +4,4 @@
 4. Mocht je thuis werken geef het aan.
 5. Niet commiten voordat iemand het heeft gecontroleerd.
 6. Werk altijd lokaal
+7. Denk aan regels 1-6
