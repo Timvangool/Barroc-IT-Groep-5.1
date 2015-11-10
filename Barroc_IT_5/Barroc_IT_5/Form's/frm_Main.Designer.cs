@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_Main));
             this.gb_Customers = new System.Windows.Forms.GroupBox();
             this.btn_C_List = new System.Windows.Forms.Button();
             this.btn_C_Edit = new System.Windows.Forms.Button();
@@ -46,13 +47,15 @@
             this.btn_A_Create = new System.Windows.Forms.Button();
             this.btn_Logout = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btn_Exit = new System.Windows.Forms.Button();
             this.lb_Menu = new System.Windows.Forms.Label();
+            this.btn_Exit = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.gb_Customers.SuspendLayout();
             this.gb_Invoices.SuspendLayout();
             this.gb_Projects.SuspendLayout();
             this.gb_Appointments.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // gb_Customers
@@ -244,6 +247,17 @@
             this.panel1.TabIndex = 5;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
             // 
+            // lb_Menu
+            // 
+            this.lb_Menu.AutoSize = true;
+            this.lb_Menu.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.lb_Menu.Location = new System.Drawing.Point(165, 19);
+            this.lb_Menu.Name = "lb_Menu";
+            this.lb_Menu.Size = new System.Drawing.Size(105, 24);
+            this.lb_Menu.TabIndex = 4;
+            this.lb_Menu.Text = "Main Menu";
+            this.lb_Menu.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lb_Menu_MouseDown);
+            // 
             // btn_Exit
             // 
             this.btn_Exit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -256,22 +270,22 @@
             this.btn_Exit.UseVisualStyleBackColor = false;
             this.btn_Exit.Click += new System.EventHandler(this.btn_Exit_Click);
             // 
-            // lb_Menu
+            // pictureBox1
             // 
-            this.lb_Menu.AutoSize = true;
-            this.lb_Menu.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.lb_Menu.Location = new System.Drawing.Point(165, 19);
-            this.lb_Menu.Name = "lb_Menu";
-            this.lb_Menu.Size = new System.Drawing.Size(105, 24);
-            this.lb_Menu.TabIndex = 4;
-            this.lb_Menu.Text = "Main Menu";
-            this.lb_Menu.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lb_Menu_MouseDown);
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(19, 268);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(156, 31);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 11;
+            this.pictureBox1.TabStop = false;
             // 
             // frm_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(429, 303);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btn_Logout);
             this.Controls.Add(this.gb_Appointments);
@@ -289,6 +303,7 @@
             this.gb_Appointments.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -315,5 +330,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btn_Exit;
         private System.Windows.Forms.Label lb_Menu;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

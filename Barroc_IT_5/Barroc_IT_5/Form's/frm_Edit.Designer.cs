@@ -28,13 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_Edit));
             this.cb_Customers = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lb_Edit = new System.Windows.Forms.Label();
             this.btn_Exit = new System.Windows.Forms.Button();
             this.btn_Save = new System.Windows.Forms.Button();
             this.btn_Cancel = new System.Windows.Forms.Button();
-            this.lb_Edit = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // cb_Customers
@@ -58,6 +61,17 @@
             this.panel1.Size = new System.Drawing.Size(1109, 43);
             this.panel1.TabIndex = 10;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
+            // 
+            // lb_Edit
+            // 
+            this.lb_Edit.AutoSize = true;
+            this.lb_Edit.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.lb_Edit.Location = new System.Drawing.Point(550, 15);
+            this.lb_Edit.Name = "lb_Edit";
+            this.lb_Edit.Size = new System.Drawing.Size(42, 24);
+            this.lb_Edit.TabIndex = 13;
+            this.lb_Edit.Text = "Edit";
+            this.lb_Edit.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lb_Edit_MouseDown);
             // 
             // btn_Exit
             // 
@@ -91,22 +105,22 @@
             this.btn_Cancel.UseVisualStyleBackColor = true;
             this.btn_Cancel.Click += new System.EventHandler(this.btn_Cancel_Click);
             // 
-            // lb_Edit
+            // pictureBox1
             // 
-            this.lb_Edit.AutoSize = true;
-            this.lb_Edit.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.lb_Edit.Location = new System.Drawing.Point(550, 15);
-            this.lb_Edit.Name = "lb_Edit";
-            this.lb_Edit.Size = new System.Drawing.Size(42, 24);
-            this.lb_Edit.TabIndex = 13;
-            this.lb_Edit.Text = "Edit";
-            this.lb_Edit.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lb_Edit_MouseDown);
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(19, 447);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(156, 31);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 13;
+            this.pictureBox1.TabStop = false;
             // 
             // frm_Edit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(855, 490);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btn_Cancel);
             this.Controls.Add(this.btn_Save);
             this.Controls.Add(this.panel1);
@@ -117,6 +131,7 @@
             this.Load += new System.EventHandler(this.frm_Edit_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -129,5 +144,6 @@
         private System.Windows.Forms.Button btn_Save;
         private System.Windows.Forms.Button btn_Cancel;
         private System.Windows.Forms.Label lb_Edit;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

@@ -28,12 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_Add));
             this.btn_Add = new System.Windows.Forms.Button();
             this.btn_Back = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btn_Exit = new System.Windows.Forms.Button();
             this.lb_Add = new System.Windows.Forms.Label();
+            this.btn_Exit = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_Add
@@ -67,6 +70,17 @@
             this.panel1.TabIndex = 9;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
             // 
+            // lb_Add
+            // 
+            this.lb_Add.AutoSize = true;
+            this.lb_Add.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.lb_Add.Location = new System.Drawing.Point(554, 15);
+            this.lb_Add.Name = "lb_Add";
+            this.lb_Add.Size = new System.Drawing.Size(45, 24);
+            this.lb_Add.TabIndex = 10;
+            this.lb_Add.Text = "Add";
+            this.lb_Add.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lb_Add_MouseDown);
+            // 
             // btn_Exit
             // 
             this.btn_Exit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -79,22 +93,22 @@
             this.btn_Exit.UseVisualStyleBackColor = false;
             this.btn_Exit.Click += new System.EventHandler(this.btn_Exit_Click);
             // 
-            // lb_Add
+            // pictureBox1
             // 
-            this.lb_Add.AutoSize = true;
-            this.lb_Add.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.lb_Add.Location = new System.Drawing.Point(554, 15);
-            this.lb_Add.Name = "lb_Add";
-            this.lb_Add.Size = new System.Drawing.Size(45, 24);
-            this.lb_Add.TabIndex = 10;
-            this.lb_Add.Text = "Add";
-            this.lb_Add.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lb_Add_MouseDown);
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(19, 447);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(156, 31);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 10;
+            this.pictureBox1.TabStop = false;
             // 
             // frm_Add
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(855, 490);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btn_Back);
             this.Controls.Add(this.btn_Add);
@@ -105,6 +119,7 @@
             this.Load += new System.EventHandler(this.frm_Add_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -116,5 +131,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btn_Exit;
         private System.Windows.Forms.Label lb_Add;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

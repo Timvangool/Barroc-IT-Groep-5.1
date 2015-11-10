@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_Show));
             this.dgv_Show = new System.Windows.Forms.DataGridView();
             this.btn_Edit = new System.Windows.Forms.Button();
             this.btn_Delete = new System.Windows.Forms.Button();
@@ -36,12 +37,15 @@
             this.btn_Back = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lb_Show = new System.Windows.Forms.Label();
             this.btn_Exit = new System.Windows.Forms.Button();
             this.cb_Tabledata = new System.Windows.Forms.ComboBox();
             this.btn_FKSearch = new System.Windows.Forms.Button();
             this.cb_Find = new System.Windows.Forms.ComboBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Show)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // dgv_Show
@@ -97,7 +101,7 @@
             this.btn_Back.Location = new System.Drawing.Point(577, 298);
             this.btn_Back.Name = "btn_Back";
             this.btn_Back.Size = new System.Drawing.Size(114, 23);
-            this.btn_Back.TabIndex = 6;
+            this.btn_Back.TabIndex = 9;
             this.btn_Back.Text = "Back";
             this.btn_Back.UseVisualStyleBackColor = true;
             this.btn_Back.Click += new System.EventHandler(this.btn_Back_Click);
@@ -107,17 +111,28 @@
             this.textBox1.Location = new System.Drawing.Point(373, 270);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(198, 20);
-            this.textBox1.TabIndex = 7;
+            this.textBox1.TabIndex = 4;
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.panel1.Controls.Add(this.lb_Show);
             this.panel1.Controls.Add(this.btn_Exit);
             this.panel1.Location = new System.Drawing.Point(-16, -11);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(756, 41);
             this.panel1.TabIndex = 8;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
+            // 
+            // lb_Show
+            // 
+            this.lb_Show.AutoSize = true;
+            this.lb_Show.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.lb_Show.Location = new System.Drawing.Point(318, 14);
+            this.lb_Show.Name = "lb_Show";
+            this.lb_Show.Size = new System.Drawing.Size(72, 24);
+            this.lb_Show.TabIndex = 4;
+            this.lb_Show.Text = "List of...";
             // 
             // btn_Exit
             // 
@@ -137,7 +152,7 @@
             this.cb_Tabledata.Location = new System.Drawing.Point(373, 298);
             this.cb_Tabledata.Name = "cb_Tabledata";
             this.cb_Tabledata.Size = new System.Drawing.Size(198, 21);
-            this.cb_Tabledata.TabIndex = 9;
+            this.cb_Tabledata.TabIndex = 6;
             this.cb_Tabledata.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cb_Tabledata_KeyPress);
             // 
             // btn_FKSearch
@@ -145,7 +160,7 @@
             this.btn_FKSearch.Location = new System.Drawing.Point(252, 298);
             this.btn_FKSearch.Name = "btn_FKSearch";
             this.btn_FKSearch.Size = new System.Drawing.Size(114, 23);
-            this.btn_FKSearch.TabIndex = 10;
+            this.btn_FKSearch.TabIndex = 8;
             this.btn_FKSearch.Text = "Find";
             this.btn_FKSearch.UseVisualStyleBackColor = true;
             this.btn_FKSearch.Click += new System.EventHandler(this.btn_FKSearch_Click);
@@ -156,13 +171,24 @@
             this.cb_Find.Location = new System.Drawing.Point(12, 300);
             this.cb_Find.Name = "cb_Find";
             this.cb_Find.Size = new System.Drawing.Size(234, 21);
-            this.cb_Find.TabIndex = 11;
+            this.cb_Find.TabIndex = 7;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(12, 327);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(156, 31);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 11;
+            this.pictureBox1.TabStop = false;
             // 
             // frm_Show
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(704, 337);
+            this.ClientSize = new System.Drawing.Size(704, 368);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.cb_Find);
             this.Controls.Add(this.btn_FKSearch);
             this.Controls.Add(this.cb_Tabledata);
@@ -180,6 +206,8 @@
             this.Load += new System.EventHandler(this.frm_Show_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Show)).EndInit();
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -198,5 +226,7 @@
         private System.Windows.Forms.ComboBox cb_Tabledata;
         private System.Windows.Forms.Button btn_FKSearch;
         private System.Windows.Forms.ComboBox cb_Find;
+        private System.Windows.Forms.Label lb_Show;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

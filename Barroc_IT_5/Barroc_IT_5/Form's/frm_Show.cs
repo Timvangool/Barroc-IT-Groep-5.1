@@ -170,7 +170,25 @@ namespace Barroc_IT_5
                 cb_Find.Visible = false;
                 btn_FKSearch.Visible = false;
             }
+            lb_Show.Text = ChangeLabel(department);
+        }
 
+        //Chooses the text to be added to the label at the top of the window.
+        private string ChangeLabel(string table)
+        {
+            switch (table)
+            {
+                case "TBL_CUSTOMERS":
+                    return "Customers";
+                case "TBL_PROJECTS":
+                    return "Projects";
+                case "TBL_INVOICES":
+                    return "Invoices";
+                case "TBL_APPOINTMENTS":
+                    return "Appointments";
+                default:
+                    return "";
+            }
         }
 
         private void btn_Exit_Click(object sender, EventArgs e)
